@@ -619,7 +619,6 @@ import '../../../../../gen/colors.gen.dart';
 import '../../../../../helpers/all_routes.dart';
 import '../../../../../helpers/navigation_service.dart';
 import '../../../../../helpers/ui_helpers.dart';
-import '../../engineer_login/presentation/widgets/presentatiosn/image_picker_controller.dart';
 
 class EngineerRegisterScreen extends StatefulWidget {
   const EngineerRegisterScreen({super.key});
@@ -1160,7 +1159,9 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                       padding: EdgeInsets.symmetric(vertical: 18.h),
                       title: 'Create Account',
                       style: TextFontStyle.text15cFFFFFF500,
-                      color: AppColors.allPrimaryColor,
+                      color: isChecked
+                          ? AppColors.allPrimaryColor
+                          : AppColors.c3B8CDB,
                       radius: BorderRadius.circular(119.r),
                       onTap: isChecked
                           ? () {
