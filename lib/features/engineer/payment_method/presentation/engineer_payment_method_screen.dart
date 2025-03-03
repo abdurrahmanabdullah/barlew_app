@@ -43,9 +43,14 @@ class _EngineerPaymentMethodScreenState
     return Scaffold(
       backgroundColor: AppColors.cF2F4F7,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: AppColors.cF2F4F7,
         scrolledUnderElevation: 0,
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),

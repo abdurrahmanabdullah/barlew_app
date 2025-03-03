@@ -1,10 +1,10 @@
-import 'package:barlew_app/features/customer/questions_page/presentations/questions_page_screen.dart';
-
+import 'package:barlew_app/features/engineer/Engineer_edit_profile/presentation/engineer_edit_profile_screen.dart';
 import 'package:barlew_app/provider/engineer_auth_provider.dart';
 import 'package:barlew_app/provider/engineer_login_provider.dart';
 import 'package:barlew_app/provider/image_pick_provider.dart';
 import 'package:barlew_app/provider/profile_provider.dart';
 import 'package:barlew_app/provider/provider.dart';
+import 'package:barlew_app/provider/selected_answer_provider.dart';
 import 'package:barlew_app/provider/signup_screen_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +12,7 @@ var providers = [
   // ChangeNotifierProvider<AuthProvider>(create: ((context) => AuthProvider())),
   ChangeNotifierProvider<IndexProviders>(
       create: ((context) => IndexProviders())),
-  ChangeNotifierProvider(
+  ChangeNotifierProvider<SelectedAnswersModel>(
     create: (context) =>
         SelectedAnswersModel(), // Add your SelectedAnswersModel here
   ),
@@ -28,4 +28,6 @@ var providers = [
 
   ChangeNotifierProvider<EngineerLoginProvider>(
       create: ((context) => EngineerLoginProvider())),
+  ChangeNotifierProvider<DataEntryProvider>(
+      create: ((context) => DataEntryProvider())),
 ];

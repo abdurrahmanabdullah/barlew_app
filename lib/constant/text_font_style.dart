@@ -285,4 +285,17 @@ class TextFontStyle {
 
   static final text14c2D3444w400 = GoogleFonts.roboto(
       color: AppColors.c2D3444, fontSize: 14.sp, fontWeight: FontWeight.w400);
+
+  static final textDescription = GoogleFonts.roboto(
+    color: const Color(0xFF3B4252),
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    height: 1.60,
+    letterSpacing: 0.40,
+  );
+
+  static final text12allPrimaryColorw400 = GoogleFonts.inter(
+      color: AppColors.allPrimaryColor,
+      fontSize: 12.sp,
+      fontWeight: FontWeight.w400);
 }

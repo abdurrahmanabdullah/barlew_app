@@ -1,7 +1,7 @@
 import 'package:barlew_app/common_widget/custom_button.dart';
 import 'package:barlew_app/constant/app_constants.dart';
 import 'package:barlew_app/constant/text_font_style.dart';
-import 'package:barlew_app/features/engineer/engineer_notifications/model/notification_model.dart';
+import 'package:barlew_app/features/engineer/home/model/engineer_task_list_model.dart';
 import 'package:barlew_app/features/engineer/home/widget/engineer_drawer.dart';
 import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
@@ -33,12 +33,11 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
   void initState() {
     super.initState();
     apiCall();
-    notificationApiCall();
+    tasklistapiCall();
   }
 
-  /// Fetch notifications
-  notificationApiCall() async {
-    await notificationRXobj.notificationRX();
+  tasklistapiCall() async {
+    await engineerTaskListRXobj.engineerTaskListRX();
   }
 
   /// Fetch engineer profile data
@@ -104,7 +103,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         toolbarHeight: 100.h, // Keep AppBar height large
         actions: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(18.0),
             child: ClipOval(
               child: profileImageUrl == null
                   ? Shimmer.fromColors(
@@ -147,8 +146,8 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         onRefresh: apiCall,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: StreamBuilder<NotificationModel>(
-            stream: notificationRXobj.dataFetcher,
+          child: StreamBuilder<EngineerTaskResponseModel>(
+            stream: engineerTaskListRXobj.dataFetcher,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -166,7 +165,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
               }
 
               if (snapshot.hasData) {
-                final notifications = snapshot.data?.data ?? [];
+                final tasks = snapshot.data?.data ?? [];
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,7 +196,7 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      notifications.length.toString(),
+                                      tasks.length.toString(),
                                       style: TextFontStyle.text14cFFFFFF400
                                           .copyWith(fontSize: 13.sp),
                                     ),
@@ -218,17 +217,14 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                         padding: EdgeInsets.zero,
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: notifications.length,
+                        itemCount: tasks.length,
                         itemBuilder: (_, index) {
-                          final notification = notifications[index];
-
-                          // Extract user data safely
-                          final userData = notification.userData;
-                          final profileImageUrl =
-                              userData?.avatar?.isNotEmpty == true
-                                  ? userData!.avatar!
-                                  : Assets.icons.personPlaceholder.path;
-                          final userName = userData?.userName ?? 'Unknown User';
+                          final task = tasks[index].discussionRequest;
+                          final serviceTitle =
+                              task?.serviceTitle ?? 'No Title Available';
+                          final servicedescription =
+                              task?.description ?? 'No Title Available';
+                          final images = task?.images ?? [];
 
                           return Padding(
                             padding: EdgeInsets.only(bottom: 60.h),
@@ -238,11 +234,14 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                                 Row(
                                   children: [
                                     ClipOval(
-                                      child: profileImageUrl.isNotEmpty
+                                      child: images.isNotEmpty
                                           ? CachedNetworkImage(
                                               width: 50.w,
                                               height: 50.h,
-                                              imageUrl: profileImageUrl,
+                                              imageUrl: images.isNotEmpty
+                                                  ? images.first
+                                                  : Assets.icons
+                                                      .personPlaceholder.path,
                                               fit: BoxFit.cover,
                                               placeholder: (context, url) =>
                                                   Shimmer.fromColors(
@@ -282,15 +281,18 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                                 ),
                                 UIHelper.verticalSpace(24.h),
                                 Text(
-                                  notification.userData?.description ?? " ",
+                                  serviceTitle,
                                   style: TextFontStyle.text14c2BA02Fw500,
                                 ),
-
+                                UIHelper.verticalSpace(24.h),
+                                Text(
+                                  servicedescription,
+                                  style: TextFontStyle.textDescription,
+                                ),
                                 UIHelper.verticalSpace(12.h),
 
                                 /// Check if there are images before rendering
-                                if (userData?.images != null &&
-                                    userData!.images!.isNotEmpty)
+                                if (images.isNotEmpty)
                                   GridView.builder(
                                     shrinkWrap: true,
                                     physics:
@@ -300,53 +302,41 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                                       crossAxisCount: 3,
                                       crossAxisSpacing: 10.w,
                                       mainAxisSpacing: 10.h,
-                                      childAspectRatio: 1,
+                                      childAspectRatio: 140 /
+                                          120, // Adjusted for reduced height
                                     ),
-                                    itemCount: userData.images!.length,
+                                    itemCount: images.length,
                                     itemBuilder: (context, index) {
-                                      return ClipOval(
-                                        child: userData
-                                                .images![index].isNotEmpty
-                                            ? CachedNetworkImage(
-                                                width: 50.w,
-                                                height: 50.h,
-                                                imageUrl:
-                                                    userData.images![index],
-                                                fit: BoxFit.cover,
-                                                placeholder: (context, url) =>
-                                                    Shimmer.fromColors(
-                                                  baseColor: Colors.grey[300]!,
-                                                  highlightColor:
-                                                      Colors.grey[100]!,
-                                                  direction: ShimmerDirection
-                                                      .ltr, // Left-to-right shimmer direction
-                                                  child: Container(
-                                                    width: 50.w,
-                                                    height: 50.h,
-                                                    color: Colors
-                                                        .white, // Placeholder color
-                                                  ),
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Icon(
-                                                  Icons.person,
-                                                  size: 50
-                                                      .sp, // Adjusted to match the size
-                                                ),
-                                                fadeInDuration: const Duration(
-                                                    milliseconds: 500),
-                                              )
-                                            : Image.asset(
-                                                Assets.icons.personPlaceholder
-                                                    .path,
-                                                width: 50.w,
-                                                height: 50.h,
-                                                fit: BoxFit.cover,
-                                              ),
+                                      return ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                            8.r), // Optional rounded corners
+                                        child: CachedNetworkImage(
+                                          width: 150.w, // Keep width same
+                                          height: 70.h, // Reduce height
+                                          imageUrl: images[index],
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
+                                            direction: ShimmerDirection.ltr,
+                                            child: Container(
+                                              width: 150.w,
+                                              height: 70
+                                                  .h, // Keep placeholder height consistent
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(
+                                            Icons.broken_image,
+                                            size: 50.sp,
+                                          ),
+                                        ),
                                       );
                                     },
                                   ),
+
                                 UIHelper.verticalSpace(20.h),
 
                                 /// -------------Accept denied  portion
@@ -355,32 +345,14 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                                     Expanded(
                                       child: CustomButton(
                                         title: "Accept",
-                                        onTap: () {
-                                          final userId = notification
-                                              .userData?.discussion_request_id;
-                                          if (userId != null) {
-                                            submitRequest(userId, "accepted");
-                                          } else {
-                                            ToastUtil.showShortToast(
-                                                "User ID not found.");
-                                          }
-                                        },
+                                        onTap: () {},
                                       ),
                                     ),
                                     UIHelper.horizontalSpace(12.h),
                                     Expanded(
                                       child: CustomButton(
                                         title: "Deny",
-                                        onTap: () {
-                                          final userId = notification
-                                              .userData?.discussion_request_id;
-                                          if (userId != null) {
-                                            submitRequest(userId, "denied");
-                                          } else {
-                                            ToastUtil.showShortToast(
-                                                "User ID not found.");
-                                          }
-                                        },
+                                        onTap: () {},
                                         border: Border.all(
                                           width: 1.w,
                                           color: AppColors.allPrimaryColor,

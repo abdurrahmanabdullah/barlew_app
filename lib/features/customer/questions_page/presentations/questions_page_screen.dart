@@ -6,6 +6,7 @@ import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/all_routes.dart';
 import 'package:barlew_app/helpers/navigation_service.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
+import 'package:barlew_app/provider/selected_answer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -74,8 +75,12 @@ class _QuestionsPageScreenState extends State<QuestionsPageScreen> {
                 centerTitle: true,
                 elevation: 0,
                 title: Text(
-                  serviceName, // Dynamically set the service name as the title
+                  serviceName,
                   style: TextFontStyle.text20cprimarycolorw500,
+                ),
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black),
+                  onPressed: () => Navigator.pop(context),
                 ),
               ),
               backgroundColor: const Color(0xFFF5F5F5),
@@ -224,54 +229,5 @@ class _QuestionsPageScreenState extends State<QuestionsPageScreen> {
         },
       ),
     );
-  }
-}
-
-///////////--------------provider for question and answer
-class SelectedAnswersModel with ChangeNotifier {
-  final List<int> _selectedQuestions = []; // Store selected question IDs
-  final List<int> _selectedAnswers = []; // Store corresponding answer IDs
-  int? _serviceID;
-  List<int> get selectedQuestions => _selectedQuestions;
-  List<int> get selectedAnswers => _selectedAnswers;
-  int? get serviceID => _serviceID;
-
-  // Set the service ID
-  void setServiceID(int id) {
-    _serviceID = id;
-    notifyListeners();
-  }
-
-  // Add selected answer for a specific question
-  void addSelectedAnswer(int questionID, int answerID) {
-    // Check if the question ID already exists
-    if (!_selectedQuestions.contains(questionID)) {
-      _selectedQuestions.add(questionID);
-      _selectedAnswers.add(answerID);
-    } else {
-      // Update the answer if question is already in the list
-      final index = _selectedQuestions.indexOf(questionID);
-      _selectedAnswers[index] = answerID;
-      _selectedQuestions[index] = questionID;
-    }
-    notifyListeners();
-  }
-
-  // Remove selected answer for a specific question
-  void removeSelectedAnswer(int questionID) {
-    final index = _selectedQuestions.indexOf(questionID);
-    if (index != -1) {
-      _selectedQuestions.removeAt(index);
-      _selectedAnswers.removeAt(index);
-    }
-    notifyListeners();
-  }
-
-  // Clear all selected answers
-  void clearAnswers() {
-    _selectedQuestions.clear();
-    _selectedAnswers.clear();
-    _serviceID = null;
-    notifyListeners();
   }
 }

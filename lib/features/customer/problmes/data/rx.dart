@@ -21,6 +21,7 @@ final class SubmitProblemRX extends RxResponseInt<Map> {
     required int serviceId,
     required String description,
     required List<int> questionId,
+    required List<int> skills,
     required List<int> answerId,
     required List<XFile> images,
   }) async {
@@ -29,8 +30,9 @@ final class SubmitProblemRX extends RxResponseInt<Map> {
         serviceId: serviceId,
         description: description,
         questionId: questionId,
-        answerId: answerId,
         images: images,
+        skills: skills,
+        answerId: answerId,
       );
       handleSuccessWithReturn(data);
       return true;

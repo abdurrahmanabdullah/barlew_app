@@ -2,7 +2,6 @@ import 'package:barlew_app/common_widget/custom_button.dart';
 import 'package:barlew_app/features/customer/matched_engineer/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
-import 'package:barlew_app/networks/api_access.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -28,18 +27,19 @@ class _MatchedEngineerScreenState extends State<MatchedEngineerScreen> {
   @override
   void initState() {
     super.initState();
-    apiCall();
+    // apiCall();
   }
 
-  apiCall() async {
-    final EngineerDetailsData =
-        await engineerDetailsPageRXobj.engineerDetailsPageRX();
-  }
+  // apiCall() async {
+  //   final EngineerDetailsData =
+  //       await engineerDetailsPageRXobj.engineerDetailsPageRX();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -47,6 +47,10 @@ class _MatchedEngineerScreenState extends State<MatchedEngineerScreen> {
         title: Text(
           'Matched Engineer',
           style: TextFontStyle.text20cprimarycolorw500,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       backgroundColor: AppColors.cFFFFFF,

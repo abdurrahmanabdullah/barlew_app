@@ -254,7 +254,13 @@ final class RouteGenerator {
                 settings: settings)
             : CupertinoPageRoute(
                 builder: (context) => const MessengingScreen());
-
+      case Routes.matchedResultScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+                widget: const ScreenTitle(widget: MatchedEngineerScreen()),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => const MatchedEngineerScreen());
       case Routes.loginScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
@@ -472,12 +478,20 @@ final class RouteGenerator {
                 builder: (context) => const EngineerVerifyEmailScreen());
 
       case Routes.engineerLevelScreen:
+        Map data = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: const ScreenTitle(widget: EngineerLevelScreen()),
+                widget: ScreenTitle(
+                    widget: EngineerLevelScreen(
+                  imageList: data["imageList"],
+                  description: data["description"],
+                )),
                 settings: settings)
             : CupertinoPageRoute(
-                builder: (context) => const EngineerLevelScreen());
+                builder: (context) => EngineerLevelScreen(
+                      imageList: data["imageList"],
+                      description: data["description"],
+                    ));
 
       default:
         return null;

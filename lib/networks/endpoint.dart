@@ -102,7 +102,7 @@ final class Endpoints {
       "/api/searched/engineer/send-request";
 
   // //customer SignIn Endpoint
-  static String engineerMatchDetailsEndpoint() => "/api/engineer/";
+  // static String engineerMatchDetailsEndpoint() => "/api/engineer/";
 
   //customer SignIn Endpoint
   static String customerToRequestEndpoint() => "/api/discussion/request";
@@ -110,7 +110,7 @@ final class Endpoints {
   static String notificationEndpoint() => "/api/notifications";
 
 //user-answer
-  static String userAnswerEndpoint() => "/api/send-request";
+  static String userAnswerEndpoint() => "/api/engineer/send-request";
 
   //user-answer
   static String engineerAcceptDeniedEndpoint({required int id}) =>
@@ -122,4 +122,9 @@ final class Endpoints {
 
   /// customer rating
   static String customerReviewsEndpoint() => "/api/reviews";
+
+  //Engineer Balance Details
+  static String engineerBalanceDetailsEndpoint() => "/api/engineers/balance";
+  //Engineer task list end posint
+  static String engineeTaskListEndpoint() => "/api/engineers/tasks";
 }

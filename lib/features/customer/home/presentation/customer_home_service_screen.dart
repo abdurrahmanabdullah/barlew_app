@@ -40,6 +40,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: AppColors.cFFFFFF,
         leading: Builder(

@@ -28,6 +28,7 @@ class _EngineerChatScreenState extends State<EngineerChatScreen> {
           style:
               TextFontStyle.text145192A48w500roboto.copyWith(fontSize: 24.sp),
         ),
+        elevation: 0,
         actions: [
           GestureDetector(
             onTap: () {},
@@ -75,7 +76,8 @@ class _EngineerChatScreenState extends State<EngineerChatScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                NavigationService.navigateTo(Routes.engineerMessenging);
+                                NavigationService.navigateTo(
+                                    Routes.engineerMessenging);
                               },
                               child: Row(
                                 children: [
@@ -109,15 +111,16 @@ class _EngineerChatScreenState extends State<EngineerChatScreen> {
                                             ),
                                             Text(
                                               formattedTime,
-                                              style:
-                                                  TextFontStyle.text12c798090w00,
+                                              style: TextFontStyle
+                                                  .text12c798090w00,
                                             ),
                                           ],
                                         ),
                                         UIHelper.verticalSpace(5.h),
                                         Text(
                                           "You: Hello Tom ! I will invest \$2000 on your",
-                                          style: TextFontStyle.text14c3D4454w400,
+                                          style:
+                                              TextFontStyle.text14c3D4454w400,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         )

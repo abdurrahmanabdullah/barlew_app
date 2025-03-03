@@ -8,6 +8,7 @@ import 'package:barlew_app/networks/api_access.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../helpers/all_routes.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -34,12 +35,19 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.cFFFFFF,
+        backgroundColor: const Color(0xFFF5F5F5),
         centerTitle: true,
-        title: const Text('Personal Information'),
+        elevation: 0,
+        title: const Text(
+          'Personal Information',
+          style: TextStyle(color: Colors.black),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
-      backgroundColor: AppColors.cFFFFFF,
+      backgroundColor: const Color(0xFFF5F5F5),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 20.h),
         child: StreamBuilder<CustomerProfileModel>(
@@ -67,11 +75,15 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
                             child: CachedNetworkImage(
                               imageUrl: profileSnap?.avatar ?? "",
                               placeholder: (context, url) {
-                                return Image.asset(
-                                  Assets.images.profileAvatar.path,
-                                  height: 100.h,
-                                  width: 100.w,
-                                  fit: BoxFit.cover,
+                                return Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  direction: ShimmerDirection.ltr,
+                                  child: Container(
+                                    width: 100.w,
+                                    height: 100.h,
+                                    color: Colors.white,
+                                  ),
                                 );
                               },
                               width: 100.w,
@@ -79,13 +91,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
                               fit: BoxFit.cover,
                             ),
                           )
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(150.r),
-                            child: Image.asset(
-                              Assets.images.profileAvatar.path,
-                              height: 100.h,
+                        : Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            direction: ShimmerDirection.ltr,
+                            child: Container(
                               width: 100.w,
-                              fit: BoxFit.cover,
+                              height: 100.h,
+                              color: Colors.white,
                             ),
                           ),
                   ),

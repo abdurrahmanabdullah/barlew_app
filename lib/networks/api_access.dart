@@ -22,6 +22,8 @@ import 'package:barlew_app/features/customer/matched_engineer/model/match_engine
 import 'package:barlew_app/features/customer/problmes/data/rx.dart';
 import 'package:barlew_app/features/engineer/Engineer_edit_profile/rx_post_Engineer_edit_profile_data/rx.dart';
 import 'package:barlew_app/features/engineer/Engineer_edit_profile/rx_post_Engineer_portfolio_image_delete_data/rx.dart';
+import 'package:barlew_app/features/engineer/balance/data/rx_engineer_get_details_balance/rx.dart';
+import 'package:barlew_app/features/engineer/balance/model/engineer_balance_details_model.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/create_new_password/rx_create_new_password/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_forget_password/data/rx_post_forget_password/rx.dart';
 
@@ -48,6 +50,8 @@ import 'package:barlew_app/features/engineer/engineer_review/data/rx_get_Enginee
 import 'package:barlew_app/features/engineer/engineer_review/model/engineer_review_model.dart';
 
 import 'package:barlew_app/features/engineer/home/data/rx_engineer_accept_denied/rx.dart';
+import 'package:barlew_app/features/engineer/home/data/rx_engineer_task_list/rx.dart';
+import 'package:barlew_app/features/engineer/home/model/engineer_task_list_model.dart';
 import 'package:barlew_app/features/engineer/personal_information/data/rx_engineer_profile/rx.dart';
 import 'package:barlew_app/features/engineer/personal_information/model/engineer_profile_model.dart';
 
@@ -172,14 +176,14 @@ EngineerAverageRevieweRX engineerAveratgeRevieweRXobj =
         dataFetcher: BehaviorSubject<EngineerAverageReviewModel>());
 
 /// engineer Review
-MatchEngineerRX matchEngineerRXobj = MatchEngineerRX(
-    empty: MatchEngineerResponseModel(),
-    dataFetcher: BehaviorSubject<MatchEngineerResponseModel>());
+// MatchEngineerRX matchEngineerRXobj = MatchEngineerRX(
+//     empty: MatchEngineerResponseModel(),
+//     dataFetcher: BehaviorSubject<MatchEngineerResponseModel>());
 
 /// engineer Review
-EngineerDetailsPageRX engineerDetailsPageRXobj = EngineerDetailsPageRX(
-    empty: EngineerDetailsPageModel(),
-    dataFetcher: BehaviorSubject<EngineerDetailsPageModel>());
+// EngineerDetailsPageRX engineerDetailsPageRXobj = EngineerDetailsPageRX(
+//     empty: EngineerDetailsPageModel(),
+//     dataFetcher: BehaviorSubject<EngineerDetailsPageModel>());
 
 ///customer to engineer  request
 CustomerToEngineerRequestRX customerToEngineerRequestRXobj =
@@ -208,6 +212,15 @@ EngineerServiceFeeRX engineerServiceFeeRXobj = EngineerServiceFeeRX(
 //Customer give  rating
 CustomerRatingRX customerRatingRXobj =
     CustomerRatingRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
+
+EngineerBalanceDetailsRX engineerBalanceDetailsRXobj = EngineerBalanceDetailsRX(
+    empty: BalanceDetailsResponseModel(),
+    dataFetcher: BehaviorSubject<BalanceDetailsResponseModel>());
+
+///--------- task list
+EngineerTaskListRX engineerTaskListRXobj = EngineerTaskListRX(
+    empty: EngineerTaskResponseModel(),
+    dataFetcher: BehaviorSubject<EngineerTaskResponseModel>());
 
 /// engineer profile
 // QuestionRX questionRXobj = QuestionRX(

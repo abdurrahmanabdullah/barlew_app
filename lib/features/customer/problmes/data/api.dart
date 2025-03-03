@@ -17,6 +17,7 @@ final class SubmitProblemApi {
     required String description,
     required List<int> questionId,
     required List<int> answerId,
+    required List<int> skills,
     required List<XFile> images,
   }) async {
     try {
@@ -24,7 +25,8 @@ final class SubmitProblemApi {
         "service_id": serviceId,
         "description": description,
         "question_id[]": questionId,
-        "answer_id[][]": answerId
+        "skills[]": skills,
+        "answer[]": answerId
       };
 
       FormData data = FormData.fromMap(mapData);
