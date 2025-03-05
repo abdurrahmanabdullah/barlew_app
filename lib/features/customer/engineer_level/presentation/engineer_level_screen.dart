@@ -395,7 +395,7 @@ class EngineerLevelScreen extends StatefulWidget {
 }
 
 class _EngineerLevelScreenState extends State<EngineerLevelScreen> {
-  final List<Data> skillList = [];
+  final List<Datum> skillList = [];
   final List<int> selectedSkills = [];
 
   @override
@@ -503,7 +503,7 @@ class _EngineerLevelScreenState extends State<EngineerLevelScreen> {
               ),
               UIHelper.verticalSpace(40.h),
               // Skill List with StreamBuilder
-              StreamBuilder<engineerskillmodel>(
+              StreamBuilder<Engineerskillmodel>(
                 stream: engineerSkillRXobj.dataFetcher,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {

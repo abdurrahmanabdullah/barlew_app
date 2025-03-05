@@ -12,7 +12,8 @@ class PaymentInformationScreen extends StatefulWidget {
   const PaymentInformationScreen({super.key});
 
   @override
-  State<PaymentInformationScreen> createState() => _PaymentInformationScreenState();
+  State<PaymentInformationScreen> createState() =>
+      _PaymentInformationScreenState();
 }
 
 class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
@@ -34,11 +35,16 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
     return Scaffold(
       backgroundColor: AppColors.cF2F4F7,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: AppColors.cF2F4F7,
         title: Text(
           "Payment",
           style:
               TextFontStyle.text17c192A48500robotos.copyWith(fontSize: 22.sp),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
         ),
         scrolledUnderElevation: 0,
         centerTitle: true,

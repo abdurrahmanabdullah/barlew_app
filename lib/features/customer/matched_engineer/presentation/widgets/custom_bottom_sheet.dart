@@ -145,7 +145,7 @@ class _CustomBottomSheetTwoState extends State<CustomBottomSheetTwo> {
                                 style: TextFontStyle.text20cFFFFFF500,
                               ),
                               Text(
-                                '\$$fee',
+                                '0.0',
                                 style: TextFontStyle.text20cFFFFFF500,
                               ),
                             ],

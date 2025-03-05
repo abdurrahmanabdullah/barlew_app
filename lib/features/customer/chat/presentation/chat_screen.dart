@@ -146,7 +146,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           UIHelper.horizontalSpace(10.w),
                           GestureDetector(
                             onTap: () {
-                              NavigationService.navigateTo(Routes.messengingScreen);
+                              NavigationService.navigateTo(
+                                  Routes.messengingScreen);
                             },
                             child: Image.asset(
                               Assets.icons.chatCircle.path,

@@ -44,7 +44,7 @@ class Datum {
   int? id;
   int? requestId;
   int? engineerId;
-  String? status;
+  Status? status;
   DateTime? createdAt;
   DateTime? updatedAt;
   DiscussionRequest? discussionRequest;
@@ -67,7 +67,7 @@ class Datum {
         id: json["id"],
         requestId: json["request_id"],
         engineerId: json["engineer_id"],
-        status: json["status"],
+        status: statusValues.map[json["status"]]!,
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -83,7 +83,7 @@ class Datum {
         "id": id,
         "request_id": requestId,
         "engineer_id": engineerId,
-        "status": status,
+        "status": statusValues.reverse[status],
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "discussion_request": discussionRequest?.toJson(),
@@ -93,11 +93,11 @@ class Datum {
 class DiscussionRequest {
   int? id;
   int? userId;
-  String? engineerId;
+  dynamic engineerId;
   int? serviceId;
-  String? serviceTitle;
+  ServiceTitle? serviceTitle;
   String? price;
-  String? status;
+  Status? status;
   List<QuestionAnswer>? questionAnswer;
   List<String>? images;
   String? description;
@@ -130,9 +130,9 @@ class DiscussionRequest {
         userId: json["user_id"],
         engineerId: json["engineer_id"],
         serviceId: json["service_id"],
-        serviceTitle: json["service_title"],
+        serviceTitle: serviceTitleValues.map[json["service_title"]]!,
         price: json["price"],
-        status: json["status"],
+        status: statusValues.map[json["status"]]!,
         questionAnswer: json["question_answer"] == null
             ? []
             : List<QuestionAnswer>.from(json["question_answer"]!
@@ -154,9 +154,9 @@ class DiscussionRequest {
         "user_id": userId,
         "engineer_id": engineerId,
         "service_id": serviceId,
-        "service_title": serviceTitle,
+        "service_title": serviceTitleValues.reverse[serviceTitle],
         "price": price,
-        "status": status,
+        "status": statusValues.reverse[status],
         "question_answer": questionAnswer == null
             ? []
             : List<dynamic>.from(questionAnswer!.map((x) => x.toJson())),
@@ -192,6 +192,22 @@ class QuestionAnswer {
         "answer": answer,
       };
 }
+
+enum ServiceTitle { BOILER_FAULT, BOILER_PRESSURE, LEAK }
+
+final serviceTitleValues = EnumValues({
+  "Boiler Fault": ServiceTitle.BOILER_FAULT,
+  "Boiler Pressure": ServiceTitle.BOILER_PRESSURE,
+  "Leak": ServiceTitle.LEAK
+});
+
+enum Status { ACCEPTED, DENIED, PENDING }
+
+final statusValues = EnumValues({
+  "accepted": Status.ACCEPTED,
+  "denied": Status.DENIED,
+  "pending": Status.PENDING
+});
 
 class Pagination {
   int? currentPage;
@@ -252,4 +268,16 @@ class Pagination {
         "to": to,
         "path": path,
       };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }

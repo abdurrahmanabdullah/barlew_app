@@ -9,12 +9,12 @@ final class EngineerSkillApi {
   EngineerSkillApi._internal();
   static EngineerSkillApi get instance => _singleton;
 
-  Future<engineerskillmodel> engineerskillApi() async {
+  Future<Engineerskillmodel> engineerskillApi() async {
     try {
       Response response = await getHttp(Endpoints.engineerskillEndpoint());
 
       if (response.statusCode == 200) {
-        final data = engineerskillmodel.fromJson(response.data);
+        final data = Engineerskillmodel.fromJson(response.data);
         return data;
       } else {
         throw DataSource.DEFAULT.getFailure();

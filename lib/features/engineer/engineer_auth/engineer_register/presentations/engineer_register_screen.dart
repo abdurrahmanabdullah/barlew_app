@@ -1,4 +1,3 @@
-
 library;
 
 import 'dart:io';
@@ -43,7 +42,7 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   XFile? selectedPortfolio;
 
-  List<Data> skillList = [];
+  List<Datum> skillList = [];
 
   List<Map<String, dynamic>> selectedSkills = [];
 

@@ -5,13 +5,12 @@ import 'package:barlew_app/networks/endpoint.dart';
 import 'package:dio/dio.dart';
 import '../../../../../networks/exception_handler/data_source.dart';
 
-final class EngineerAcceptDeniedApi {
-  static final EngineerAcceptDeniedApi _singleton =
-      EngineerAcceptDeniedApi._internal();
-  EngineerAcceptDeniedApi._internal();
-  static EngineerAcceptDeniedApi get instance => _singleton;
+final class EngineerAcceptApi {
+  static final EngineerAcceptApi _singleton = EngineerAcceptApi._internal();
+  EngineerAcceptApi._internal();
+  static EngineerAcceptApi get instance => _singleton;
 
-  Future<Map> engineerAcceptDeniedApi(
+  Future<Map> engineerAcceptApi(
       {required String status, required int id}) async {
     try {
       FormData data = FormData.fromMap({
@@ -19,7 +18,7 @@ final class EngineerAcceptDeniedApi {
       });
 
       Response response =
-          await postHttp(Endpoints.engineerAcceptDeniedEndpoint(id: id), data);
+          await getHttp(Endpoints.engineerAcceptEndpoint(id: id), data);
 
       if (response.statusCode == 200) {
         final data = json.decode(json.encode(response.data));

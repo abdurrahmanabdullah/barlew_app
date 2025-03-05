@@ -12,6 +12,8 @@ import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class CustomerReviewScreen extends StatefulWidget {
   const CustomerReviewScreen({super.key});
@@ -42,6 +44,7 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
     return Scaffold(
       backgroundColor: AppColors.cF2F4F7,
       appBar: AppBar(
+        elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.cF2F4F7,
         title: Text(
@@ -129,10 +132,26 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
                   ),
                 ),
               ),
-              UIHelper.verticalSpace(300.h),
+              UIHelper.verticalSpace(200.h),
+
+              CustomButton(
+                onTap: () {
+                  Get.bottomSheet(
+                    const ReportBottomSheet(),
+                  );
+                },
+                // radius: BorderRadius.circular(111.r),
+                // padding: EdgeInsets.symmetric(vertical: 17.h),
+                title: 'Discuss issue',
+                style: TextFontStyle.text15cFFFFFF500,
+                color: AppColors.allPrimaryColor,
+              ),
+              UIHelper.verticalSpace(80.h),
+              // const ReportBottomSheet(),
               CustomButton(
                 title: "Submit",
                 onTap: () {
+                  // NavigationService.navigateTo(Routes.navigationsBarScreen);
                   NavigationService.navigateTo(Routes.navigationsBarScreen);
                 },
               )

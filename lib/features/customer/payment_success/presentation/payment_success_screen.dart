@@ -21,6 +21,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
     return Scaffold(
       backgroundColor: AppColors.cF2F4F7,
       appBar: AppBar(
+        elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.cF2F4F7,
         title: Text(

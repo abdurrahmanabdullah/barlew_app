@@ -8,6 +8,7 @@ import 'package:barlew_app/features/customer/auth/logout/data/rx_post_logout/rx.
 import 'package:barlew_app/features/customer/auth/signup_verify/data/rx_post-signup_verify_otp/rx.dart';
 import 'package:barlew_app/features/customer/auth/signup_verify/model/sign_up_verify_model.dart';
 import 'package:barlew_app/features/customer/customer_review/data/rx_post_customer_review/rx.dart';
+import 'package:barlew_app/features/customer/customer_review/data/rx_post_engineer_report_issue/rx.dart';
 import 'package:barlew_app/features/customer/home/model/customer_home_model.dart';
 import 'package:barlew_app/features/customer/home/model/customer_home_profile_model.dart';
 import 'package:barlew_app/features/customer/home/data/rx_get_customer_home_profile/rx.dart';
@@ -48,8 +49,9 @@ import 'package:barlew_app/features/engineer/engineer_notifications/data/rx_noti
 import 'package:barlew_app/features/engineer/engineer_notifications/model/notification_model.dart';
 import 'package:barlew_app/features/engineer/engineer_review/data/rx_get_Engineer_review/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_review/model/engineer_review_model.dart';
+import 'package:barlew_app/features/engineer/home/data/rx_get_engineer_accept_/rx.dart';
 
-import 'package:barlew_app/features/engineer/home/data/rx_engineer_accept_denied/rx.dart';
+import 'package:barlew_app/features/engineer/home/data/rx_post_engineer_denied/rx.dart';
 import 'package:barlew_app/features/engineer/home/data/rx_engineer_task_list/rx.dart';
 import 'package:barlew_app/features/engineer/home/model/engineer_task_list_model.dart';
 import 'package:barlew_app/features/engineer/personal_information/data/rx_engineer_profile/rx.dart';
@@ -130,8 +132,8 @@ EngineerProfileRX engineerProfileRXObj = EngineerProfileRX(
 
 ///engineer skill
 EngineerSkillRX engineerSkillRXobj = EngineerSkillRX(
-    empty: engineerskillmodel(),
-    dataFetcher: BehaviorSubject<engineerskillmodel>());
+    empty: Engineerskillmodel(),
+    dataFetcher: BehaviorSubject<Engineerskillmodel>());
 
 /// forget password otp
 ForgetPasswordSendOTPRx forgetPasswordSendOTPRxObj =
@@ -201,9 +203,13 @@ NotificationRX notificationRXobj = NotificationRX(
 SubmitProblemRX submitProblemRXobj =
     SubmitProblemRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
 
-//Engineer Accept Denied  request
-EngineerAcceptDeniedRX engineerAcceptDeniedRXobj =
-    EngineerAcceptDeniedRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
+//Engineer Accept   request
+EngineerAcceptRX engineerAcceptRXobj =
+    EngineerAcceptRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
+
+//Engineer  Denied  request
+EngineerDeniedRX engineerDeniedRXobj =
+    EngineerDeniedRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
 
 EngineerServiceFeeRX engineerServiceFeeRXobj = EngineerServiceFeeRX(
     empty: ServiceFeeResponseModel(),
@@ -221,6 +227,11 @@ EngineerBalanceDetailsRX engineerBalanceDetailsRXobj = EngineerBalanceDetailsRX(
 EngineerTaskListRX engineerTaskListRXobj = EngineerTaskListRX(
     empty: EngineerTaskResponseModel(),
     dataFetcher: BehaviorSubject<EngineerTaskResponseModel>());
+
+////------------ report issue  against engineer
+
+EngineerReportRX engineerReportRXobj =
+    EngineerReportRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
 
 /// engineer profile
 // QuestionRX questionRXobj = QuestionRX(

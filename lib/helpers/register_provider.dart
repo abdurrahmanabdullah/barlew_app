@@ -1,5 +1,6 @@
 import 'package:barlew_app/features/engineer/Engineer_edit_profile/presentation/engineer_edit_profile_screen.dart';
 import 'package:barlew_app/provider/engineer_auth_provider.dart';
+import 'package:barlew_app/provider/engineer_edit_provider.dart';
 import 'package:barlew_app/provider/engineer_login_provider.dart';
 import 'package:barlew_app/provider/image_pick_provider.dart';
 import 'package:barlew_app/provider/profile_provider.dart';
@@ -30,4 +31,6 @@ var providers = [
       create: ((context) => EngineerLoginProvider())),
   ChangeNotifierProvider<DataEntryProvider>(
       create: ((context) => DataEntryProvider())),
+  ChangeNotifierProvider<EngineerEditProfileProvider>(
+      create: ((context) => EngineerEditProfileProvider())),
 ];

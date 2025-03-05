@@ -1,16 +1,13 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:barlew_app/constant/text_font_style.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../gen/colors.gen.dart';
 
 class MyCustomDropdown extends StatefulWidget {
-  final String? selectedValue;
+  final List<String> selectedValues;
   final List<String> dropDownValue;
-  final Function(String?)? onTap;
+  final Function(List<String>)? onTap;
   final double horizonPadding;
   final double verticPadding;
   final String? hinttext;
@@ -25,7 +22,7 @@ class MyCustomDropdown extends StatefulWidget {
 
   const MyCustomDropdown({
     super.key,
-    required this.selectedValue,
+    required this.selectedValues,
     required this.dropDownValue,
     this.horizonPadding = 2,
     this.verticPadding = 0,
@@ -97,7 +94,9 @@ class _MyCustomDropdownState extends State<MyCustomDropdown> {
                       color: widget.hintColor, fontSize: widget.hintFontSize),
                 ),
                 isExpanded: true,
-                value: widget.selectedValue,
+                value: widget.selectedValues.isNotEmpty
+                    ? widget.selectedValues.first
+                    : null,
                 icon: widget.icon ??
                     Icon(
                       Icons.arrow_drop_down_outlined,
@@ -108,17 +107,35 @@ class _MyCustomDropdownState extends State<MyCustomDropdown> {
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(
-                      value,
-                      style: widget.textStyle ??
-                          TextFontStyle.text12allPrimaryColorw400,
-                      overflow: TextOverflow.ellipsis,
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: widget.selectedValues.contains(value),
+                          onChanged: (bool? newValue) {
+                            setState(() {
+                              if (newValue != null) {
+                                if (newValue) {
+                                  widget.selectedValues.add(value);
+                                } else {
+                                  widget.selectedValues.remove(value);
+                                }
+                                widget.onTap?.call(widget.selectedValues);
+                              }
+                            });
+                          },
+                        ),
+                        Text(
+                          value,
+                          style: widget.textStyle ??
+                              TextFontStyle.text12allPrimaryColorw400,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
                   );
                 }).toList(),
                 onChanged: (newValue) {
-                  widget.onTap?.call(newValue);
-                  FocusScope.of(context).requestFocus(_focusNode);
+                  // This is not needed anymore since we are handling checkbox selection
                 },
                 dropdownColor: widget.dropdownfillColor ?? AppColors.c22BB55,
               ),

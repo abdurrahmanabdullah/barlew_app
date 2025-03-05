@@ -5,6 +5,7 @@ import 'package:barlew_app/features/customer/auth/sign_up/presentation/register_
 import 'package:barlew_app/features/customer/auth/signup_verify/presentation/sign_up_verify_screen.dart';
 import 'package:barlew_app/features/customer/chat/presentation/call_screen.dart';
 import 'package:barlew_app/features/customer/chat/presentation/messenging_screen.dart';
+import 'package:barlew_app/features/customer/customer_review/widget/report_bottom_sheet.dart';
 import 'package:barlew_app/features/customer/engineer_level/presentation/engineer_level_screen.dart';
 import 'package:barlew_app/features/customer/matched_engineer/presentation/matched_engineer_screen.dart';
 
@@ -107,6 +108,7 @@ final class Routes {
   static const String engineerSignupVerifyScreen =
       '/engineerSignupVerifyScreen';
   static const String matchedResultScreen = '/matchedResultScreen';
+  static const String reportBottomSheet = '/ReportBottomSheet';
 }
 
 final class RouteGenerator {
@@ -492,6 +494,13 @@ final class RouteGenerator {
                       imageList: data["imageList"],
                       description: data["description"],
                     ));
+      case Routes.reportBottomSheet:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+                widget: const ScreenTitle(widget: ReportBottomSheet()),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => const ReportBottomSheet());
 
       default:
         return null;

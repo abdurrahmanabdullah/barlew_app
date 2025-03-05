@@ -98,8 +98,8 @@ final class Endpoints {
       "/api/reviews/average-rating";
 
   //customer SignIn Endpoint
-  static String engineerMatchEndpoint() =>
-      "/api/searched/engineer/send-request";
+  // static String engineerMatchEndpoint() =>
+  //     "/api/searched/engineer/send-request";
 
   // //customer SignIn Endpoint
   // static String engineerMatchDetailsEndpoint() => "/api/engineer/";
@@ -112,10 +112,13 @@ final class Endpoints {
 //user-answer
   static String userAnswerEndpoint() => "/api/engineer/send-request";
 
-  //user-answer
-  static String engineerAcceptDeniedEndpoint({required int id}) =>
-      "/api/discussion-requests/$id";
+  //engineer  request accept
+  static String engineerAcceptEndpoint({required int id}) =>
+      "/api/engineers/request-accept/$id";
 
+  /// engineer  request denied
+  static String engineerDeniedEndpoint({required int id}) =>
+      "/api/engineers/request-decline/$id";
   //user-answer
   static String engineerServiceFeeEndpoint() =>
       "/api/engineers-service-fee/show";
@@ -127,4 +130,6 @@ final class Endpoints {
   static String engineerBalanceDetailsEndpoint() => "/api/engineers/balance";
   //Engineer task list end posint
   static String engineeTaskListEndpoint() => "/api/engineers/tasks";
+
+  static String engineerReportEndpoint() => "/api/report-issues";
 }

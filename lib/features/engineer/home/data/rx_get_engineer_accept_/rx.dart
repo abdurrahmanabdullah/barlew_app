@@ -45,27 +45,26 @@
 
 import 'dart:developer';
 
-import 'package:barlew_app/features/engineer/home/data/rx_engineer_accept_denied/api.dart';
+import 'package:barlew_app/features/engineer/home/data/rx_get_engineer_accept_/api.dart';
 import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../../../../helpers/toast.dart';
 import '../../../../../networks/rx_base.dart';
 
-class EngineerAcceptDeniedRX extends RxResponseInt<Map> {
-  final api = EngineerAcceptDeniedApi.instance;
+class EngineerAcceptRX extends RxResponseInt<Map> {
+  final api = EngineerAcceptApi.instance;
 
-  EngineerAcceptDeniedRX({required super.empty, required super.dataFetcher});
+  EngineerAcceptRX({required super.empty, required super.dataFetcher});
 
   ValueStream get customerProfileSteam => dataFetcher.stream;
 
-  Future<Map?> engineerAcceptDeniedRX(
+  Future<bool?> engineerAcceptRX(
       {required int id, required String status}) async {
     try {
-      Map data = await api.engineerAcceptDeniedApi(id: id, status: status);
+      Map data = await api.engineerAcceptApi(id: id, status: status);
       handleSuccessWithReturn(data);
 
-      // Return the accepted_by details (engineer's info)
-      return data['data']?['accepted_request']?['accepted_by'];
+      return true;
     } catch (error) {
       return handleErrorWithReturn(error);
     }
@@ -74,10 +73,16 @@ class EngineerAcceptDeniedRX extends RxResponseInt<Map> {
   @override
   handleErrorWithReturn(dynamic error) {
     if (error is DioException) {
-      if (error.response!.statusCode == 400) {
-        ToastUtil.showShortToast(error.response!.data["error"]);
+      if (error.response != null && error.response!.data != null) {
+        String? errorMessage =
+            error.response!.data["error"] ?? error.response!.data["message"];
+        if (errorMessage != null) {
+          ToastUtil.showShortToast(errorMessage);
+        } else {
+          ToastUtil.showShortToast("An unknown error occurred.");
+        }
       } else {
-        ToastUtil.showShortToast(error.response!.data["message"]);
+        ToastUtil.showShortToast("No response from server.");
       }
     }
     log(error.toString());

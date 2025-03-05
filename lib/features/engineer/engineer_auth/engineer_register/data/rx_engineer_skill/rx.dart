@@ -9,16 +9,16 @@ import 'package:barlew_app/networks/rx_base.dart';
 import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
 
-final class EngineerSkillRX extends RxResponseInt<engineerskillmodel> {
+final class EngineerSkillRX extends RxResponseInt<Engineerskillmodel> {
   final api = EngineerSkillApi.instance;
 
   EngineerSkillRX({required super.empty, required super.dataFetcher});
 
   ValueStream get customerProfileSteam => dataFetcher.stream;
 
-  Future<engineerskillmodel?> engineerSkillRX() async {
+  Future<Engineerskillmodel?> engineerSkillRX() async {
     try {
-      final engineerskillmodel data = await api.engineerskillApi();
+      final Engineerskillmodel data = await api.engineerskillApi();
       handleSuccessWithReturn(data);
       return data;
     } catch (error) {
