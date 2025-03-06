@@ -51,8 +51,6 @@ class SignupScreenProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Function to add or remove skill from selected list
-
   @override
   void dispose() {
     firstnameController.dispose();

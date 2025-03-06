@@ -98,13 +98,6 @@ final class Endpoints {
       "/api/reviews/average-rating";
 
   //customer SignIn Endpoint
-  // static String engineerMatchEndpoint() =>
-  //     "/api/searched/engineer/send-request";
-
-  // //customer SignIn Endpoint
-  // static String engineerMatchDetailsEndpoint() => "/api/engineer/";
-
-  //customer SignIn Endpoint
   static String customerToRequestEndpoint() => "/api/discussion/request";
   //engineer notification
   static String notificationEndpoint() => "/api/notifications";
@@ -132,4 +125,12 @@ final class Endpoints {
   static String engineeTaskListEndpoint() => "/api/engineers/tasks";
 
   static String engineerReportEndpoint() => "/api/report-issues";
+
+  static String engineerBankDetailsEndpoint() => "/api/engineers/bank-details";
+  static String engineerGetBankDetailsEndpoint() =>
+      "/api/engineers/get/bank-details";
+
+  /// withdrawal request
+  static String engineerWithdrawalrequestEndpoint() =>
+      "/api/engineers/withdrawal-request";
 }

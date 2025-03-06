@@ -10,7 +10,7 @@ import 'package:barlew_app/provider/signup_screen_provider.dart';
 import 'package:provider/provider.dart';
 
 var providers = [
-  // ChangeNotifierProvider<AuthProvider>(create: ((context) => AuthProvider())),
+
   ChangeNotifierProvider<IndexProviders>(
       create: ((context) => IndexProviders())),
   ChangeNotifierProvider<SelectedAnswersModel>(
