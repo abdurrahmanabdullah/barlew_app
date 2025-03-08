@@ -42,7 +42,7 @@ class PaymentMethodContainer extends StatelessWidget {
                 children: [
                   Image.asset(
                     logo,
-                    width: 50,
+                    width: 90,
                     height: 32,
                     fit: BoxFit.cover,
                   ),

@@ -65,6 +65,7 @@ dependencies:
   multi_dropdown:
 
   rxdart: any
+  timeago: ^3.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -13,13 +13,15 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   /// File path: assets/icons/Attachment.png
-  AssetGenImage get attachment => const AssetGenImage('assets/icons/Attachment.png');
+  AssetGenImage get attachment =>
+      const AssetGenImage('assets/icons/Attachment.png');
 
   /// File path: assets/icons/CaretRight.svg
   String get caretRight => 'assets/icons/CaretRight.svg';
 
   /// File path: assets/icons/Close X (Vector).png
-  AssetGenImage get closeXVector => const AssetGenImage('assets/icons/Close X (Vector).png');
+  AssetGenImage get closeXVector =>
+      const AssetGenImage('assets/icons/Close X (Vector).png');
 
   /// File path: assets/icons/Danger.png
   AssetGenImage get danger => const AssetGenImage('assets/icons/Danger.png');
@@ -28,13 +30,15 @@ class $AssetsIconsGen {
   AssetGenImage get danger2 => const AssetGenImage('assets/icons/Danger2.png');
 
   /// File path: assets/icons/Group (10).png
-  AssetGenImage get group10 => const AssetGenImage('assets/icons/Group (10).png');
+  AssetGenImage get group10 =>
+      const AssetGenImage('assets/icons/Group (10).png');
 
   /// File path: assets/icons/Mute (1).png
   AssetGenImage get mute1 => const AssetGenImage('assets/icons/Mute (1).png');
 
   /// File path: assets/icons/ReperMan.png
-  AssetGenImage get reperMan => const AssetGenImage('assets/icons/ReperMan.png');
+  AssetGenImage get reperMan =>
+      const AssetGenImage('assets/icons/ReperMan.png');
 
   /// File path: assets/icons/Speaker.png
   AssetGenImage get speaker => const AssetGenImage('assets/icons/Speaker.png');
@@ -52,10 +56,16 @@ class $AssetsIconsGen {
   AssetGenImage get array1 => const AssetGenImage('assets/icons/array1.png');
 
   /// File path: assets/icons/arraytow.png
-  AssetGenImage get arraytow => const AssetGenImage('assets/icons/arraytow.png');
+  AssetGenImage get arraytow =>
+      const AssetGenImage('assets/icons/arraytow.png');
 
   /// File path: assets/icons/audiocall_circle.png
-  AssetGenImage get audiocallCircle => const AssetGenImage('assets/icons/audiocall_circle.png');
+  AssetGenImage get audiocallCircle =>
+      const AssetGenImage('assets/icons/audiocall_circle.png');
+
+  /// File path: assets/icons/bank-of-america.png
+  AssetGenImage get bankOfAmerica =>
+      const AssetGenImage('assets/icons/bank-of-america.png');
 
   /// File path: assets/icons/calling.png
   AssetGenImage get calling => const AssetGenImage('assets/icons/calling.png');
@@ -67,7 +77,8 @@ class $AssetsIconsGen {
   AssetGenImage get chat2 => const AssetGenImage('assets/icons/chat2.png');
 
   /// File path: assets/icons/chat_circle.png
-  AssetGenImage get chatCircle => const AssetGenImage('assets/icons/chat_circle.png');
+  AssetGenImage get chatCircle =>
+      const AssetGenImage('assets/icons/chat_circle.png');
 
   /// File path: assets/icons/check.png
   AssetGenImage get check => const AssetGenImage('assets/icons/check.png');
@@ -76,7 +87,8 @@ class $AssetsIconsGen {
   AssetGenImage get clender => const AssetGenImage('assets/icons/clender.png');
 
   /// File path: assets/icons/community.png
-  AssetGenImage get community => const AssetGenImage('assets/icons/community.png');
+  AssetGenImage get community =>
+      const AssetGenImage('assets/icons/community.png');
 
   /// File path: assets/icons/deleat.png
   AssetGenImage get deleat => const AssetGenImage('assets/icons/deleat.png');
@@ -88,10 +100,12 @@ class $AssetsIconsGen {
   AssetGenImage get eddit => const AssetGenImage('assets/icons/eddit.png');
 
   /// File path: assets/icons/edit profile option.png
-  AssetGenImage get editProfileOption => const AssetGenImage('assets/icons/edit profile option.png');
+  AssetGenImage get editProfileOption =>
+      const AssetGenImage('assets/icons/edit profile option.png');
 
   /// File path: assets/icons/edit profile option12.png
-  AssetGenImage get editProfileOption12 => const AssetGenImage('assets/icons/edit profile option12.png');
+  AssetGenImage get editProfileOption12 =>
+      const AssetGenImage('assets/icons/edit profile option12.png');
 
   /// File path: assets/icons/eye-off-svgrepo-com.svg
   String get eyeOffSvgrepoCom => 'assets/icons/eye-off-svgrepo-com.svg';
@@ -106,10 +120,12 @@ class $AssetsIconsGen {
   AssetGenImage get eyeOpen => const AssetGenImage('assets/icons/eye_open.png');
 
   /// File path: assets/icons/flag_circle.png
-  AssetGenImage get flagCircle => const AssetGenImage('assets/icons/flag_circle.png');
+  AssetGenImage get flagCircle =>
+      const AssetGenImage('assets/icons/flag_circle.png');
 
   /// File path: assets/icons/google2png.png
-  AssetGenImage get google2png => const AssetGenImage('assets/icons/google2png.png');
+  AssetGenImage get google2png =>
+      const AssetGenImage('assets/icons/google2png.png');
 
   /// File path: assets/icons/home.png
   AssetGenImage get home => const AssetGenImage('assets/icons/home.png');
@@ -139,10 +155,12 @@ class $AssetsIconsGen {
   AssetGenImage get info => const AssetGenImage('assets/icons/info.png');
 
   /// File path: assets/icons/internet.png
-  AssetGenImage get internet => const AssetGenImage('assets/icons/internet.png');
+  AssetGenImage get internet =>
+      const AssetGenImage('assets/icons/internet.png');
 
   /// File path: assets/icons/location-marker.png
-  AssetGenImage get locationMarker => const AssetGenImage('assets/icons/location-marker.png');
+  AssetGenImage get locationMarker =>
+      const AssetGenImage('assets/icons/location-marker.png');
 
   /// File path: assets/icons/logout.png
   AssetGenImage get logout => const AssetGenImage('assets/icons/logout.png');
@@ -151,10 +169,12 @@ class $AssetsIconsGen {
   AssetGenImage get mail => const AssetGenImage('assets/icons/mail.png');
 
   /// File path: assets/icons/notification.png
-  AssetGenImage get notification => const AssetGenImage('assets/icons/notification.png');
+  AssetGenImage get notification =>
+      const AssetGenImage('assets/icons/notification.png');
 
   /// File path: assets/icons/notificatiosn.png
-  AssetGenImage get notificatiosn => const AssetGenImage('assets/icons/notificatiosn.png');
+  AssetGenImage get notificatiosn =>
+      const AssetGenImage('assets/icons/notificatiosn.png');
 
   /// File path: assets/icons/pamynt.png
   AssetGenImage get pamynt => const AssetGenImage('assets/icons/pamynt.png');
@@ -163,7 +183,8 @@ class $AssetsIconsGen {
   AssetGenImage get person => const AssetGenImage('assets/icons/person.png');
 
   /// File path: assets/icons/person_placeholder.png
-  AssetGenImage get personPlaceholder => const AssetGenImage('assets/icons/person_placeholder.png');
+  AssetGenImage get personPlaceholder =>
+      const AssetGenImage('assets/icons/person_placeholder.png');
 
   /// File path: assets/icons/phone.png
   AssetGenImage get phone => const AssetGenImage('assets/icons/phone.png');
@@ -184,22 +205,26 @@ class $AssetsIconsGen {
   AssetGenImage get profile => const AssetGenImage('assets/icons/profile.png');
 
   /// File path: assets/icons/riniging.png
-  AssetGenImage get riniging => const AssetGenImage('assets/icons/riniging.png');
+  AssetGenImage get riniging =>
+      const AssetGenImage('assets/icons/riniging.png');
 
   /// File path: assets/icons/search.png
   AssetGenImage get search => const AssetGenImage('assets/icons/search.png');
 
   /// File path: assets/icons/sentButton.png
-  AssetGenImage get sentButton => const AssetGenImage('assets/icons/sentButton.png');
+  AssetGenImage get sentButton =>
+      const AssetGenImage('assets/icons/sentButton.png');
 
   /// File path: assets/icons/settings.png
-  AssetGenImage get settings => const AssetGenImage('assets/icons/settings.png');
+  AssetGenImage get settings =>
+      const AssetGenImage('assets/icons/settings.png');
 
   /// File path: assets/icons/tast.png
   AssetGenImage get tast => const AssetGenImage('assets/icons/tast.png');
 
   /// File path: assets/icons/threedot.png
-  AssetGenImage get threedot => const AssetGenImage('assets/icons/threedot.png');
+  AssetGenImage get threedot =>
+      const AssetGenImage('assets/icons/threedot.png');
 
   /// File path: assets/icons/user.png
   AssetGenImage get user => const AssetGenImage('assets/icons/user.png');
@@ -208,7 +233,8 @@ class $AssetsIconsGen {
   AssetGenImage get varning => const AssetGenImage('assets/icons/varning.png');
 
   /// File path: assets/icons/videocall_circle.png
-  AssetGenImage get videocallCircle => const AssetGenImage('assets/icons/videocall_circle.png');
+  AssetGenImage get videocallCircle =>
+      const AssetGenImage('assets/icons/videocall_circle.png');
 
   /// List of all assets
   List<dynamic> get values => [
@@ -227,6 +253,7 @@ class $AssetsIconsGen {
         array1,
         arraytow,
         audiocallCircle,
+        bankOfAmerica,
         calling,
         chat,
         chat2,
@@ -285,64 +312,98 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   /// File path: assets/images/ImageTwo.png
-  AssetGenImage get imageTwo => const AssetGenImage('assets/images/ImageTwo.png');
+  AssetGenImage get imageTwo =>
+      const AssetGenImage('assets/images/ImageTwo.png');
 
   /// File path: assets/images/backgroud4.png
-  AssetGenImage get backgroud4 => const AssetGenImage('assets/images/backgroud4.png');
+  AssetGenImage get backgroud4 =>
+      const AssetGenImage('assets/images/backgroud4.png');
 
   /// File path: assets/images/backgroud5.png
-  AssetGenImage get backgroud5 => const AssetGenImage('assets/images/backgroud5.png');
+  AssetGenImage get backgroud5 =>
+      const AssetGenImage('assets/images/backgroud5.png');
 
   /// File path: assets/images/background.png
-  AssetGenImage get background => const AssetGenImage('assets/images/background.png');
+  AssetGenImage get background =>
+      const AssetGenImage('assets/images/background.png');
 
   /// File path: assets/images/background_1.png
-  AssetGenImage get background1 => const AssetGenImage('assets/images/background_1.png');
-
-  /// File path: assets/images/boy.png
-  AssetGenImage get boy => const AssetGenImage('assets/images/boy.png');
+  AssetGenImage get background1 =>
+      const AssetGenImage('assets/images/background_1.png');
 
   /// File path: assets/images/chat_screen_header_image.png
-  AssetGenImage get chatScreenHeaderImage => const AssetGenImage('assets/images/chat_screen_header_image.png');
+  AssetGenImage get chatScreenHeaderImage =>
+      const AssetGenImage('assets/images/chat_screen_header_image.png');
 
   /// File path: assets/images/empty_img.jpg
-  AssetGenImage get emptyImg => const AssetGenImage('assets/images/empty_img.jpg');
+  AssetGenImage get emptyImg =>
+      const AssetGenImage('assets/images/empty_img.jpg');
 
   /// File path: assets/images/imageFour.png
-  AssetGenImage get imageFour => const AssetGenImage('assets/images/imageFour.png');
+  AssetGenImage get imageFour =>
+      const AssetGenImage('assets/images/imageFour.png');
 
   /// File path: assets/images/imageOne.png
-  AssetGenImage get imageOne => const AssetGenImage('assets/images/imageOne.png');
+  AssetGenImage get imageOne =>
+      const AssetGenImage('assets/images/imageOne.png');
 
   /// File path: assets/images/imageThee.png
-  AssetGenImage get imageThee => const AssetGenImage('assets/images/imageThee.png');
+  AssetGenImage get imageThee =>
+      const AssetGenImage('assets/images/imageThee.png');
 
   /// File path: assets/images/mastercard with background.png
-  AssetGenImage get mastercardWithBackground => const AssetGenImage('assets/images/mastercard with background.png');
+  AssetGenImage get mastercardWithBackground =>
+      const AssetGenImage('assets/images/mastercard with background.png');
 
   /// File path: assets/images/matchimg.png
-  AssetGenImage get matchimg => const AssetGenImage('assets/images/matchimg.png');
+  AssetGenImage get matchimg =>
+      const AssetGenImage('assets/images/matchimg.png');
 
   /// File path: assets/images/payment_success.png
-  AssetGenImage get paymentSuccess => const AssetGenImage('assets/images/payment_success.png');
+  AssetGenImage get paymentSuccess =>
+      const AssetGenImage('assets/images/payment_success.png');
 
   /// File path: assets/images/paypal logo.png
-  AssetGenImage get paypalLogo => const AssetGenImage('assets/images/paypal logo.png');
+  AssetGenImage get paypalLogo =>
+      const AssetGenImage('assets/images/paypal logo.png');
 
   /// File path: assets/images/paypel with background.png
-  AssetGenImage get paypelWithBackground => const AssetGenImage('assets/images/paypel with background.png');
+  AssetGenImage get paypelWithBackground =>
+      const AssetGenImage('assets/images/paypel with background.png');
 
   /// File path: assets/images/profile_avatar.png
-  AssetGenImage get profileAvatar => const AssetGenImage('assets/images/profile_avatar.png');
+  AssetGenImage get profileAvatar =>
+      const AssetGenImage('assets/images/profile_avatar.png');
 
   /// File path: assets/images/splashImage.png
-  AssetGenImage get splashImage => const AssetGenImage('assets/images/splashImage.png');
+  AssetGenImage get splashImage =>
+      const AssetGenImage('assets/images/splashImage.png');
 
   /// File path: assets/images/visa with background.png
-  AssetGenImage get visaWithBackground => const AssetGenImage('assets/images/visa with background.png');
+  AssetGenImage get visaWithBackground =>
+      const AssetGenImage('assets/images/visa with background.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [imageTwo, backgroud4, backgroud5, background, background1, boy, chatScreenHeaderImage, emptyImg, imageFour, imageOne, imageThee, mastercardWithBackground, matchimg, paymentSuccess, paypalLogo, paypelWithBackground, profileAvatar, splashImage, visaWithBackground];
+  List<AssetGenImage> get values => [
+        imageTwo,
+        backgroud4,
+        backgroud5,
+        background,
+        background1,
+        chatScreenHeaderImage,
+        emptyImg,
+        imageFour,
+        imageOne,
+        imageThee,
+        mastercardWithBackground,
+        matchimg,
+        paymentSuccess,
+        paypalLogo,
+        paypelWithBackground,
+        profileAvatar,
+        splashImage,
+        visaWithBackground
+      ];
 }
 
 class $AssetsLottieGen {

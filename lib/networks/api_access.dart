@@ -43,8 +43,7 @@ import 'package:barlew_app/features/customer/auth/verify_email/data/rx_post_veri
 import 'package:barlew_app/features/customer/auth/verify_email/model/customer_otp_response_model.dart';
 import 'package:barlew_app/features/engineer/engineer_average_review/model/engineer_average_review_model.dart';
 import 'package:barlew_app/features/engineer/engineer_average_review/rx_get_Engineer_Average_review/rx.dart';
-import 'package:barlew_app/features/engineer/engineer_notifications/data/rx_notification/rx.dart';
-import 'package:barlew_app/features/engineer/engineer_notifications/model/notification_model.dart';
+
 import 'package:barlew_app/features/engineer/engineer_review/data/rx_get_Engineer_review/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_review/model/engineer_review_model.dart';
 import 'package:barlew_app/features/engineer/home/data/rx_get_engineer_accept_/rx.dart';
@@ -183,11 +182,6 @@ CustomerToEngineerRequestRX customerToEngineerRequestRXobj =
   empty: {},
   dataFetcher: BehaviorSubject<Map>(),
 );
-
-/// notification
-NotificationRX notificationRXobj = NotificationRX(
-    empty: NotificationModel(),
-    dataFetcher: BehaviorSubject<NotificationModel>());
 
 //Engineer Delete portfolio
 SubmitProblemRX submitProblemRXobj =

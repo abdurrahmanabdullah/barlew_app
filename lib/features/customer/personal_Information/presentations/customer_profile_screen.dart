@@ -8,7 +8,6 @@ import 'package:barlew_app/networks/api_access.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../helpers/all_routes.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -42,10 +41,10 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
           'Personal Information',
           style: TextStyle(color: Colors.black),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back, color: Colors.black),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
       ),
       backgroundColor: const Color(0xFFF5F5F5),
       body: Padding(
@@ -64,6 +63,11 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
                 child: Text("Snapshot has error"),
               );
             }
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text("Snapshot has error"),
+              );
+            }
             if (snapshot.hasData) {
               final profileSnap = snapshot.data?.data;
               return Column(
@@ -73,32 +77,35 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(150.r),
                             child: CachedNetworkImage(
-                              imageUrl: profileSnap?.avatar ?? "",
+                              imageUrl: profileSnap?.avatar ?? "N/A",
                               placeholder: (context, url) {
-                                return Shimmer.fromColors(
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                  direction: ShimmerDirection.ltr,
-                                  child: Container(
-                                    width: 100.w,
-                                    height: 100.h,
-                                    color: Colors.white,
-                                  ),
+                                return Image.asset(
+                                  Assets.images.profileAvatar.path,
+                                  height: 100.w,
+                                  width: 100.w,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                              errorWidget: (context, url, error) {
+                                return Image.asset(
+                                  Assets.images.profileAvatar.path,
+                                  height: 100.w,
+                                  width: 100.w,
+                                  fit: BoxFit.cover,
                                 );
                               },
                               width: 100.w,
-                              height: 100.h,
+                              height: 100.w,
                               fit: BoxFit.cover,
                             ),
                           )
-                        : Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            direction: ShimmerDirection.ltr,
-                            child: Container(
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(150.r),
+                            child: Image.asset(
+                              Assets.images.profileAvatar.path,
+                              height: 100.w,
                               width: 100.w,
-                              height: 100.h,
-                              color: Colors.white,
+                              fit: BoxFit.cover,
                             ),
                           ),
                   ),

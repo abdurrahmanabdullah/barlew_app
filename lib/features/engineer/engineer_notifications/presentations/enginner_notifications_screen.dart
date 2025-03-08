@@ -1,5 +1,7 @@
 import 'package:barlew_app/constant/text_font_style.dart';
-import 'package:barlew_app/features/engineer/engineer_notifications/model/notification_model.dart';
+
+import 'package:barlew_app/features/engineer/home/model/engineer_task_list_model.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
@@ -22,17 +24,18 @@ class _EngineerNotificationScreenState
   @override
   void initState() {
     super.initState();
-    apiCall();
+    tasklistapiCall();
   }
 
-  apiCall() async {
-    await notificationRXobj.notificationRX();
+  tasklistapiCall() async {
+    await engineerTaskListRXobj.engineerTaskListRX();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -43,8 +46,8 @@ class _EngineerNotificationScreenState
         ),
       ),
       backgroundColor: AppColors.cFFFFFF,
-      body: StreamBuilder<NotificationModel>(
-        stream: notificationRXobj.dataFetcher,
+      body: StreamBuilder<EngineerTaskResponseModel>(
+        stream: engineerTaskListRXobj.dataFetcher,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -62,24 +65,28 @@ class _EngineerNotificationScreenState
           }
 
           if (snapshot.hasData) {
+            final tasks = snapshot.data?.data ?? [];
             return ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 15),
-              itemCount: snapshot.data!.data!.length,
+              itemCount: tasks.length,
               itemBuilder: (_, index) {
-                final notification = snapshot.data!.data![index];
+                final task = tasks[index].discussionRequest;
+                final notificationTime =
+                    tasks[index].createdAt; // `createdAt` is likely DateTime?
 
-                // Determine the sender (user or engineer)
-                final sender = notification.userData ?? notification.engineer;
-                final senderName = sender is UserData
-                    ? sender.userName ?? "Unknown"
-                    : sender is Engineer
-                        ? sender.name ?? "Unknown"
-                        : "Unknown";
-
-                final avatarUrl = sender is UserData
-                    ? sender.avatar
-                    : null; // Avatar only for UserData
-
+                // Ensure the notificationTime is valid
+                final formattedTime = notificationTime != null
+                    ? timeago.format(
+                        notificationTime) // Format the DateTime with timeago
+                    : 'Unknown time';
+                final servicedescription =
+                    task?.description ?? 'No Title Available';
+                final userAvatar =
+                    task?.user?.avatar ?? Assets.icons.personPlaceholder.path;
+                final user = task?.user;
+                final userName =
+                    "${user?.firstName ?? 'Unknown'} ${user?.lastName ?? ''}"
+                        .trim();
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -90,11 +97,11 @@ class _EngineerNotificationScreenState
                           Stack(
                             children: [
                               CircleAvatar(
-                                backgroundImage:
-                                    avatarUrl != null && avatarUrl.isNotEmpty
-                                        ? NetworkImage(avatarUrl)
-                                        : AssetImage(Assets.images.boy.path)
-                                            as ImageProvider,
+                                backgroundImage: userAvatar.isNotEmpty
+                                    ? NetworkImage(userAvatar)
+                                    : AssetImage(
+                                            Assets.images.profileAvatar.path)
+                                        as ImageProvider,
                                 radius: 25,
                               ),
                               const Positioned(
@@ -113,14 +120,14 @@ class _EngineerNotificationScreenState
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  senderName,
+                                  userName,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextFontStyle.text145192A48w500roboto,
                                 ),
                                 UIHelper.verticalSpace(5),
                                 Text(
-                                  notification.message ?? '',
+                                  servicedescription,
                                   textAlign: TextAlign.justify,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 3,
@@ -136,7 +143,7 @@ class _EngineerNotificationScreenState
                     Expanded(
                       flex: 1,
                       child: Text(
-                        notification.time ?? '',
+                        formattedTime,
                         overflow: TextOverflow.ellipsis,
                         style: TextFontStyle.text12cAFB3BCw400roboto,
                       ),

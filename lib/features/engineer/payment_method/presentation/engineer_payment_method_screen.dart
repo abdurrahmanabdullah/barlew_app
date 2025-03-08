@@ -40,6 +40,7 @@ class _EngineerPaymentMethodScreenState
     );
   }
 
+  @override
   void initState() {
     super.initState();
     apiCall();
@@ -83,10 +84,10 @@ class _EngineerPaymentMethodScreenState
             }
 
             if (snapshot.hasData) {
-              final Bankdata = snapshot.data!.data;
-              final bankDetails = snapshot.data!.message?.first;
-              final accountNumber =
-                  bankDetails?.accountNumber ?? "Account number not available";
+              // final Bankdata = snapshot.data!.data;
+              // final bankDetails = snapshot.data!.message?.first;
+              // final accountNumber =
+              //     bankDetails?.accountNumber ?? "Account number not available";
 
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -105,9 +106,9 @@ class _EngineerPaymentMethodScreenState
                       ),
                       UIHelper.verticalSpace(50.h),
                       PaymentMethodContainer(
-                        logo: Assets.images.paypelWithBackground.path,
-                        cardNumber: "****  ****  ****  5963",
-                        validate: "Expires 09/30",
+                        logo: Assets.icons.bankOfAmerica.path,
+                        // cardNumber: "****  ****  ****  5963",
+                        // validate: "Expires 09/30",
                         containerColor: provider.selectedPaymentMethodIndex == 0
                             ? Colors.transparent
                             : AppColors.cFFFFFF,
@@ -123,8 +124,8 @@ class _EngineerPaymentMethodScreenState
                       UIHelper.verticalSpace(16.h),
                       PaymentMethodContainer(
                         logo: Assets.images.visaWithBackground.path,
-                        cardNumber: accountNumber,
-                        validate: "Expires 09/30",
+                        // cardNumber: accountNumber,
+                        // validate: "Expires 09/30",
                         containerColor: provider.selectedPaymentMethodIndex == 1
                             ? Colors.transparent
                             : AppColors.cFFFFFF,
@@ -140,8 +141,8 @@ class _EngineerPaymentMethodScreenState
                       UIHelper.verticalSpace(16.h),
                       PaymentMethodContainer(
                         logo: Assets.images.mastercardWithBackground.path,
-                        cardNumber: "****  ****  ****  5963",
-                        validate: "Expires 09/30",
+                        // cardNumber: "****  ****  ****  5963",
+                        // validate: "Expires 09/30",
                         containerColor: provider.selectedPaymentMethodIndex == 2
                             ? Colors.transparent
                             : AppColors.cFFFFFF,

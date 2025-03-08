@@ -39,7 +39,7 @@ final class EngineerBankDetailsApi {
       // Check if the response is successful
       if (response.statusCode == 200) {
         final data = json.decode(json.encode(response.data));
-        ToastUtil.showShortToast("Profile Updated Successfully");
+
         return data;
       } else {
         throw DataSource.DEFAULT.getFailure();

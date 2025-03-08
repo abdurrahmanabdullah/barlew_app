@@ -18,7 +18,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-       scrolledUnderElevation: 0,
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
         automaticallyImplyLeading: false,
@@ -31,72 +31,74 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          itemCount: 11,
-          itemBuilder: (_,indext){
-        return    Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 4,
-              child: Row(
-                children: [
-                  Stack(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage(Assets.images.boy.path),
-                        radius: 25,
-                      ),
-                      const Positioned(
-                        right: 0, // Adjusted for better alignment
-                        top: 0, // Position at bottom-right
-                        child: CircleAvatar(
-                          radius: 7,
-                          backgroundColor: AppColors.c35BA0C,
-                        ),
-                      ),
-                    ],
-                  ),
-                  UIHelper.horizontalSpace(11.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        scrollDirection: Axis.vertical,
+        itemCount: 11,
+        itemBuilder: (_, indext) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 4,
+                child: Row(
+                  children: [
+                    Stack(
                       children: [
-                        Text(
-                          'Ralph Edwards',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextFontStyle.text145192A48w500roboto,
+                        CircleAvatar(
+                          backgroundImage:
+                              AssetImage(Assets.images.profileAvatar.path),
+                          radius: 25,
                         ),
-                        UIHelper.verticalSpace(5.h),
-                        Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elitdolor sit amet, consectetur adipiscing elit.0 hi my name  ',
-                          textAlign: TextAlign.justify,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 4,
-                          style: TextFontStyle.text11c9499A6w400roboto,
+                        const Positioned(
+                          right: 0, // Adjusted for better alignment
+                          top: 0, // Position at bottom-right
+                          child: CircleAvatar(
+                            radius: 7,
+                            backgroundColor: AppColors.c35BA0C,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    UIHelper.horizontalSpace(11.w),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Ralph Edwards',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextFontStyle.text145192A48w500roboto,
+                          ),
+                          UIHelper.verticalSpace(5.h),
+                          Text(
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elitdolor sit amet, consectetur adipiscing elit.0 hi my name  ',
+                            textAlign: TextAlign.justify,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 4,
+                            style: TextFontStyle.text11c9499A6w400roboto,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            UIHelper.horizontalSpace(18.w),
-            Expanded(
-              flex: 1,
-              child: Text(
-                '26/9/2024',
-                overflow: TextOverflow.ellipsis,
-                style: TextFontStyle.text12cAFB3BCw400roboto,
+              UIHelper.horizontalSpace(18.w),
+              Expanded(
+                flex: 1,
+                child: Text(
+                  '26/9/2024',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextFontStyle.text12cAFB3BCw400roboto,
+                ),
               ),
-            ),
-          ],
-        );
-      }, separatorBuilder: (BuildContext context, int index) {
+            ],
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
           return UIHelper.verticalSpace(15.h);
-      },),
-
+        },
+      ),
     );
   }
 }

@@ -95,7 +95,7 @@ class _EngineerPersonalInfoScreenState
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
-                                Assets.images.boy
+                                Assets.images.profileAvatar
                                     .path, // Default image in case of error
                                 width: 60.w,
                                 height: 60.h,

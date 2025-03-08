@@ -70,15 +70,11 @@ class _EngineerDrawerState extends State<EngineerDrawer> {
 
                             return ClipOval(
                               child: profile?.avatar == null
-                                  ? Shimmer.fromColors(
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.grey[100]!,
-                                      direction: ShimmerDirection.ltr,
-                                      child: Container(
-                                        width: 50.w,
-                                        height: 50.h,
-                                        color: Colors.white,
-                                      ),
+                                  ? Image.asset(
+                                      Assets.images.profileAvatar.path,
+                                      width: 50.w,
+                                      height: 50.h,
+                                      fit: BoxFit.cover,
                                     )
                                   : CachedNetworkImage(
                                       width: 50.w,

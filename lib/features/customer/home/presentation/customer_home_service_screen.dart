@@ -9,9 +9,11 @@ import 'package:barlew_app/helpers/all_routes.dart';
 import 'package:barlew_app/helpers/navigation_service.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:barlew_app/networks/api_access.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});
@@ -70,9 +72,45 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 GlobalProfile.email = snapshot.data?.data?.email;
                 GlobalProfile.avatar = snapshot.data?.data?.avatar;
 
-                return CircleAvatar(
-                  backgroundImage: NetworkImage(snapshot.data!.data!.avatar!),
+                String profileImageUrl = snapshot.data?.data?.avatar ?? "";
+                return ClipOval(
+                  // ignore: unnecessary_null_comparison
+                  child: profileImageUrl == null
+                      ? Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          direction: ShimmerDirection.ltr,
+                          child: Container(
+                            width: 70.w, // Reduced width
+                            // Reduced height
+                            color: Colors.white,
+                          ),
+                        )
+                      : CachedNetworkImage(
+                          width: 60.w, // Reduced width
+                          // Reduced height
+                          imageUrl: profileImageUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            direction: ShimmerDirection.ltr,
+                            child: Container(
+                              width: 50.w,
+                              color: Colors.white,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.person,
+                            size: 35.sp, // Match icon size
+                          ),
+                          fadeInDuration: const Duration(milliseconds: 500),
+                        ),
                 );
+                // return
+                //  CircleAvatar(
+                //   backgroundImage: NetworkImage(snapshot.data!.data!.avatar!),
+                // );
               } else {
                 return const Center(
                   child: Text(

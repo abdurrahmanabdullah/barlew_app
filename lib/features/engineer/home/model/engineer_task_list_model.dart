@@ -44,7 +44,7 @@ class Datum {
   int? id;
   int? requestId;
   int? engineerId;
-  Status? status;
+  String? status;
   DateTime? createdAt;
   DateTime? updatedAt;
   DiscussionRequest? discussionRequest;
@@ -67,7 +67,7 @@ class Datum {
         id: json["id"],
         requestId: json["request_id"],
         engineerId: json["engineer_id"],
-        status: statusValues.map[json["status"]]!,
+        status: json["status"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -83,7 +83,7 @@ class Datum {
         "id": id,
         "request_id": requestId,
         "engineer_id": engineerId,
-        "status": statusValues.reverse[status],
+        "status": status,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "discussion_request": discussionRequest?.toJson(),
@@ -95,14 +95,15 @@ class DiscussionRequest {
   int? userId;
   dynamic engineerId;
   int? serviceId;
-  ServiceTitle? serviceTitle;
+  String? serviceTitle;
   String? price;
-  Status? status;
+  String? status;
   List<QuestionAnswer>? questionAnswer;
-  List<String>? images;
+  dynamic images;
   String? description;
   DateTime? createdAt;
   DateTime? updatedAt;
+  User? user;
 
   DiscussionRequest({
     this.id,
@@ -117,6 +118,7 @@ class DiscussionRequest {
     this.description,
     this.createdAt,
     this.updatedAt,
+    this.user,
   });
 
   factory DiscussionRequest.fromRawJson(String str) =>
@@ -130,16 +132,14 @@ class DiscussionRequest {
         userId: json["user_id"],
         engineerId: json["engineer_id"],
         serviceId: json["service_id"],
-        serviceTitle: serviceTitleValues.map[json["service_title"]]!,
+        serviceTitle: json["service_title"],
         price: json["price"],
-        status: statusValues.map[json["status"]]!,
+        status: json["status"],
         questionAnswer: json["question_answer"] == null
             ? []
             : List<QuestionAnswer>.from(json["question_answer"]!
                 .map((x) => QuestionAnswer.fromJson(x))),
-        images: json["images"] == null
-            ? []
-            : List<String>.from(json["images"]!.map((x) => x)),
+        images: json["images"],
         description: json["description"],
         createdAt: json["created_at"] == null
             ? null
@@ -147,6 +147,7 @@ class DiscussionRequest {
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -154,23 +155,23 @@ class DiscussionRequest {
         "user_id": userId,
         "engineer_id": engineerId,
         "service_id": serviceId,
-        "service_title": serviceTitleValues.reverse[serviceTitle],
+        "service_title": serviceTitle,
         "price": price,
-        "status": statusValues.reverse[status],
+        "status": status,
         "question_answer": questionAnswer == null
             ? []
             : List<dynamic>.from(questionAnswer!.map((x) => x.toJson())),
-        "images":
-            images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+        "images": images,
         "description": description,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
+        "user": user?.toJson(),
       };
 }
 
 class QuestionAnswer {
   String? question;
-  String? answer;
+  Answer? answer;
 
   QuestionAnswer({
     this.question,
@@ -184,30 +185,78 @@ class QuestionAnswer {
 
   factory QuestionAnswer.fromJson(Map<String, dynamic> json) => QuestionAnswer(
         question: json["question"],
-        answer: json["answer"],
+        answer: answerValues.map[json["answer"]]!,
       );
 
   Map<String, dynamic> toJson() => {
         "question": question,
-        "answer": answer,
+        "answer": answerValues.reverse[answer],
       };
 }
 
-enum ServiceTitle { BOILER_FAULT, BOILER_PRESSURE, LEAK }
+enum Answer { ANSWER_1, FUNCTIONAL, WITHIN_THE_LAST_YEAR }
 
-final serviceTitleValues = EnumValues({
-  "Boiler Fault": ServiceTitle.BOILER_FAULT,
-  "Boiler Pressure": ServiceTitle.BOILER_PRESSURE,
-  "Leak": ServiceTitle.LEAK
+final answerValues = EnumValues({
+  "answer 1": Answer.ANSWER_1,
+  "Functional": Answer.FUNCTIONAL,
+  "Within the last year": Answer.WITHIN_THE_LAST_YEAR
 });
 
-enum Status { ACCEPTED, DENIED, PENDING }
+class User {
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? service;
+  String? about;
+  String? avatar;
+  String? address;
+  String? role;
+  String? name;
 
-final statusValues = EnumValues({
-  "accepted": Status.ACCEPTED,
-  "denied": Status.DENIED,
-  "pending": Status.PENDING
-});
+  User({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.service,
+    this.about,
+    this.avatar,
+    this.address,
+    this.role,
+    this.name,
+  });
+
+  factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["id"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        email: json["email"],
+        service: json["service"],
+        about: json["about"],
+        avatar: json["avatar"],
+        address: json["address"],
+        role: json["role"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "service": service,
+        "about": about,
+        "avatar": avatar,
+        "address": address,
+        "role": role,
+        "name": name,
+      };
+}
 
 class Pagination {
   int? currentPage;
@@ -217,7 +266,7 @@ class Pagination {
   String? firstPageUrl;
   String? lastPageUrl;
   String? nextPageUrl;
-  dynamic prevPageUrl;
+  String? prevPageUrl;
   int? from;
   int? to;
   String? path;

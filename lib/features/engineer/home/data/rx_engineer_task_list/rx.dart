@@ -26,8 +26,8 @@ final class EngineerTaskListRX
     } catch (error) {
       // Handle the error locally and return a fallback response
       if (error is DioException) {
-        ToastUtil.showShortToast(
-            error.response!.data["message"] ?? "Unknown error");
+        // ToastUtil.showShortToast(
+        //     error.response!.data["message"] ?? "Unknown error");
       }
       log(error.toString());
     }
