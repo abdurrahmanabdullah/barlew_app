@@ -4,7 +4,6 @@ import 'package:barlew_app/constant/text_font_style.dart';
 
 import 'package:barlew_app/features/engineer/home/model/engineer_task_list_model.dart';
 import 'package:barlew_app/features/engineer/home/presentatiosn/widget/engineer_drawer.dart';
-import 'package:barlew_app/features/engineer/personal_information/model/engineer_profile_model.dart';
 import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/di.dart';
@@ -28,6 +27,9 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
   String? engineerId;
   bool declineisLoading = false;
   bool acceptisLoading = false;
+  String? profileImageUrl;
+  String? firstName;
+  String? lastName;
   @override
   void initState() {
     super.initState();
@@ -41,7 +43,18 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
 
   /// Fetch engineer profile data
   apiCall() async {
-    await engineerProfileRXObj.engineerProfileRX();
+    try {
+      final profileData = await engineerProfileRXObj.engineerProfileRX();
+
+      setState(() {
+        profileImageUrl = profileData?.data?.avatar;
+        firstName = profileData?.data?.firstName;
+        lastName = profileData?.data?.lastName;
+      });
+      appData.write(kUserRole, profileData!.data!.role);
+    } catch (e) {
+      print("Error  fetching profile data: $e");
+    }
   }
 
   /// get method
@@ -88,87 +101,131 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         iconTheme: const IconThemeData(color: AppColors.cFFFFFF),
         toolbarHeight: 100.h, // Keep AppBar height large
         actions: [
-          StreamBuilder<EngineerProfileModel>(
-              stream: engineerProfileRXObj.dataFetcher,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: SpinKitCircle(
-                      color: AppColors.allPrimaryColor,
-                      size: 50.0,
-                    ),
-                  );
-                }
-                if (snapshot.hasError) {
-                  return Center(
-                      child: Text(
-                          "snapshot has error: {$snapshot.error.tostring()}"));
-                }
-
-                if (snapshot.hasData) {
-                  appData.write(kUserRole, snapshot.data!.data!.role);
-                  final profileImageUrl = snapshot.data!.data!.avatar;
-
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(150.r),
-                    child: CachedNetworkImage(
-                      imageUrl: profileImageUrl ?? "N/A",
-                      placeholder: (context, url) {
-                        return Image.asset(
-                          Assets.images.profileAvatar.path,
-                          height: 50.w,
-                          width: 50.w,
-                          fit: BoxFit.cover,
-                        );
-                      },
-                      errorWidget: (context, url, error) {
-                        return Image.asset(
-                          Assets.images.profileAvatar.path,
-                          height: 50.w,
-                          width: 50.w,
-                          fit: BoxFit.cover,
-                        );
-                      },
-                      width: 50.w,
-                      height: 50.w,
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: ClipOval(
+              child: profileImageUrl == null
+                  ? Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      direction: ShimmerDirection.ltr,
+                      child: Container(
+                        width: 70.w, // Reduced width
+                        // Reduced height
+                        color: Colors.white,
+                      ),
+                    )
+                  : CachedNetworkImage(
+                      width: 70.w, // Reduced width
+                      // Reduced height
+                      imageUrl: profileImageUrl!,
                       fit: BoxFit.cover,
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        direction: ShimmerDirection.ltr,
+                        child: Container(
+                          width: 50.w,
+                          color: Colors.white,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.person,
+                        size: 35.sp, // Match icon size
+                      ),
+                      fadeInDuration: const Duration(milliseconds: 500),
                     ),
-                  );
-                  // return ClipRRect(
-                  //   borderRadius: BorderRadius.circular(150.r),
-                  //   child: profileImageUrl == null
-                  //       ? Image.asset(Assets.images.profileAvatar.path)
-                  //       : CachedNetworkImage(
-                  //           height: 50.w,
-                  //           width: 50.w,
-                  //           imageUrl: profileImageUrl,
-                  //           fit: BoxFit.cover,
-                  //           placeholder: (context, url) => Shimmer.fromColors(
-                  //             baseColor: Colors.grey[300]!,
-                  //             highlightColor: Colors.grey[100]!,
-                  //             direction: ShimmerDirection.ltr,
-                  //             child: Container(
-                  //               width: 50.w,
-                  //               color: Colors.white,
-                  //             ),
-                  //           ),
-                  //           errorWidget: (context, url, error) =>
-                  //               Image.asset(Assets.images.profileAvatar.path),
-                  //           fadeInDuration: const Duration(milliseconds: 500),
-                  //         ),
-                  // );
-                } else {
-                  return const Center(
-                    child: Text(
-                      'Error: No data',
-                    ),
-                  );
-                }
-              }),
+            ),
+          ),
           UIHelper.horizontalSpace(20.w),
         ],
         backgroundColor: AppColors.allPrimaryColor,
       ),
+      // appBar: AppBar(
+      //   iconTheme: const IconThemeData(color: AppColors.cFFFFFF),
+      //   toolbarHeight: 100.h, // Keep AppBar height large
+      //   actions: [
+      //     StreamBuilder<EngineerProfileModel>(
+      //         stream: engineerProfileRXObj.dataFetcher,
+      //         builder: (context, snapshot) {
+      //           if (snapshot.connectionState == ConnectionState.waiting) {
+      //             return const Center(
+      //               child: SpinKitCircle(
+      //                 color: AppColors.allPrimaryColor,
+      //                 size: 50.0,
+      //               ),
+      //             );
+      //           }
+      //           if (snapshot.hasError) {
+      //             return Center(
+      //                 child: Text(
+      //                     "snapshot has error: {$snapshot.error.tostring()}"));
+      //           }
+
+      //           if (snapshot.hasData) {
+      //             appData.write(kUserRole, snapshot.data!.data!.role);
+      //             final profileImageUrl = snapshot.data!.data!.avatar;
+
+      //             return ClipRRect(
+      //               borderRadius: BorderRadius.circular(150.r),
+      //               child: CachedNetworkImage(
+      //                 imageUrl: profileImageUrl ?? "N/A",
+      //                 placeholder: (context, url) {
+      //                   return Image.asset(
+      //                     Assets.images.profileAvatar.path,
+      //                     height: 50.w,
+      //                     width: 50.w,
+      //                     fit: BoxFit.cover,
+      //                   );
+      //                 },
+      //                 errorWidget: (context, url, error) {
+      //                   return Image.asset(
+      //                     Assets.images.profileAvatar.path,
+      //                     height: 50.w,
+      //                     width: 50.w,
+      //                     fit: BoxFit.cover,
+      //                   );
+      //                 },
+      //                 width: 50.w,
+      //                 height: 50.w,
+      //                 fit: BoxFit.cover,
+      //               ),
+      //             );
+      //             // return ClipRRect(
+      //             //   borderRadius: BorderRadius.circular(150.r),
+      //             //   child: profileImageUrl == null
+      //             //       ? Image.asset(Assets.images.profileAvatar.path)
+      //             //       : CachedNetworkImage(
+      //             //           height: 50.w,
+      //             //           width: 50.w,
+      //             //           imageUrl: profileImageUrl,
+      //             //           fit: BoxFit.cover,
+      //             //           placeholder: (context, url) => Shimmer.fromColors(
+      //             //             baseColor: Colors.grey[300]!,
+      //             //             highlightColor: Colors.grey[100]!,
+      //             //             direction: ShimmerDirection.ltr,
+      //             //             child: Container(
+      //             //               width: 50.w,
+      //             //               color: Colors.white,
+      //             //             ),
+      //             //           ),
+      //             //           errorWidget: (context, url, error) =>
+      //             //               Image.asset(Assets.images.profileAvatar.path),
+      //             //           fadeInDuration: const Duration(milliseconds: 500),
+      //             //         ),
+      //             // );
+      //           } else {
+      //             return const Center(
+      //               child: Text(
+      //                 'Error: No data',
+      //               ),
+      //             );
+      //           }
+      //         }),
+      //     UIHelper.horizontalSpace(20.w),
+      //   ],
+      //   backgroundColor: AppColors.allPrimaryColor,
+      // ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: StreamBuilder<EngineerTaskResponseModel>(
