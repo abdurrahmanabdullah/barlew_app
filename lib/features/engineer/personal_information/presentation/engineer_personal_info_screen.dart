@@ -83,6 +83,7 @@ class _EngineerPersonalInfoScreenState
                     child: Column(
                       children: [
                         UIHelper.verticalSpace(85.h),
+                        //<<---------------------- profile Img ------------------------>>
                         Center(
                             child: ClipRRect(
                           borderRadius: BorderRadius.circular(150.r),

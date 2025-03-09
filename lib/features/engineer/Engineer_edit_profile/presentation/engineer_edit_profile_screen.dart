@@ -38,7 +38,7 @@ class _EngineerEditProfileScreenState extends State<EngineerEditProfileScreen> {
   final ImagePicker _picker = ImagePicker();
   final ImagePicker portfoliopicked = ImagePicker();
   final List<File> _portfolioImages = [];
-  late final engineerEditProfileProvider;
+  late EngineerEditProfileProvider engineerEditProfileProvider;
 
   @override
   void dispose() {
@@ -160,7 +160,9 @@ class _EngineerEditProfileScreenState extends State<EngineerEditProfileScreen> {
             }
 
             if (snapshot.hasError) {
-              return const Center(child: Text("Error loading profile data"));
+              return Center(
+                  child:
+                      Text("snapshot has error :{$snapshot.error.toString()}"));
             }
 
             if (snapshot.hasData) {
@@ -227,7 +229,7 @@ class _EngineerEditProfileScreenState extends State<EngineerEditProfileScreen> {
                                 backgroundImage: _selectedProfileImage != null
                                     ? FileImage(File(_selectedProfileImage!
                                         .path)) // Ensure it uses the correct path
-                                    : (profileImageUrl!.isNotEmpty)
+                                    : (profileImageUrl.isNotEmpty)
                                         ? NetworkImage(profileImageUrl)
                                         : AssetImage(Assets
                                             .icons.personPlaceholder.path),
@@ -551,25 +553,5 @@ class _EngineerEditProfileScreenState extends State<EngineerEditProfileScreen> {
             }
           }),
     );
-  }
-}
-
-///------------------provider
-
-class DataEntryProvider extends ChangeNotifier {
-  List<String> allVillageList = [];
-  String selectedValue = "";
-  int count = 0;
-
-  void selectedvillegeTab(String newValue) {
-    selectedValue = newValue;
-    count++;
-    notifyListeners();
-  }
-
-  bool isHide = false;
-  void isTab() {
-    isHide = !isHide;
-    notifyListeners();
   }
 }

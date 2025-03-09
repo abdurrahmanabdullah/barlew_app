@@ -1,10 +1,9 @@
 import 'package:barlew_app/constant/text_font_style.dart';
+import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../gen/assets.gen.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});

@@ -1,5 +1,6 @@
 import 'package:barlew_app/features/customer/home/presentation/customer_home_service_screen.dart';
-import 'package:barlew_app/features/notification/presentations/notification_screen.dart';
+import 'package:barlew_app/features/customer/notification/presentations/notification_screen.dart';
+
 import 'package:barlew_app/features/customer/personal_Information/presentations/customer_profile_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../gen/assets.gen.dart';

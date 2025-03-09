@@ -171,7 +171,7 @@ class DiscussionRequest {
 
 class QuestionAnswer {
   String? question;
-  Answer? answer;
+  String? answer;
 
   QuestionAnswer({
     this.question,
@@ -185,22 +185,14 @@ class QuestionAnswer {
 
   factory QuestionAnswer.fromJson(Map<String, dynamic> json) => QuestionAnswer(
         question: json["question"],
-        answer: answerValues.map[json["answer"]]!,
+        answer: json["answer"],
       );
 
   Map<String, dynamic> toJson() => {
         "question": question,
-        "answer": answerValues.reverse[answer],
+        "answer": answer,
       };
 }
-
-enum Answer { ANSWER_1, FUNCTIONAL, WITHIN_THE_LAST_YEAR }
-
-final answerValues = EnumValues({
-  "answer 1": Answer.ANSWER_1,
-  "Functional": Answer.FUNCTIONAL,
-  "Within the last year": Answer.WITHIN_THE_LAST_YEAR
-});
 
 class User {
   int? id;
@@ -265,8 +257,8 @@ class Pagination {
   int? total;
   String? firstPageUrl;
   String? lastPageUrl;
-  String? nextPageUrl;
-  String? prevPageUrl;
+  dynamic nextPageUrl;
+  dynamic prevPageUrl;
   int? from;
   int? to;
   String? path;
@@ -317,16 +309,4 @@ class Pagination {
         "to": to,
         "path": path,
       };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

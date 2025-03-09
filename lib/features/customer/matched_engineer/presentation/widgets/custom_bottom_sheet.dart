@@ -121,10 +121,29 @@ class _CustomBottomSheetTwoState extends State<CustomBottomSheetTwo> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const SpinKitCircle(
-                            color: AppColors.allPrimaryColor,
-                            size: 50.0,
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 50.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "service fee ",
+                                  style: TextFontStyle.text15cFFFFFF500,
+                                ),
+                                const Spacer(), // This is fine since Spacer() is a constant
+                                Text(
+                                  "120",
+                                  style: TextFontStyle
+                                      .text15cFFFFFF500, // Removed `const`
+                                ),
+                              ],
+                            ),
                           );
+
+                          // return const SpinKitCircle(
+                          //   color: AppColors.allPrimaryColor,
+                          //   size: 50.0,
+                          // );
                         }
                         if (snapshot.hasError) {
                           return const Center(

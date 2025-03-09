@@ -90,7 +90,7 @@ class _CustomerLogoutBottomSheetState extends State<CustomerLogoutBottomSheet> {
                                 _isLoading = true;
                               });
                               NavigationService.navigateToUntilReplacement(
-                                  Routes.loginScreen);
+                                  Routes.onboardScreen);
                             } else {
                               setState(() {
                                 _isLoading = true;

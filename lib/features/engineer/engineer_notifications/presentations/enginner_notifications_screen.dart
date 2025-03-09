@@ -59,8 +59,8 @@ class _EngineerNotificationScreenState
           }
 
           if (snapshot.hasError) {
-            return const Center(
-              child: Text("Error loading notifications"),
+            return Center(
+              child: Text("snapshot hass error ${snapshot.error.toString()}"),
             );
           }
 

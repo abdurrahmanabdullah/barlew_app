@@ -1,62 +1,3 @@
-// import 'dart:convert';
-// import 'dart:io';
-// import 'package:barlew_app/helpers/toast.dart';
-// import 'package:barlew_app/networks/endpoint.dart';
-// import 'package:barlew_app/networks/exception_handler/data_source.dart';
-// import 'package:dio/dio.dart';
-// import 'package:image_picker/image_picker.dart';
-// import '../../../../../networks/dio/dio.dart';
-
-// final class EngineerEditProfileApi {
-//   static final EngineerEditProfileApi _singleton =
-//       EngineerEditProfileApi._internal();
-//   EngineerEditProfileApi._internal();
-//   static EngineerEditProfileApi get instance => _singleton;
-
-//   Future<Map> engineerEditProfileApi({
-//     required String firstName,
-//     required String lastName,
-//     required String service,
-//     required String about,
-//     required List<int> skills,
-//     XFile? avatar,
-//   }) async {
-//     try {
-//       FormData data = FormData.fromMap({
-//         "first_name": firstName,
-//         "last_name": lastName,
-//         "service": service,
-//         "about": about,
-//         "skills": skills,
-//       }
-
-//       );
-
-//       if (avatar != null && await File(avatar.path).exists()) {
-//         data.files.add(
-//           MapEntry(
-//             'avatar',
-//             await MultipartFile.fromFile(avatar.path),
-//           ),
-//         );
-//       }
-//       Response response =
-//           await postHttp(Endpoints.engineerProfileUpdateEndpoint(), data);
-
-//       if (response.statusCode == 200) {
-//         final data = json.decode(json.encode(response.data));
-//         ToastUtil.showShortToast("Profile Updated Successfully");
-//         return data;
-//       } else {
-//         throw DataSource.DEFAULT.getFailure();
-//       }
-//     } catch (error) {
-//       // Handle generic errors
-//       rethrow;
-//     }
-//   }
-// }
-///---------------------
 import 'dart:convert';
 import 'dart:io';
 import 'package:barlew_app/helpers/toast.dart';
@@ -64,7 +5,7 @@ import 'package:barlew_app/networks/endpoint.dart';
 import 'package:barlew_app/networks/exception_handler/data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../../networks/dio/dio.dart';
+import '../../../../../../networks/dio/dio.dart';
 
 final class EngineerEditProfileApi {
   static final EngineerEditProfileApi _singleton =

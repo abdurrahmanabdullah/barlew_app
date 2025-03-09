@@ -8,10 +8,11 @@ import 'package:barlew_app/features/customer/chat/presentation/messenging_screen
 import 'package:barlew_app/features/customer/customer_review/widget/report_bottom_sheet.dart';
 import 'package:barlew_app/features/customer/engineer_level/presentation/engineer_level_screen.dart';
 import 'package:barlew_app/features/customer/matched_engineer/presentation/matched_engineer_screen.dart';
+import 'package:barlew_app/features/customer/notification/presentations/notification_screen.dart';
 
 import 'package:barlew_app/features/customer/waiting_screen/presentation/waiting_screen.dart';
 import 'package:barlew_app/features/engineer/Income_history/presentations/Income_history_screen.dart';
-import 'package:barlew_app/features/engineer/Engineer_edit_profile/presentation/engineer_edit_profile_screen.dart';
+import 'package:barlew_app/features/engineer/engineer_edit_profile/presentation/engineer_edit_profile_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/create_new_password/engineer_create_new_pass_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_forget_password/presentations/engineer_forgot_password_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_login/presentation/engineer_login_screen.dart';
@@ -31,6 +32,7 @@ import 'package:barlew_app/features/customer/payment_method/presentation/payment
 import 'package:barlew_app/features/customer/payment_success/presentation/payment_success_screen.dart';
 import 'package:barlew_app/features/customer/customer_review/presentation/customer_review_screen.dart';
 import 'package:barlew_app/features/engineer/withdraw_success/presentation/withdraw_success_screen.dart';
+import 'package:barlew_app/onboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import '../features/customer/auth/create_new_password/presentation/create_new_password.dart';
 import '../features/customer/auth/forgot_password/presentation/forgot_password_screen.dart';
@@ -42,7 +44,7 @@ import '../features/customer/edit_profile/presentations/edit_profile_screen.dart
 import '../features/customer/history_details/presentations/history_details_screen.dart';
 
 import '../features/customer_navigations_bar/presentations/navigations_bar_screen.dart';
-import '../features/notification/presentations/notification_screen.dart';
+
 import '../features/customer/problmes/presentatiosn/problmes_screen.dart';
 import '../features/customer/questions_page/presentations/questions_page_screen.dart';
 
@@ -345,14 +347,6 @@ final class RouteGenerator {
             : CupertinoPageRoute(
                 builder: (context) => const NavigationsBarScreen());
 
-      case Routes.notificationScreen:
-        return Platform.isAndroid
-            ? _FadedTransitionRoute(
-                widget: const ScreenTitle(widget: NotificationScreen()),
-                settings: settings)
-            : CupertinoPageRoute(
-                builder: (context) => const NotificationScreen());
-
       case Routes.editProfileScreen:
         final args = settings.arguments as Map;
         return Platform.isAndroid
@@ -390,7 +384,13 @@ final class RouteGenerator {
                 settings: settings)
             : CupertinoPageRoute(
                 builder: (context) => const MatchedEngineerScreen());
-
+      case Routes.notificationScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+                widget: const ScreenTitle(widget: NotificationScreen()),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => const NotificationScreen());
       case Routes.chatScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
@@ -501,7 +501,12 @@ final class RouteGenerator {
                 settings: settings)
             : CupertinoPageRoute(
                 builder: (context) => const ReportBottomSheet());
-
+      case Routes.onboardScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+                widget: const ScreenTitle(widget: OnboardScreen()),
+                settings: settings)
+            : CupertinoPageRoute(builder: (context) => const OnboardScreen());
       default:
         return null;
     }

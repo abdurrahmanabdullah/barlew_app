@@ -84,11 +84,6 @@ class _EngineerPaymentMethodScreenState
             }
 
             if (snapshot.hasData) {
-              // final Bankdata = snapshot.data!.data;
-              // final bankDetails = snapshot.data!.message?.first;
-              // final accountNumber =
-              //     bankDetails?.accountNumber ?? "Account number not available";
-
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: SingleChildScrollView(

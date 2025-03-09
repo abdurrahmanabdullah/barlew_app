@@ -3,7 +3,7 @@ import 'package:barlew_app/helpers/toast.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rxdart/rxdart.dart';
-import '../../../../../networks/rx_base.dart';
+import '../../../../../../networks/rx_base.dart';
 import 'api.dart';
 
 final class EngineerEditProfileRX extends RxResponseInt<Map> {
