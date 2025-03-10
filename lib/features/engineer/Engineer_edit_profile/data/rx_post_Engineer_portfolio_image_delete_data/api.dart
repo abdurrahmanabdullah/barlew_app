@@ -4,7 +4,7 @@ import 'package:barlew_app/networks/endpoint.dart';
 import 'package:barlew_app/networks/exception_handler/data_source.dart';
 import 'package:dio/dio.dart';
 
-import '../../../../../../../networks/dio/dio.dart';
+import '../../../../../../networks/dio/dio.dart';
 
 final class EngineerPortfolioDelete {
   static final EngineerPortfolioDelete _singleton =

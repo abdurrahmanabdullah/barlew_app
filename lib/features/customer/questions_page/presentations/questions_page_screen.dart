@@ -112,7 +112,7 @@ class _QuestionsPageScreenState extends State<QuestionsPageScreen> {
 
                           // Using ListView.builder safely
                           SizedBox(
-                            height: 240.h,
+                            height: 280.h,
                             child: ListView.builder(
                               itemCount: questionSnap.answers?.length ?? 0,
                               itemBuilder: (context, index) {
@@ -176,7 +176,7 @@ class _QuestionsPageScreenState extends State<QuestionsPageScreen> {
                         ],
                       ),
                     ),
-                    UIHelper.verticalSpace(222.h),
+                    UIHelper.verticalSpace(120.h),
 
                     // Next Button
                     CustomButtonTow(

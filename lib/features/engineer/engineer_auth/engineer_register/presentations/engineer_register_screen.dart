@@ -32,6 +32,7 @@ class EngineerRegisterScreen extends StatefulWidget {
 class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
   /// this is all controller start here ////
 
+  // ignore: prefer_typing_uninitialized_variables
   late final signupScreenProvider;
 
   //arraye theke asbe

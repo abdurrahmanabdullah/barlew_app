@@ -21,6 +21,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   //// <<<<<<<<<<< controller start here >>>>>>>>>>> //////
+  bool isLoading = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool _obscurePassword = true; // By default, password is hidden

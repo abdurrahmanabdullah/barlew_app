@@ -102,21 +102,22 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         toolbarHeight: 100.h, // Keep AppBar height large
         actions: [
           Padding(
-            padding: const EdgeInsets.all(18.0),
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: ClipOval(
+              // ignore: unnecessary_null_comparison
               child: profileImageUrl == null
                   ? Shimmer.fromColors(
                       baseColor: Colors.grey[300]!,
                       highlightColor: Colors.grey[100]!,
                       direction: ShimmerDirection.ltr,
                       child: Container(
-                        width: 70.w, // Reduced width
+                        width: 60.w, // Reduced width
                         // Reduced height
                         color: Colors.white,
                       ),
                     )
                   : CachedNetworkImage(
-                      width: 70.w, // Reduced width
+                      width: 60.w, // Reduced width
                       // Reduced height
                       imageUrl: profileImageUrl!,
                       fit: BoxFit.cover,
@@ -125,7 +126,8 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                         highlightColor: Colors.grey[100]!,
                         direction: ShimmerDirection.ltr,
                         child: Container(
-                          width: 50.w,
+                          width: 60.w,
+                          height: 60,
                           color: Colors.white,
                         ),
                       ),
@@ -141,119 +143,31 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         ],
         backgroundColor: AppColors.allPrimaryColor,
       ),
-      // appBar: AppBar(
-      //   iconTheme: const IconThemeData(color: AppColors.cFFFFFF),
-      //   toolbarHeight: 100.h, // Keep AppBar height large
-      //   actions: [
-      //     StreamBuilder<EngineerProfileModel>(
-      //         stream: engineerProfileRXObj.dataFetcher,
-      //         builder: (context, snapshot) {
-      //           if (snapshot.connectionState == ConnectionState.waiting) {
-      //             return const Center(
-      //               child: SpinKitCircle(
-      //                 color: AppColors.allPrimaryColor,
-      //                 size: 50.0,
-      //               ),
-      //             );
-      //           }
-      //           if (snapshot.hasError) {
-      //             return Center(
-      //                 child: Text(
-      //                     "snapshot has error: {$snapshot.error.tostring()}"));
-      //           }
-
-      //           if (snapshot.hasData) {
-      //             appData.write(kUserRole, snapshot.data!.data!.role);
-      //             final profileImageUrl = snapshot.data!.data!.avatar;
-
-      //             return ClipRRect(
-      //               borderRadius: BorderRadius.circular(150.r),
-      //               child: CachedNetworkImage(
-      //                 imageUrl: profileImageUrl ?? "N/A",
-      //                 placeholder: (context, url) {
-      //                   return Image.asset(
-      //                     Assets.images.profileAvatar.path,
-      //                     height: 50.w,
-      //                     width: 50.w,
-      //                     fit: BoxFit.cover,
-      //                   );
-      //                 },
-      //                 errorWidget: (context, url, error) {
-      //                   return Image.asset(
-      //                     Assets.images.profileAvatar.path,
-      //                     height: 50.w,
-      //                     width: 50.w,
-      //                     fit: BoxFit.cover,
-      //                   );
-      //                 },
-      //                 width: 50.w,
-      //                 height: 50.w,
-      //                 fit: BoxFit.cover,
-      //               ),
-      //             );
-      //             // return ClipRRect(
-      //             //   borderRadius: BorderRadius.circular(150.r),
-      //             //   child: profileImageUrl == null
-      //             //       ? Image.asset(Assets.images.profileAvatar.path)
-      //             //       : CachedNetworkImage(
-      //             //           height: 50.w,
-      //             //           width: 50.w,
-      //             //           imageUrl: profileImageUrl,
-      //             //           fit: BoxFit.cover,
-      //             //           placeholder: (context, url) => Shimmer.fromColors(
-      //             //             baseColor: Colors.grey[300]!,
-      //             //             highlightColor: Colors.grey[100]!,
-      //             //             direction: ShimmerDirection.ltr,
-      //             //             child: Container(
-      //             //               width: 50.w,
-      //             //               color: Colors.white,
-      //             //             ),
-      //             //           ),
-      //             //           errorWidget: (context, url, error) =>
-      //             //               Image.asset(Assets.images.profileAvatar.path),
-      //             //           fadeInDuration: const Duration(milliseconds: 500),
-      //             //         ),
-      //             // );
-      //           } else {
-      //             return const Center(
-      //               child: Text(
-      //                 'Error: No data',
-      //               ),
-      //             );
-      //           }
-      //         }),
-      //     UIHelper.horizontalSpace(20.w),
-      //   ],
-      //   backgroundColor: AppColors.allPrimaryColor,
-      // ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: StreamBuilder<EngineerTaskResponseModel>(
           stream: engineerTaskListRXobj.dataFetcher,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: SpinKitCircle(
-                  color: AppColors.allPrimaryColor,
-                  size: 50.0,
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: 130.0),
+                child: Center(
+                  child: SpinKitCircle(
+                    color: AppColors.allPrimaryColor,
+                    size: 100.0,
+                  ),
                 ),
               );
             }
 
             if (snapshot.hasError) {
-              return const Center(
-                child: Text("Error loading tasks"),
+              return Center(
+                child: Text("snapshot has error: {$snapshot.error.tostring()}"),
               );
             }
 
             if (snapshot.hasData) {
               final tasksSnap = snapshot.data?.data ?? [];
-
-              if (tasksSnap.isEmpty) {
-                return const Center(
-                  child: Text("No tasks available"),
-                );
-              }
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,13 +426,13 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
 }
 
 ///----------------- provider
-class EngineerProvider with ChangeNotifier {
-  String? _engineerId;
+// class EngineerProvider with ChangeNotifier {
+//   String? _engineerId;
 
-  String? get engineerId => _engineerId;
+//   String? get engineerId => _engineerId;
 
-  void setEngineerId(String? id) {
-    _engineerId = id;
-    notifyListeners();
-  }
-}
+//   void setEngineerId(String? id) {
+//     _engineerId = id;
+//     notifyListeners();
+//   }
+// }

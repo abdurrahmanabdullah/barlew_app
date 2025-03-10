@@ -113,8 +113,6 @@ final class Endpoints {
   static String engineerDeniedEndpoint({required int id}) =>
       "/api/engineers/request-decline/$id";
   //user-answer
-  static String engineerServiceFeeEndpoint() =>
-      "/api/engineers-service-fee/show";
 
   /// customer rating
   static String customerReviewsEndpoint() => "/api/reviews";
@@ -133,4 +131,7 @@ final class Endpoints {
   /// withdrawal request
   static String engineerWithdrawalrequestEndpoint() =>
       "/api/engineers/withdrawal-request";
+
+  /// withdrawal request
+  static String paypalPaymentEndpoint() => "/api/paypal/pay";
 }

@@ -1,3 +1,7 @@
+// ignore: camel_case_types
+// ignore_for_file: prefer_collection_literals
+
+// ignore: camel_case_types
 class engineerlavelmodel {
   List<lavelData>? data;
   String? message;
@@ -9,7 +13,7 @@ class engineerlavelmodel {
     if (json['data'] != null) {
       data = <lavelData>[];
       json['data'].forEach((v) {
-        data!.add(new lavelData.fromJson(v));
+        data!.add(lavelData.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,16 +21,17 @@ class engineerlavelmodel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['status'] = this.status;
+    data['message'] = message;
+    data['status'] = status;
     return data;
   }
 }
 
+// ignore: camel_case_types
 class lavelData {
   String? id;
   String? name;
@@ -39,9 +44,9 @@ class lavelData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }

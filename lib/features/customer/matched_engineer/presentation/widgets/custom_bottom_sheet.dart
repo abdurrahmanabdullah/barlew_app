@@ -1,13 +1,20 @@
+import 'dart:developer';
+
 import 'package:barlew_app/common_widget/custom_button.dart';
 import 'package:barlew_app/common_widget/custom_button_two.dart';
-import 'package:barlew_app/features/customer/matched_engineer/model/customer_service_fee_model.dart';
+import 'package:barlew_app/features/customer/home/model/customer_home_model.dart';
+
 import 'package:barlew_app/gen/colors.gen.dart';
-import 'package:barlew_app/helpers/all_routes.dart';
+
 import 'package:barlew_app/helpers/navigation_service.dart';
+import 'package:barlew_app/helpers/toast.dart';
 import 'package:barlew_app/networks/api_access.dart';
+import 'package:barlew_app/provider/selected_answer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+
 import '../../../../../constant/text_font_style.dart';
 import '../../../../../gen/assets.gen.dart';
 import '../../../../../helpers/ui_helpers.dart';
@@ -27,7 +34,28 @@ class _CustomBottomSheetTwoState extends State<CustomBottomSheetTwo> {
   }
 
   apiCall() async {
-    await engineerServiceFeeRXobj.engineerServiceFeeRX();
+    await customerHomeServiceRXobj.customerhomeserviceRX();
+  }
+
+  /// paypal payment show
+
+  Future<void> signinSubmitForm(BuildContext context) async {
+    {
+      try {
+        // Perform the login API call
+        final isSuccess = await paypalPayRequestRXobj.paypalPayRequestRX(
+            discussionrequestid: 34);
+
+        if (isSuccess) {
+          // NavigationService.navigateToUntilReplacement(
+          //     Routes.engineerNavigationsBarScreen);
+        } else {
+          ToastUtil.showShortToast("Invalid request Id");
+        }
+      } catch (e) {
+        ToastUtil.showShortToast(e.toString());
+      }
+    }
   }
 
   @override
@@ -116,34 +144,15 @@ class _CustomBottomSheetTwoState extends State<CustomBottomSheetTwo> {
                 color: AppColors.c192A48,
                 title: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 11.0),
-                  child: StreamBuilder<ServiceFeeResponseModel>(
-                      stream: engineerServiceFeeRXobj.dataFetcher,
+                  child: StreamBuilder<CustomerHomeServiceModel>(
+                      stream: customerHomeServiceRXobj.dataFetcher,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 50.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "service fee ",
-                                  style: TextFontStyle.text15cFFFFFF500,
-                                ),
-                                const Spacer(), // This is fine since Spacer() is a constant
-                                Text(
-                                  "120",
-                                  style: TextFontStyle
-                                      .text15cFFFFFF500, // Removed `const`
-                                ),
-                              ],
-                            ),
+                          return const SpinKitCircle(
+                            color: AppColors.allPrimaryColor,
+                            size: 50.0,
                           );
-
-                          // return const SpinKitCircle(
-                          //   color: AppColors.allPrimaryColor,
-                          //   size: 50.0,
-                          // );
                         }
                         if (snapshot.hasError) {
                           return const Center(
@@ -151,23 +160,33 @@ class _CustomBottomSheetTwoState extends State<CustomBottomSheetTwo> {
                           );
                         }
                         if (snapshot.hasData) {
-                          final serviceFeeList = snapshot.data?.data;
-                          final String fee = serviceFeeList?.isNotEmpty == true
-                              ? serviceFeeList!.first.fee ?? "N/A"
-                              : "N/A";
-
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Service fee',
-                                style: TextFontStyle.text20cFFFFFF500,
-                              ),
-                              Text(
-                                '0.0',
-                                style: TextFontStyle.text20cFFFFFF500,
-                              ),
-                            ],
+                          final selectedServiceID =
+                              Provider.of<SelectedAnswersModel>(context,
+                                      listen: false)
+                                  .serviceID;
+                          log('Selected Service ID: $selectedServiceID');
+                          // Find the matching service by ID
+                          final matchedService =
+                              snapshot.data?.data?.firstWhere(
+                            (service) => service.id == selectedServiceID,
+                            orElse: () => Datum(price: "N/A"),
+                          );
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Service fee',
+                                  style: TextFontStyle.text20cFFFFFF500,
+                                ),
+                                const Spacer(),
+                                Text(
+                                  matchedService?.price ?? '0.0',
+                                  style: TextFontStyle.text20cFFFFFF500,
+                                ),
+                              ],
+                            ),
                           );
                         } else {
                           return const Center(child: Text("No data available"));
@@ -179,7 +198,8 @@ class _CustomBottomSheetTwoState extends State<CustomBottomSheetTwo> {
               padding: EdgeInsets.symmetric(vertical: 20.h),
               radius: BorderRadius.circular(111.r),
               onTap: () {
-                NavigationService.navigateTo(Routes.payment);
+                signinSubmitForm(context);
+                // NavigationService.navigateTo(Routes.payment);
               },
               title: 'Proceed To Payment',
               style: TextFontStyle.text15cFFFFFF500,

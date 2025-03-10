@@ -6,18 +6,18 @@ class CustomerHomeProfileModel {
   CustomerHomeProfileModel({this.data, this.message, this.status});
 
   CustomerHomeProfileModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];
     status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = this.message;
-    data['status'] = this.status;
+    data['message'] = message;
+    data['status'] = status;
     return data;
   }
 }
@@ -63,18 +63,18 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['email'] = this.email;
-    data['service'] = this.service;
-    data['about'] = this.about;
-    data['avatar'] = this.avatar;
-    data['address'] = this.address;
-    data['role'] = this.role;
-    data['level'] = this.level;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['email'] = email;
+    data['service'] = service;
+    data['about'] = about;
+    data['avatar'] = avatar;
+    data['address'] = address;
+    data['role'] = role;
+    data['level'] = level;
+    data['name'] = name;
     return data;
   }
 }

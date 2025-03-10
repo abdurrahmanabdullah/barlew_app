@@ -6,18 +6,18 @@ class EngineerAverageReviewModel {
   EngineerAverageReviewModel({this.data, this.message, this.status});
 
   EngineerAverageReviewModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     message = json['message'];
     status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = this.message;
-    data['status'] = this.status;
+    data['message'] = message;
+    data['status'] = status;
     return data;
   }
 }
@@ -34,9 +34,9 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['average_rating'] = this.averageRating;
-    data['reviews_count'] = this.reviewsCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['average_rating'] = averageRating;
+    data['reviews_count'] = reviewsCount;
     return data;
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:auto_animated/auto_animated.dart';
 import 'package:barlew_app/constant/app_constants.dart';
 import 'package:barlew_app/constant/custome_theme.dart';

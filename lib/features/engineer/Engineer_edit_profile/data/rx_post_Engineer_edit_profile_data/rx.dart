@@ -20,13 +20,11 @@ final class EngineerEditProfileRX extends RxResponseInt<Map> {
     required String about,
     required List<int> skills,
     required List<XFile> portfolio,
-    required XFile avatar,
   }) async {
     try {
       Map data = await api.engineerEditProfileApi(
         firstName: firstName,
         lastName: lastName,
-        avatar: avatar,
         service: service,
         about: about,
         skills: skills,

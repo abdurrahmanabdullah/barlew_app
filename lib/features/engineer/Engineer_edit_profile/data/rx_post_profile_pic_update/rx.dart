@@ -1,23 +1,29 @@
+// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages
+
 import 'dart:developer';
 
-import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_Engineer_edit_profile_data/rx_post_Engineer_portfolio_image_delete_data/api.dart';
 import 'package:barlew_app/helpers/toast.dart';
-import 'package:barlew_app/networks/rx_base.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rxdart/rxdart.dart';
 
-final class EngineerPortfolioDeleteRX extends RxResponseInt<Map> {
-  final api = EngineerPortfolioDelete.instance;
+import '../../../../../networks/rx_base.dart';
+import 'api.dart';
 
-  EngineerPortfolioDeleteRX({required super.empty, required super.dataFetcher});
+final class PostProfilePicUpdateRx extends RxResponseInt<Map> {
+  final api = PostProfilePicUpdateApi.instance;
+
+  PostProfilePicUpdateRx({required super.empty, required super.dataFetcher});
 
   ValueStream get getFileData => dataFetcher.stream;
 
-  Future<bool> engineerPortfolioDeleteRX({
-    required int id,
+  Future<bool> postProfilePicUpdateRx({
+    required XFile avatar,
   }) async {
     try {
-      Map data = await api.postDeleteApi(id: id);
+      Map data = await api.postProfilePicUpdateApi(
+        avatar: avatar,
+      );
       handleSuccessWithReturn(data);
       return true;
     } catch (error) {

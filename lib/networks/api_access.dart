@@ -13,14 +13,17 @@ import 'package:barlew_app/features/customer/home/model/customer_home_model.dart
 import 'package:barlew_app/features/customer/home/model/customer_home_profile_model.dart';
 import 'package:barlew_app/features/customer/home/data/rx_get_customer_home_profile/rx.dart';
 import 'package:barlew_app/features/customer/home/data/rx_get_customer_home_service/rx.dart';
-import 'package:barlew_app/features/customer/matched_engineer/data/rx_get_engineer_service_fee/rx.dart';
+
 import 'package:barlew_app/features/customer/matched_engineer/data/rx_post_discussion_request/rx.dart';
-import 'package:barlew_app/features/customer/matched_engineer/model/customer_service_fee_model.dart';
+import 'package:barlew_app/features/customer/matched_engineer/data/rx_post_paypal_payment/rx.dart';
+
+import 'package:barlew_app/features/customer/matched_engineer/model/paypal_pay_response_model.dart';
 import 'package:barlew_app/features/customer/payment_method/model/bank_details_model.dart';
 import 'package:barlew_app/features/customer/payment_method/rx_engineer_get_bank_details/rx.dart';
 import 'package:barlew_app/features/customer/problmes/data/rx.dart';
+import 'package:barlew_app/features/engineer/Engineer_edit_profile/data/rx_post_Engineer_portfolio_image_delete_data/rx.dart';
+import 'package:barlew_app/features/engineer/Engineer_edit_profile/data/rx_post_profile_pic_update/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_Engineer_edit_profile_data/rx.dart';
-import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_Engineer_edit_profile_data/rx_post_Engineer_portfolio_image_delete_data/rx.dart';
 
 import 'package:barlew_app/features/engineer/balance/data/rx_engineer_get_details_balance/rx.dart';
 import 'package:barlew_app/features/engineer/balance/model/engineer_balance_details_model.dart';
@@ -130,6 +133,10 @@ EngineerProfileRX engineerProfileRXObj = EngineerProfileRX(
     empty: EngineerProfileModel(),
     dataFetcher: BehaviorSubject<EngineerProfileModel>());
 
+//profile pic update
+PostProfilePicUpdateRx postProfilePicUpdateRxObj =
+    PostProfilePicUpdateRx(empty: {}, dataFetcher: BehaviorSubject<Map>());
+
 ///engineer skill
 EngineerSkillRX engineerSkillRXobj = EngineerSkillRX(
     empty: Engineerskillmodel(),
@@ -196,10 +203,6 @@ EngineerAcceptRX engineerAcceptRXobj =
 EngineerDeniedRX engineerDeniedRXobj =
     EngineerDeniedRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
 
-EngineerServiceFeeRX engineerServiceFeeRXobj = EngineerServiceFeeRX(
-    empty: ServiceFeeResponseModel(),
-    dataFetcher: BehaviorSubject<ServiceFeeResponseModel>());
-
 //Customer give  rating
 CustomerRatingRX customerRatingRXobj =
     CustomerRatingRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
@@ -231,3 +234,7 @@ EngineerGetBankDetailsRX engineerGetBankDetailsRXobj = EngineerGetBankDetailsRX(
 
 EngineerWithdrawlRequestRX engineerWithdrawlRequestRXobj =
     EngineerWithdrawlRequestRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
+////  get bank details
+PaypalPayRequestRX paypalPayRequestRXobj = PaypalPayRequestRX(
+    empty: PaypalpayResponseModel(),
+    dataFetcher: BehaviorSubject<PaypalpayResponseModel>());

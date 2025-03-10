@@ -19,7 +19,6 @@ final class EngineerEditProfileApi {
     required String service,
     required String about,
     required List<int> skills,
-    required XFile avatar,
     required List<XFile> portfolio,
   }) async {
     try {
@@ -29,22 +28,11 @@ final class EngineerEditProfileApi {
         "last_name": lastName,
         "service": service,
         "about": about,
-        "avatar": avatar,
       });
 
       // Append skills as an array
       for (int i = 0; i < skills.length; i++) {
         data.fields.add(MapEntry("skills[$i]", skills[i].toString()));
-      }
-
-      // Add avatar file if present
-      if (await File(avatar.path).exists()) {
-        data.files.add(
-          MapEntry(
-            'avatar',
-            await MultipartFile.fromFile(avatar.path),
-          ),
-        );
       }
 
 //// portfolio data -------------

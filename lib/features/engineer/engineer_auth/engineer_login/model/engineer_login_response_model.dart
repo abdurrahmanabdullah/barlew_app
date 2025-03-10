@@ -1,3 +1,7 @@
+// ignore: camel_case_types
+// ignore_for_file: prefer_collection_literals
+
+// ignore: camel_case_types
 class engineer_login_response_model {
   bool? status;
   String? message;
@@ -13,15 +17,15 @@ class engineer_login_response_model {
     message = json['message'];
     tokenType = json['token_type'];
     token = json['token'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    data['token_type'] = this.tokenType;
-    data['token'] = this.token;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['status'] = status;
+    data['message'] = message;
+    data['token_type'] = tokenType;
+    data['token'] = token;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -74,35 +78,35 @@ class Data {
     if (json['portfolios'] != null) {
       portfolios = <Portfolios>[];
       json['portfolios'].forEach((v) {
-        portfolios!.add(new Portfolios.fromJson(v));
+        portfolios!.add(Portfolios.fromJson(v));
       });
     }
     if (json['skills'] != null) {
       skills = <Skills>[];
       json['skills'].forEach((v) {
-        skills!.add(new Skills.fromJson(v));
+        skills!.add(Skills.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['email'] = this.email;
-    data['service'] = this.service;
-    data['about'] = this.about;
-    data['avatar'] = this.avatar;
-    data['address'] = this.address;
-    data['role'] = this.role;
-    data['level'] = this.level;
-    data['name'] = this.name;
-    if (this.portfolios != null) {
-      data['portfolios'] = this.portfolios!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['email'] = email;
+    data['service'] = service;
+    data['about'] = about;
+    data['avatar'] = avatar;
+    data['address'] = address;
+    data['role'] = role;
+    data['level'] = level;
+    data['name'] = name;
+    if (portfolios != null) {
+      data['portfolios'] = portfolios!.map((v) => v.toJson()).toList();
     }
-    if (this.skills != null) {
-      data['skills'] = this.skills!.map((v) => v.toJson()).toList();
+    if (skills != null) {
+      data['skills'] = skills!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -120,9 +124,9 @@ class Portfolios {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['image'] = this.image;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['image'] = image;
     return data;
   }
 }
@@ -139,9 +143,9 @@ class Skills {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }

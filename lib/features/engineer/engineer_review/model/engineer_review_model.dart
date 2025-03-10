@@ -9,7 +9,7 @@ class EngineerReviewModel {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,12 +17,12 @@ class EngineerReviewModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['status'] = this.status;
+    data['message'] = message;
+    data['status'] = status;
     return data;
   }
 }
@@ -55,22 +55,21 @@ class Data {
     review = json['review'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    reviewer = json['reviewer'] != null
-        ? new Reviewer.fromJson(json['reviewer'])
-        : null;
+    reviewer =
+        json['reviewer'] != null ? Reviewer.fromJson(json['reviewer']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['reviewer_id'] = this.reviewerId;
-    data['user_id'] = this.userId;
-    data['rating'] = this.rating;
-    data['review'] = this.review;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.reviewer != null) {
-      data['reviewer'] = this.reviewer!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['reviewer_id'] = reviewerId;
+    data['user_id'] = userId;
+    data['rating'] = rating;
+    data['review'] = review;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (reviewer != null) {
+      data['reviewer'] = reviewer!.toJson();
     }
     return data;
   }
@@ -94,12 +93,12 @@ class Reviewer {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['avatar'] = this.avatar;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
+    data['avatar'] = avatar;
+    data['name'] = name;
     return data;
   }
 }

@@ -12,6 +12,7 @@ import 'package:barlew_app/networks/api_access.dart';
 import 'package:barlew_app/provider/engineer_auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../helpers/all_routes.dart';
@@ -24,7 +25,9 @@ class CustomBottomSheet extends StatefulWidget {
 }
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
+  // ignore: prefer_typing_uninitialized_variables
   late final authProvider;
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -56,10 +59,15 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                 color: AppColors.cF4F4F4,
               ),
               UIHelper.verticalSpace(30.h),
-              Text(
-                'Are You Sure you Want to log out',
-                style: TextFontStyle.text16cc373E4Ew500roboto,
-              ),
+              _isLoading == true
+                  ? const SpinKitCircle(
+                      color: AppColors.allPrimaryColor,
+                      size: 50.0,
+                    )
+                  : Text(
+                      'Are You Sure you Want to log out',
+                      style: TextFontStyle.text16cc373E4Ew500roboto,
+                    ),
               UIHelper.verticalSpace(32.h),
               Row(
                 children: [
@@ -80,18 +88,24 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     child: CustomButton(
                       onTap: () {
                         authProvider.clearTextField();
-                        setState(() {});
+                        setState(() {
+                          _isLoading = true;
+                        });
                         logOutRxObj.logoutRx().then(
                           (value) async {
                             if (value) {
                               ToastUtil.showShortToast("Logout successfully.");
                               await appData.write(kKeyIsLoggedIn, false);
                               await appData.write(kKeyAccessToken, '');
-                              setState(() {});
+                              setState(() {
+                                _isLoading = true;
+                              });
                               NavigationService.navigateToUntilReplacement(
                                   Routes.onboardScreen);
                             } else {
-                              setState(() {});
+                              setState(() {
+                                _isLoading = true;
+                              });
                               ToastUtil.showShortToast("Failed to logout.");
                             }
                           },
