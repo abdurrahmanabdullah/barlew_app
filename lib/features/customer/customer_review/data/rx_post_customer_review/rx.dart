@@ -20,8 +20,8 @@ final class CustomerRatingRX extends RxResponseInt<Map> {
     required String review,
   }) async {
     try {
-      Map data =
-          await api.customerRatingApi(userId: 2, rating: 5, review: 'dsfds');
+      Map data = await api.customerRatingApi(
+          userId: userID, rating: rating, review: review);
       handleSuccessWithReturn(data);
       return true;
     } catch (error) {

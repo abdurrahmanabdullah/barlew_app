@@ -12,6 +12,7 @@ import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:barlew_app/networks/api_access.dart';
 import 'package:barlew_app/provider/profile_provider.dart';
 import 'package:barlew_app/provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -84,27 +85,42 @@ class _EngineerPersonalInfoScreenState
                       children: [
                         UIHelper.verticalSpace(85.h),
                         //<<---------------------- profile Img ------------------------>>
+
                         Center(
-                            child: ClipRRect(
-                          borderRadius: BorderRadius.circular(150.r),
-                          child: Image.network(
-                            EngineerprofileSnap.avatar?.isNotEmpty == true
-                                ? EngineerprofileSnap.avatar!
-                                : "https://example.com/path/to/placeholder.jpg", // Default image
-                            width: 60.w,
-                            height: 60.h,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                Assets.images.profileAvatar
-                                    .path, // Default image in case of error
-                                width: 60.w,
-                                height: 60.h,
-                                fit: BoxFit.cover,
-                              );
-                            },
-                          ),
-                        )),
+                          child: (EngineerprofileSnap.avatar != null &&
+                                  EngineerprofileSnap.avatar!.isNotEmpty)
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(150.r),
+                                  child: CachedNetworkImage(
+                                    imageUrl: EngineerprofileSnap.avatar!,
+                                    placeholder: (context, url) => Image.asset(
+                                      Assets.images.profileAvatar.path,
+                                      height: 100.w,
+                                      width: 100.w,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
+                                      Assets.images.profileAvatar.path,
+                                      height: 100.w,
+                                      width: 100.w,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    width: 100.w,
+                                    height: 100.w,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(150.r),
+                                  child: Image.asset(
+                                    Assets.images.profileAvatar.path,
+                                    height: 100.w,
+                                    width: 100.w,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                        ),
 
                         UIHelper.verticalSpace(12.h),
                         /////////////////////////     Profile name        ///////////////////////

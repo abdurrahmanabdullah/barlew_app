@@ -200,8 +200,7 @@ class _ProblemsScreenState extends State<ProblemsScreen> {
                           NavigationService.navigateToWithArgs(
                             Routes.engineerLevelScreen,
                             {
-                              "imageList": List.of(controller
-                                  .pickedFiles), // Send a copy of the list
+                              "imageList": List.of(controller.pickedFiles),
                               "description": descriptionController.text,
                             },
                           ).then((_) {

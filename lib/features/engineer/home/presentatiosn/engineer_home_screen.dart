@@ -4,6 +4,7 @@ import 'package:barlew_app/constant/text_font_style.dart';
 
 import 'package:barlew_app/features/engineer/home/model/engineer_task_list_model.dart';
 import 'package:barlew_app/features/engineer/home/presentatiosn/widget/engineer_drawer.dart';
+import 'package:barlew_app/features/engineer/personal_information/model/engineer_profile_model.dart';
 import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/di.dart';
@@ -25,11 +26,9 @@ class EngineerHomeScreen extends StatefulWidget {
 
 class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
   String? engineerId;
-  bool declineisLoading = false;
-  bool acceptisLoading = false;
-  String? profileImageUrl;
-  String? firstName;
-  String? lastName;
+  Map<String, bool> acceptLoadingMap = {};
+  Map<String, bool> declineLoadingMap = {};
+
   @override
   void initState() {
     super.initState();
@@ -46,11 +45,6 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
     try {
       final profileData = await engineerProfileRXObj.engineerProfileRX();
 
-      setState(() {
-        profileImageUrl = profileData?.data?.avatar;
-        firstName = profileData?.data?.firstName;
-        lastName = profileData?.data?.lastName;
-      });
       appData.write(kUserRole, profileData!.data!.role);
     } catch (e) {
       print("Error  fetching profile data: $e");
@@ -101,44 +95,74 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
         iconTheme: const IconThemeData(color: AppColors.cFFFFFF),
         toolbarHeight: 100.h, // Keep AppBar height large
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: ClipOval(
-              // ignore: unnecessary_null_comparison
-              child: profileImageUrl == null
-                  ? Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      direction: ShimmerDirection.ltr,
-                      child: Container(
-                        width: 60.w, // Reduced width
-                        // Reduced height
-                        color: Colors.white,
-                      ),
-                    )
-                  : CachedNetworkImage(
-                      width: 60.w, // Reduced width
-                      // Reduced height
-                      imageUrl: profileImageUrl!,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        direction: ShimmerDirection.ltr,
-                        child: Container(
-                          width: 60.w,
-                          height: 60,
-                          color: Colors.white,
+          StreamBuilder<EngineerProfileModel>(
+              stream: engineerProfileRXObj.dataFetcher,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: SpinKitCircle(
+                          color: Colors.yellow,
+                          size: 50.0,
                         ),
                       ),
-                      errorWidget: (context, url, error) => Icon(
-                        Icons.person,
-                        size: 35.sp, // Match icon size
-                      ),
-                      fadeInDuration: const Duration(milliseconds: 500),
+                    ],
+                  );
+                }
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text(
+                      'Error: No data',
                     ),
-            ),
-          ),
+                  );
+                }
+                if (snapshot.hasData) {
+                  String profileSnap = snapshot.data?.data?.avatar ?? "";
+
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: ClipOval(
+                      // ignore: unnecessary_null_comparison
+                      child: profileSnap != null
+                          ? CachedNetworkImage(
+                              width: 60.w, // Reduced width
+                              // Reduced height
+                              imageUrl: profileSnap,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                                direction: ShimmerDirection.ltr,
+                                child: Container(
+                                  width: 60.w,
+                                  height: 60,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.person,
+                                size: 35.sp, // Match icon size
+                              ),
+                            )
+                          : Image.asset(
+                              Assets.images.profileAvatar.path,
+                              height: 60.w,
+                              width: 60.w,
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: Text(
+                      'Error: No data',
+                    ),
+                  );
+                }
+              }),
           UIHelper.horizontalSpace(20.w),
         ],
         backgroundColor: AppColors.allPrimaryColor,
@@ -332,76 +356,81 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                                   : Row(
                                       children: [
                                         Expanded(
-                                          child:
-                                              declineisLoading // Show the spinner when loading
-                                                  ? const Center(
-                                                      child: SpinKitCircle(
-                                                        color: Colors.black,
-                                                        size: 50.0,
-                                                      ),
-                                                    )
-                                                  : CustomButton(
-                                                      title: "Deny",
-                                                      onTap: () async {
-                                                        if (requestId != null) {
-                                                          print(
-                                                              "Declining request with ID: $requestId");
-                                                          setState(() {
-                                                            declineisLoading =
-                                                                true; // Start loading
-                                                          });
-                                                          await submitDeclineRequest(
-                                                              requestId,
-                                                              "decline");
-                                                          setState(() {
-                                                            declineisLoading =
-                                                                false; // Stop loading after completion
-                                                          });
-                                                        }
-                                                      },
-                                                      border: Border.all(
-                                                        width: 1.w,
-                                                        color: AppColors
-                                                            .allPrimaryColor,
-                                                      ),
-                                                      color: AppColors.cFFFFFF,
-                                                      style: TextFontStyle
-                                                          .text18allPrimaryColorw500
-                                                          .copyWith(
-                                                        fontSize: 14.sp,
-                                                      ),
-                                                    ),
+                                          child: declineLoadingMap[
+                                                      requestId.toString()] ==
+                                                  false
+                                              ? const Center(
+                                                  child: SpinKitCircle(
+                                                    color: Colors.black,
+                                                    size: 50.0,
+                                                  ),
+                                                )
+                                              : CustomButton(
+                                                  title: "Deny",
+                                                  onTap: () async {
+                                                    if (requestId != null) {
+                                                      print(
+                                                          "Declining request with ID: $requestId");
+                                                      setState(() {
+                                                        declineLoadingMap[
+                                                                requestId
+                                                                    .toString()] =
+                                                            false; // Start loading
+                                                      });
+                                                      await submitDeclineRequest(
+                                                          requestId, "decline");
+                                                      setState(() {
+                                                        declineLoadingMap[
+                                                                requestId
+                                                                    .toString()] =
+                                                            false; // Stop loading after completion
+                                                      });
+                                                    }
+                                                  },
+                                                  border: Border.all(
+                                                    width: 1.w,
+                                                    color: AppColors
+                                                        .allPrimaryColor,
+                                                  ),
+                                                  color: AppColors.cFFFFFF,
+                                                  style: TextFontStyle
+                                                      .text18allPrimaryColorw500
+                                                      .copyWith(
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                ),
                                         ),
                                         UIHelper.horizontalSpace(12.h),
                                         Expanded(
-                                          child:
-                                              acceptisLoading // Show the spinner when loading
-                                                  ? const Center(
-                                                      child: SpinKitCircle(
-                                                        color: Colors.black,
-                                                        size: 50.0,
-                                                      ),
-                                                    )
-                                                  : CustomButton(
-                                                      title: "Accept",
-                                                      onTap: () async {
-                                                        if (requestId != null) {
-                                                          print(
-                                                              "Accepting request with ID: $requestId");
-                                                          setState(() {
-                                                            acceptisLoading =
-                                                                true; // Start loading
-                                                          });
-                                                          await submitAcceptRequest(
-                                                              requestId,
-                                                              "accept");
-                                                          setState(() {
-                                                            acceptisLoading =
-                                                                false; // Stop loading after completion
-                                                          });
-                                                        }
-                                                      },
-                                                    ),
+                                          child: acceptLoadingMap[
+                                                      requestId.toString()] ==
+                                                  true // Show the spinner when loading
+                                              ? const Center(
+                                                  child: SpinKitCircle(
+                                                    color: Colors.black,
+                                                    size: 50.0,
+                                                  ),
+                                                )
+                                              : CustomButton(
+                                                  title: "Accept",
+                                                  onTap: () async {
+                                                    if (requestId != null) {
+                                                      print(
+                                                          "Accepting request with ID: $requestId");
+                                                      setState(() {
+                                                        acceptLoadingMap[requestId
+                                                            .toString()] = true;
+                                                      });
+                                                      await submitAcceptRequest(
+                                                          requestId, "accept");
+                                                      setState(() {
+                                                        acceptLoadingMap[requestId
+                                                                .toString()] =
+                                                            false;
+                                                      });
+                                                    }
+                                                  },
+                                                ),
                                         ),
                                       ],
                                     ),
@@ -424,15 +453,3 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
     );
   }
 }
-
-///----------------- provider
-// class EngineerProvider with ChangeNotifier {
-//   String? _engineerId;
-
-//   String? get engineerId => _engineerId;
-
-//   void setEngineerId(String? id) {
-//     _engineerId = id;
-//     notifyListeners();
-//   }
-// }

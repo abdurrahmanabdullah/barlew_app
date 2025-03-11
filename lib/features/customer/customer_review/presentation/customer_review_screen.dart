@@ -8,7 +8,9 @@ import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/all_routes.dart';
 import 'package:barlew_app/helpers/navigation_service.dart';
+import 'package:barlew_app/helpers/toast.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
+import 'package:barlew_app/networks/api_access.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,20 +24,30 @@ class CustomerReviewScreen extends StatefulWidget {
 }
 
 class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
-  void _showExpandedBottomSheet() {
-    showModalBottomSheet(
-      backgroundColor: AppColors.cFFFFFF,
-      context: context,
-      isScrollControlled: true, // Makes the bottom sheet expandable
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20), // Rounded top corners
-        ),
-      ),
-      builder: (context) {
-        return const ReportBottomSheet();
-      },
-    );
+  //// submit  the review
+  bool _isLoading = false;
+  double _selectedRating = 0.0;
+  final TextEditingController reviewcontroller = TextEditingController();
+  Future<bool> submitreview() async {
+    try {
+      await customerRatingRXobj
+          .customerRatingRX(
+              userID: 3,
+              rating: _selectedRating.toInt(),
+              review: reviewcontroller.text)
+          .then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+      return true;
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      ToastUtil.showShortToast(e.toString());
+      return false;
+    }
   }
 
   @override
@@ -56,7 +68,10 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
             padding: EdgeInsets.only(right: 20.w),
             child: GestureDetector(
                 onTap: () {
-                  _showExpandedBottomSheet();
+                  // _showExpandedBottomSheet();
+                  Get.bottomSheet(
+                    const ReportBottomSheet(),
+                  );
                 },
                 child: Image.asset(
                   Assets.icons.flagCircle.path,
@@ -97,7 +112,9 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
                   color: AppColors.cFDB022,
                 ),
                 onRatingUpdate: (rating) {
-                  print(rating);
+                  setState(() {
+                    _selectedRating = rating; // Store the selected rating
+                  });
                 },
               ),
               UIHelper.verticalSpace(30.h),
@@ -120,40 +137,29 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
                 child: Padding(
                   padding: EdgeInsets.all(5.sp),
                   child: CommonTextFormField(
+                    controller: reviewcontroller,
                     isPrefixIcon: false,
                     fillColor: AppColors.cFFFFFF,
                     borderColor: Colors.transparent,
                     focusBorderColor: Colors.transparent,
                     textInputStyle: TextFontStyle.text14c444B5Bw500,
-                    hintText:
-                        "Great job, my boiler pressure problem has been resolved, so I keep coming back to this company!",
+                    hintText: "Write Review.....",
                     maxline: 4,
                   ),
                 ),
               ),
               UIHelper.verticalSpace(200.h),
 
-              CustomButton(
-                onTap: () {
-                  Get.bottomSheet(
-                    const ReportBottomSheet(),
-                  );
-                },
-                // radius: BorderRadius.circular(111.r),
-                // padding: EdgeInsets.symmetric(vertical: 17.h),
-                title: 'Discuss issue',
-                style: TextFontStyle.text15cFFFFFF500,
-                color: AppColors.allPrimaryColor,
-              ),
-              UIHelper.verticalSpace(80.h),
               // const ReportBottomSheet(),
               CustomButton(
                 title: "Submit",
-                onTap: () {
-                  // NavigationService.navigateTo(Routes.navigationsBarScreen);
-                  NavigationService.navigateTo(Routes.navigationsBarScreen);
+                onTap: () async {
+                  bool isSuccess = await submitreview();
+                  if (isSuccess) {
+                    NavigationService.navigateTo(Routes.navigationsBarScreen);
+                  }
                 },
-              )
+              ),
             ],
           ),
         ),

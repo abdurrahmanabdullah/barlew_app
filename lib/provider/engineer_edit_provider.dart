@@ -10,6 +10,13 @@ class EngineerEditProfileProvider with ChangeNotifier {
   final TextEditingController aboutController = TextEditingController();
 
   final List<File> portfolioImages = [];
+  String _profileImageUrl = '';
+
+  String get profileImageUrl => _profileImageUrl;
+  void updateProfileImage(String newUrl) {
+    _profileImageUrl = newUrl;
+    notifyListeners(); // Notify UI to refresh
+  }
 
   @override
   void dispose() {

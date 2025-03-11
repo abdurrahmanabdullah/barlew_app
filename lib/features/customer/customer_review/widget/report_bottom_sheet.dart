@@ -24,17 +24,12 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
   Future<void> submitreportissue() async {
     try {
       print("Submitting description: ${_descriptionController.text}");
-      await engineerReportRXobj
-          .engineerReportRX(
-        discussionrequestid: 43,
+      await engineerReportRXobj.engineerReportRX(
+        discussionrequestid: 34,
         type: 'issues',
         description: _descriptionController.text.trim(),
-      )
-          .then((value) {
-        setState(() {});
-      });
+      );
     } catch (e) {
-      setState(() {});
       ToastUtil.showShortToast(e.toString());
     }
   }

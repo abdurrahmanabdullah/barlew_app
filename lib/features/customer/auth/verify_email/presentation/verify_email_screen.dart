@@ -102,48 +102,6 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                       }
                     }),
                 UIHelper.verticalSpace(22.h),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     const Text('Didn’t Receive Code?'),
-                //     UIHelper.horizontalSpace(9.w),
-                //     InkWell(
-                //       onTap: () {},
-                //       child: Text(
-                //         'Resend Code',
-                //         style: TextFontStyle.text15cFFFFFF500
-                //             .copyWith(color: AppColors.allPrimaryColor),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                UIHelper.verticalSpace(8.h),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Text(
-                //       "Resend code in ",
-                //       style: TextFontStyle.text15c192A48400
-                //           .copyWith(fontSize: 14.sp),
-                //     ),
-                //     TimerCountdown(
-                //       spacerWidth: 2.w,
-                //       timeTextStyle: TextFontStyle.text15c192A48400
-                //           .copyWith(fontSize: 14.sp),
-                //       colonsTextStyle: TextFontStyle.text15c192A48400
-                //           .copyWith(fontSize: 14.sp),
-                //       format: CountDownTimerFormat.minutesSeconds,
-                //       enableDescriptions: false,
-                //       endTime: DateTime.now().add(
-                //         const Duration(minutes: 0, seconds: 0),
-                //       ),
-                //       onEnd: () {
-
-                //       },
-                //     ),
-                //   ],
-                // ),
                 UIHelper.verticalSpace(325.h),
                 CustomButton(
                   padding: EdgeInsets.symmetric(vertical: 18.h),

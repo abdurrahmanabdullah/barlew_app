@@ -129,7 +129,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         children: [
                           GestureDetector(
                               onTap: () {
-                                NavigationService.navigateTo(Routes.callScreen);
+                                // NavigationService.navigateTo(Routes.callScreen);
+                                NavigationService.navigateTo(
+                                    Routes.customerReviewScreen);
                               },
                               child: Image.asset(
                                 Assets.icons.audiocallCircle.path,

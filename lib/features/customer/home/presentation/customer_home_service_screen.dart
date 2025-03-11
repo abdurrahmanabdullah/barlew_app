@@ -75,18 +75,8 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 String profileImageUrl = snapshot.data?.data?.avatar ?? "";
                 return ClipOval(
                   // ignore: unnecessary_null_comparison
-                  child: profileImageUrl == null
-                      ? Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[100]!,
-                          direction: ShimmerDirection.ltr,
-                          child: Container(
-                            width: 70.w, // Reduced width
-                            // Reduced height
-                            color: Colors.white,
-                          ),
-                        )
-                      : CachedNetworkImage(
+                  child: profileImageUrl != null
+                      ? CachedNetworkImage(
                           width: 60.w, // Reduced width
                           // Reduced height
                           imageUrl: profileImageUrl,
@@ -105,12 +95,17 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                             size: 35.sp, // Match icon size
                           ),
                           fadeInDuration: const Duration(milliseconds: 500),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(150.r),
+                          child: Image.asset(
+                            Assets.images.profileAvatar.path,
+                            height: 60.w,
+                            width: 60.w,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                 );
-                // return
-                //  CircleAvatar(
-                //   backgroundImage: NetworkImage(snapshot.data!.data!.avatar!),
-                // );
               } else {
                 return const Center(
                   child: Text(
