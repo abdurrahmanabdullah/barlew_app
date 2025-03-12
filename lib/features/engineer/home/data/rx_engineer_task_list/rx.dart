@@ -18,9 +18,11 @@ final class EngineerTaskListRX
 
   ValueStream get customerProfileSteam => dataFetcher.stream;
 
-  Future<EngineerTaskResponseModel?> engineerTaskListRX() async {
+  Future<EngineerTaskResponseModel?> engineerTaskListRX(
+      {required String endPart}) async {
     try {
-      final EngineerTaskResponseModel data = await api.engineerTaskListApi();
+      final EngineerTaskResponseModel data =
+          await api.engineerTaskListApi(endPart);
       handleSuccessWithReturn(data);
       return data;
     } catch (error) {

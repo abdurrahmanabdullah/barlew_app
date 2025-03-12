@@ -193,7 +193,7 @@ class _CustomBottomSheetTwoState extends State<CustomBottomSheetTwo> {
                       ),
                       onTap: () {}, // Ensure onTap is properly set
                     ),
-                    UIHelper.verticalSpace(22.h),
+                    UIHelper.verticalSpace(40.h),
                     CustomButton(
                       padding: EdgeInsets.symmetric(vertical: 20.h),
                       radius: BorderRadius.circular(111.r),

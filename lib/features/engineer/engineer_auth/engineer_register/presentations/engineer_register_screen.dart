@@ -30,12 +30,9 @@ class EngineerRegisterScreen extends StatefulWidget {
 }
 
 class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
-  /// this is all controller start here ////
-
   // ignore: prefer_typing_uninitialized_variables
   late final signupScreenProvider;
 
-  //arraye theke asbe
   final engineerSkillsController = TextEditingController();
 
   bool isChecked = false;
@@ -49,7 +46,7 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
 
   Map<String, int> skillOptions = {};
 
-  final bool _isLoading = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -82,6 +79,9 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
   Future<void> engineersignupMethod() async {
     try {
       if (_formKey.currentState!.validate()) {
+        setState(() {
+          _isLoading = true; // Show loading indicator
+        });
         final imagePickerProvider =
             Provider.of<ImagePickerProvider>(context, listen: false);
 
@@ -114,15 +114,24 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
         );
 
         if (isSignedUp) {
+          setState(() {
+            _isLoading = false;
+          });
           NavigationService.navigateToWithArgs(
             Routes.engineerSignupVerifyScreen,
             {"email": signupScreenProvider.emailController.text},
           );
         } else {
+          setState(() {
+            _isLoading = false;
+          });
           ToastUtil.showShortToast("Failed to sign up");
         }
       }
     } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
       ToastUtil.showShortToast("Signup failed: ${e.toString()}");
     }
   }

@@ -24,8 +24,6 @@ class CustomerReviewScreen extends StatefulWidget {
 }
 
 class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
-  //// submit  the review
-  bool _isLoading = false;
   double _selectedRating = 0.0;
   final TextEditingController reviewcontroller = TextEditingController();
   Future<bool> submitreview() async {
@@ -36,15 +34,11 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
               rating: _selectedRating.toInt(),
               review: reviewcontroller.text)
           .then((value) {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() {});
       });
       return true;
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() {});
       ToastUtil.showShortToast(e.toString());
       return false;
     }

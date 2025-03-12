@@ -28,7 +28,8 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
   String? engineerId;
   Map<String, bool> acceptLoadingMap = {};
   Map<String, bool> declineLoadingMap = {};
-
+  int pageId = 1;
+  int lastPageNumber = 1;
   @override
   void initState() {
     super.initState();
@@ -37,7 +38,39 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
   }
 
   tasklistapiCall() async {
-    await engineerTaskListRXobj.engineerTaskListRX();
+    String endPart = "?page=$pageId";
+    final response =
+        await engineerTaskListRXobj.engineerTaskListRX(endPart: endPart);
+    lastPageNumber = response?.pagination?.lastPage is int
+        ? response?.pagination?.lastPage as int
+        : 1;
+  }
+
+  void previouspage() {
+    if (pageId > 1) {
+      setState(() {
+        pageId--;
+      });
+      tasklistapiCall();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("No previous page available")),
+      );
+    }
+  }
+
+  void nextpage() {
+    if (pageId < lastPageNumber) {
+      setState(() {
+        pageId++;
+      });
+      tasklistapiCall();
+    } else {
+      // Show message if no next page available
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("No next page available")),
+      );
+    }
   }
 
   /// Fetch engineer profile data
@@ -439,7 +472,55 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                         );
                       },
                     ),
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            previouspage();
+                          },
+                          child: const Row(
+                            children: [
+                              Icon(Icons.arrow_back, size: 24),
+                              SizedBox(width: 4),
+                              Text(
+                                'Previous',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        GestureDetector(
+                          onTap: () {
+                            nextpage();
+                          },
+                          child: const Row(
+                            children: [
+                              Text(
+                                'Next',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              SizedBox(width: 4),
+                              Icon(Icons.arrow_forward, size: 24),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  UIHelper.verticalSpace(30.h),
                 ],
               );
             } else {

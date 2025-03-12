@@ -180,37 +180,38 @@ class _ProblemsScreenState extends State<ProblemsScreen> {
                 Consumer<SelectedAnswersModel>(
                   builder: (BuildContext context, provider, Widget? child) {
                     return CustomButtonTow(
-                      // onTap: () {
-                      //   if (_formKey.currentState?.validate() == true &&
-                      //       controller.pickedFiles.isNotEmpty) {
-                      //     NavigationService.navigateToWithArgs(
-                      //       Routes.engineerLevelScreen,
-                      //       {
-                      //         "imageList": controller.pickedFiles,
-                      //         "description": descriptionController.text,
-                      //       },
-                      //     );
-                      //   } else {
-                      //     ToastUtil.showShortToast("please select image");
-                      //   }
-                      // },
                       onTap: () {
                         if (_formKey.currentState?.validate() == true &&
                             controller.pickedFiles.isNotEmpty) {
                           NavigationService.navigateToWithArgs(
                             Routes.engineerLevelScreen,
                             {
-                              "imageList": List.of(controller.pickedFiles),
+                              "imageList": controller.pickedFiles,
                               "description": descriptionController.text,
                             },
-                          ).then((_) {
-                            // Clear the picked files after navigation
-                            controller.pickedFiles.clear();
-                          });
+                          );
                         } else {
                           ToastUtil.showShortToast("please select image");
                         }
                       },
+                      // onTap: () {
+                      //   if (_formKey.currentState?.validate() == true &&
+                      //       controller.pickedFiles.isNotEmpty) {
+                      //     NavigationService.navigateToWithArgs(
+                      //       Routes.engineerLevelScreen,
+                      //       {
+                      //         "imageList": List.of(controller.pickedFiles),
+                      //         "description": descriptionController.text,
+                      //       },
+                      //     ).then((_) {
+                      //       // Clear the picked files after navigation
+                      //       controller.pickedFiles.clear();
+                      //       controller.pickedFiles.refresh();
+                      //     });
+                      //   } else {
+                      //     ToastUtil.showShortToast("please select image");
+                      //   }
+                      // },
 
                       title: Text(
                         'Next',

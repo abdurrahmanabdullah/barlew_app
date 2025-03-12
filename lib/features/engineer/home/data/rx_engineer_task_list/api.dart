@@ -9,9 +9,10 @@ final class EngineerTaskListApi {
   EngineerTaskListApi._internal();
   static EngineerTaskListApi get instance => _singleton;
 
-  Future<EngineerTaskResponseModel> engineerTaskListApi() async {
+  Future<EngineerTaskResponseModel> engineerTaskListApi(String endPart) async {
     try {
-      Response response = await getHttp(Endpoints.engineeTaskListEndpoint());
+      Response response =
+          await getHttp(Endpoints.engineeTaskListEndpoint(endPart: endPart));
 
       if (response.statusCode == 200) {
         final data = EngineerTaskResponseModel.fromJson(response.data);

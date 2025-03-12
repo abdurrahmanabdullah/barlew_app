@@ -120,7 +120,8 @@ final class Endpoints {
   //Engineer Balance Details
   static String engineerBalanceDetailsEndpoint() => "/api/engineers/balance";
   //Engineer task list end posint
-  static String engineeTaskListEndpoint() => "/api/engineers/tasks";
+  static String engineeTaskListEndpoint({required String endPart}) =>
+      "/api/engineers/tasks$endPart";
 
   static String engineerReportEndpoint() => "/api/report-issues";
 

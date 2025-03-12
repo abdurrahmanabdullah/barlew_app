@@ -27,7 +27,7 @@ import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_
 
 import 'package:barlew_app/features/engineer/balance/data/rx_engineer_get_details_balance/rx.dart';
 import 'package:barlew_app/features/engineer/balance/model/engineer_balance_details_model.dart';
-import 'package:barlew_app/features/engineer/engineer_auth/create_new_password/rx_create_new_password/rx.dart';
+import 'package:barlew_app/features/engineer/engineer_auth/create_new_password/data/rx_create_new_password/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_forget_password/data/rx_post_forget_password/rx.dart';
 
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_login/data/rx_login/rx.dart';
