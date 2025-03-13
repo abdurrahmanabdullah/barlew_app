@@ -135,4 +135,8 @@ final class Endpoints {
 
   /// withdrawal request
   static String paypalPaymentEndpoint() => "/api/paypal/pay";
+
+  /// withdrawal request
+  static String engineerMatchProfileEndpoint({required String requestId}) =>
+      "/api/engineer-profile-with-services/$requestId";
 }

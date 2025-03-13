@@ -90,11 +90,11 @@ class _EngineerLevelScreenState extends State<EngineerLevelScreen> {
           'Engineer Level',
           style: TextFontStyle.text20cprimarycolorw500,
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back,
-              color: Colors.black), // Set back arrow to black
-          onPressed: () => Navigator.pop(context),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back,
+        //       color: Colors.black), // Set back arrow to black
+        //   onPressed: () => Navigator.pop(context),
+        // ),
       ),
       backgroundColor: const Color(0xFFF5F5F5),
       body: Padding(

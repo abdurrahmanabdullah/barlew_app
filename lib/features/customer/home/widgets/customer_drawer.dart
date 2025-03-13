@@ -82,6 +82,7 @@ class _CustomerDrawerState extends State<CustomerDrawer> {
                           style: TextFontStyle.text18cFFFFFFw500
                               .copyWith(fontSize: 16.sp),
                         ),
+                        UIHelper.verticalSpace(12.w),
                         Text(
                           GlobalProfile.email ?? "No Email",
                           style: TextFontStyle.text14cFFFFFF400

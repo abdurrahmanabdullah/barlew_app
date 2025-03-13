@@ -32,11 +32,12 @@ final class CustomerSignUpApi {
         "password_confirmation": passwordConfirmation
       };
 
-      Response response = await postHttp(Endpoints.customerSignUpEndpoint(), data);
+      Response response =
+          await postHttp(Endpoints.customerSignUpEndpoint(), data);
 
       if (response.statusCode == 201) {
         final data = json.decode(json.encode(response.data));
-        ToastUtil.showShortToast("Sign Up Successful");
+        ToastUtil.showShortToast("varify  Successful");
         return data;
       } else {
         // ToastUtil.showShortToast("Anything wrong");

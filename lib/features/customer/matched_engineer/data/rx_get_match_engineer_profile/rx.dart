@@ -1,30 +1,34 @@
-// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages, body_might_complete_normally_nullable
-
 import 'dart:developer';
-import 'package:barlew_app/features/customer/personal_Information/data/rx_customer_profile/api.dart';
-import 'package:barlew_app/features/customer/personal_Information/model/customer_profile_model.dart';
+
+import 'package:barlew_app/features/customer/matched_engineer/data/rx_get_match_engineer_profile/api.dart';
+
+import 'package:barlew_app/features/customer/matched_engineer/model/match_engineer_profile_model.dart';
+
 import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../../../../helpers/toast.dart';
 import '../../../../../networks/rx_base.dart';
 
-final class CustomerProfileRX extends RxResponseInt<CustomerProfileModel> {
-  final api = CustomerProfileApi.instance;
+final class MatchEngineerProfileRX
+    extends RxResponseInt<MatchEngineerProfileModel> {
+  final api = MatchEngineerProfileApi.instance;
 
-  CustomerProfileRX({required super.empty, required super.dataFetcher});
+  MatchEngineerProfileRX({required super.empty, required super.dataFetcher});
 
   ValueStream get customerProfileSteam => dataFetcher.stream;
 
-  Future<CustomerProfileModel?> customerProfileRX() async {
+  Future<MatchEngineerProfileModel?> matchEngineerProfileRX(
+      {required String requestId}) async {
     try {
-      final CustomerProfileModel data = await api.customerProfileApi();
+      final MatchEngineerProfileModel data =
+          await api.matchEngineerProfileApi(requestId);
       handleSuccessWithReturn(data);
       return data;
     } catch (error) {
       // Handle the error locally and return a fallback response
       if (error is DioException) {
-        // ToastUtil.showShortToast(
-        //     error.response!.data["message"] ?? "Unknown error");
+        ToastUtil.showShortToast(
+            error.response!.data["message"] ?? "Unknown error");
       }
       log(error.toString());
     }

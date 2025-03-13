@@ -13,9 +13,11 @@ import 'package:barlew_app/features/customer/home/model/customer_home_model.dart
 import 'package:barlew_app/features/customer/home/model/customer_home_profile_model.dart';
 import 'package:barlew_app/features/customer/home/data/rx_get_customer_home_profile/rx.dart';
 import 'package:barlew_app/features/customer/home/data/rx_get_customer_home_service/rx.dart';
+import 'package:barlew_app/features/customer/matched_engineer/data/rx_get_match_engineer_profile/rx.dart';
 
 import 'package:barlew_app/features/customer/matched_engineer/data/rx_post_discussion_request/rx.dart';
 import 'package:barlew_app/features/customer/matched_engineer/data/rx_post_paypal_payment/rx.dart';
+import 'package:barlew_app/features/customer/matched_engineer/model/match_engineer_profile_model.dart';
 
 import 'package:barlew_app/features/customer/matched_engineer/model/paypal_pay_response_model.dart';
 import 'package:barlew_app/features/customer/payment_method/model/bank_details_model.dart';
@@ -238,3 +240,8 @@ EngineerWithdrawlRequestRX engineerWithdrawlRequestRXobj =
 PaypalPayRequestRX paypalPayRequestRXobj = PaypalPayRequestRX(
     empty: PaypalpayResponseModel(),
     dataFetcher: BehaviorSubject<PaypalpayResponseModel>());
+
+////  MatchEngineerProfile
+MatchEngineerProfileRX matchEngineerProfileRXobj = MatchEngineerProfileRX(
+    empty: MatchEngineerProfileModel(),
+    dataFetcher: BehaviorSubject<MatchEngineerProfileModel>());

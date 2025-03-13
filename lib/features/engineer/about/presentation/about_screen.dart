@@ -175,8 +175,7 @@ class _AboutScreenState extends State<AboutScreen> {
               ),
               UIHelper.verticalSpace(8.h),
               Text(
-                engineerprofileSnap.about ??
-                    "I’m a dedicated Plumber Engineer specializing in designing and maintaining efficient plumbing systems.",
+                engineerprofileSnap.about ?? "NA",
                 style:
                     TextFontStyle.text12c474E5EBw400.copyWith(fontSize: 14.sp),
               ),

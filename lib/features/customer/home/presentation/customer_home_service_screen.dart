@@ -74,38 +74,36 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 
                 String profileImageUrl = snapshot.data?.data?.avatar ?? "";
                 return ClipOval(
-                  // ignore: unnecessary_null_comparison
-                  child: profileImageUrl != null
-                      ? CachedNetworkImage(
-                          width: 60.w, // Reduced width
-                          // Reduced height
-                          imageUrl: profileImageUrl,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            direction: ShimmerDirection.ltr,
-                            child: Container(
-                              width: 50.w,
-                              color: Colors.white,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => Icon(
-                            Icons.person,
-                            size: 35.sp, // Match icon size
-                          ),
-                          fadeInDuration: const Duration(milliseconds: 500),
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(150.r),
-                          child: Image.asset(
-                            Assets.images.profileAvatar.path,
-                            height: 60.w,
-                            width: 60.w,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                );
+                    child: CachedNetworkImage(
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  height: MediaQuery.of(context).size.width * 0.15,
+                  // Reduced height
+                  imageUrl: profileImageUrl,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    direction: ShimmerDirection.ltr,
+                    child: Container(
+                      width: 50.w,
+                      color: Colors.white,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) {
+                    return Image.asset(
+                      Assets.images.profileAvatar.path,
+                      height: 50.w,
+                      width: 50.w,
+                      fit: BoxFit.cover,
+                    );
+                  },
+
+                  // Icon(
+                  //   Icons.person,
+                  //   size: 35.sp, // Match icon size
+                  // ),
+                  fadeInDuration: const Duration(milliseconds: 500),
+                ));
               } else {
                 return const Center(
                   child: Text(
@@ -118,7 +116,17 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           UIHelper.horizontalSpace(11.w),
         ],
       ),
-      drawer: const CustomerDrawer(),
+      drawer: Theme(
+        data: Theme.of(context).copyWith(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+        ),
+        child: const Material(
+          color: Colors.white,
+          child: CustomerDrawer(),
+        ),
+      ),
       backgroundColor: AppColors.cFFFFFF,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),

@@ -14,6 +14,7 @@ import 'package:barlew_app/networks/api_access.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 class CustomerReviewScreen extends StatefulWidget {
@@ -24,21 +25,29 @@ class CustomerReviewScreen extends StatefulWidget {
 }
 
 class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
+  bool isLoading = false;
   double _selectedRating = 0.0;
   final TextEditingController reviewcontroller = TextEditingController();
   Future<bool> submitreview() async {
     try {
+      setState(() {
+        isLoading = true; // Start loading when form submission begins
+      });
       await customerRatingRXobj
           .customerRatingRX(
               userID: 3,
               rating: _selectedRating.toInt(),
               review: reviewcontroller.text)
           .then((value) {
-        setState(() {});
+        setState(() {
+          isLoading = false;
+        });
       });
       return true;
     } catch (e) {
-      setState(() {});
+      setState(() {
+        isLoading = false;
+      });
       ToastUtil.showShortToast(e.toString());
       return false;
     }
@@ -78,85 +87,96 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              UIHelper.verticalSpace(45.h),
-              Text(
-                "Thank You For Using OK!",
-                style: TextFontStyle.text14c798090w500,
-              ),
-              UIHelper.verticalSpace(6.h),
-              Text(
-                "Give a Review",
-                style: TextFontStyle.text16c192A48inter700
-                    .copyWith(fontSize: 24.sp),
-              ),
-              UIHelper.verticalSpace(15.h),
-              RatingBar.builder(
-                unratedColor: AppColors.c000000.withOpacity(0.1),
-                initialRating: 3,
-                itemSize: 25.sp,
-                minRating: 0,
-                direction: Axis.horizontal,
-                allowHalfRating: false,
-                itemCount: 6,
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: AppColors.cFDB022,
+        child: Stack(children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                UIHelper.verticalSpace(45.h),
+                Text(
+                  "Thank You For Using OK!",
+                  style: TextFontStyle.text14c798090w500,
                 ),
-                onRatingUpdate: (rating) {
-                  setState(() {
-                    _selectedRating = rating; // Store the selected rating
-                  });
-                },
-              ),
-              UIHelper.verticalSpace(30.h),
-              Row(
-                children: [
-                  Text(
-                    "Detail Review",
-                    style: TextFontStyle.text14c444B5Bw500,
+                UIHelper.verticalSpace(6.h),
+                Text(
+                  "Give a Review",
+                  style: TextFontStyle.text16c192A48inter700
+                      .copyWith(fontSize: 24.sp),
+                ),
+                UIHelper.verticalSpace(15.h),
+                RatingBar.builder(
+                  unratedColor: AppColors.c000000.withOpacity(0.1),
+                  initialRating: 3,
+                  itemSize: 25.sp,
+                  minRating: 0,
+                  direction: Axis.horizontal,
+                  allowHalfRating: false,
+                  itemCount: 6,
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: AppColors.cFDB022,
                   ),
-                ],
-              ),
-              UIHelper.verticalSpace(8.h),
-              Container(
-                height: 120.h,
-                decoration: BoxDecoration(
-                    color: AppColors.cFFFFFF,
-                    border:
-                        Border.all(width: 1.w, color: AppColors.broderColor),
-                    borderRadius: BorderRadius.circular(12.r)),
-                child: Padding(
-                  padding: EdgeInsets.all(5.sp),
-                  child: CommonTextFormField(
-                    controller: reviewcontroller,
-                    isPrefixIcon: false,
-                    fillColor: AppColors.cFFFFFF,
-                    borderColor: Colors.transparent,
-                    focusBorderColor: Colors.transparent,
-                    textInputStyle: TextFontStyle.text14c444B5Bw500,
-                    hintText: "Write Review.....",
-                    maxline: 4,
+                  onRatingUpdate: (rating) {
+                    setState(() {
+                      _selectedRating = rating; // Store the selected rating
+                    });
+                  },
+                ),
+                UIHelper.verticalSpace(30.h),
+                Row(
+                  children: [
+                    Text(
+                      "Detail Review",
+                      style: TextFontStyle.text14c444B5Bw500,
+                    ),
+                  ],
+                ),
+                UIHelper.verticalSpace(8.h),
+                Container(
+                  height: 120.h,
+                  decoration: BoxDecoration(
+                      color: AppColors.cFFFFFF,
+                      border:
+                          Border.all(width: 1.w, color: AppColors.broderColor),
+                      borderRadius: BorderRadius.circular(12.r)),
+                  child: Padding(
+                    padding: EdgeInsets.all(5.sp),
+                    child: CommonTextFormField(
+                      controller: reviewcontroller,
+                      isPrefixIcon: false,
+                      fillColor: AppColors.cFFFFFF,
+                      borderColor: Colors.transparent,
+                      focusBorderColor: Colors.transparent,
+                      textInputStyle: TextFontStyle.text14c444B5Bw500,
+                      hintText: "Write Review.....",
+                      maxline: 4,
+                    ),
                   ),
                 ),
-              ),
-              UIHelper.verticalSpace(200.h),
+                UIHelper.verticalSpace(200.h),
 
-              // const ReportBottomSheet(),
-              CustomButton(
-                title: "Submit",
-                onTap: () async {
-                  bool isSuccess = await submitreview();
-                  if (isSuccess) {
-                    NavigationService.navigateTo(Routes.navigationsBarScreen);
-                  }
-                },
-              ),
-            ],
+                // const ReportBottomSheet(),
+                CustomButton(
+                  title: "Submit",
+                  onTap: () async {
+                    bool isSuccess = await submitreview();
+                    if (isSuccess) {
+                      NavigationService.navigateTo(Routes.navigationsBarScreen);
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
+          if (isLoading)
+            const Positioned.fill(
+              child: Center(
+                child: SpinKitCircle(
+                  color: Colors.yellow,
+                  size: 50.0,
+                ),
+              ),
+            ),
+        ]),
       ),
     );
   }

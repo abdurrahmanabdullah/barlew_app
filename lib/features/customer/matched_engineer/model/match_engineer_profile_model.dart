@@ -1,23 +1,23 @@
 import 'dart:convert';
 
-class EngineerDetailsPageModel {
+class MatchEngineerProfileModel {
   Data? data;
   String? message;
   int? status;
 
-  EngineerDetailsPageModel({
+  MatchEngineerProfileModel({
     this.data,
     this.message,
     this.status,
   });
 
-  factory EngineerDetailsPageModel.fromRawJson(String str) =>
-      EngineerDetailsPageModel.fromJson(json.decode(str));
+  factory MatchEngineerProfileModel.fromRawJson(String str) =>
+      MatchEngineerProfileModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory EngineerDetailsPageModel.fromJson(Map<String, dynamic> json) =>
-      EngineerDetailsPageModel(
+  factory MatchEngineerProfileModel.fromJson(Map<String, dynamic> json) =>
+      MatchEngineerProfileModel(
         data: json["data"] == null ? null : Data.fromJson(json["data"]),
         message: json["message"],
         status: json["status"],
@@ -32,15 +32,11 @@ class EngineerDetailsPageModel {
 
 class Data {
   Engineer? engineer;
-  int? averageRating;
-  int? reviewCount;
-  List<Review>? reviews;
+  Service? service;
 
   Data({
     this.engineer,
-    this.averageRating,
-    this.reviewCount,
-    this.reviews,
+    this.service,
   });
 
   factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
@@ -51,21 +47,13 @@ class Data {
         engineer: json["engineer"] == null
             ? null
             : Engineer.fromJson(json["engineer"]),
-        averageRating: json["average_rating"],
-        reviewCount: json["review_count"],
-        reviews: json["reviews"] == null
-            ? []
-            : List<Review>.from(
-                json["reviews"]!.map((x) => Review.fromJson(x))),
+        service:
+            json["service"] == null ? null : Service.fromJson(json["service"]),
       );
 
   Map<String, dynamic> toJson() => {
         "engineer": engineer?.toJson(),
-        "average_rating": averageRating,
-        "review_count": reviewCount,
-        "reviews": reviews == null
-            ? []
-            : List<dynamic>.from(reviews!.map((x) => x.toJson())),
+        "service": service?.toJson(),
       };
 }
 
@@ -79,7 +67,8 @@ class Engineer {
   String? avatar;
   String? address;
   String? role;
-  String? level;
+  String? ratting;
+  int? totalReviews;
   String? name;
   List<Skill>? skills;
   List<Portfolio>? portfolios;
@@ -94,7 +83,8 @@ class Engineer {
     this.avatar,
     this.address,
     this.role,
-    this.level,
+    this.ratting,
+    this.totalReviews,
     this.name,
     this.skills,
     this.portfolios,
@@ -115,7 +105,8 @@ class Engineer {
         avatar: json["avatar"],
         address: json["address"],
         role: json["role"],
-        level: json["level"],
+        ratting: json["ratting"],
+        totalReviews: json["total_reviews"],
         name: json["name"],
         skills: json["skills"] == null
             ? []
@@ -136,7 +127,8 @@ class Engineer {
         "avatar": avatar,
         "address": address,
         "role": role,
-        "level": level,
+        "ratting": ratting,
+        "total_reviews": totalReviews,
         "name": name,
         "skills": skills == null
             ? []
@@ -196,77 +188,34 @@ class Skill {
       };
 }
 
-class Review {
-  Reviewer? reviewer;
-  int? rating;
-  String? review;
-
-  Review({
-    this.reviewer,
-    this.rating,
-    this.review,
-  });
-
-  factory Review.fromRawJson(String str) => Review.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Review.fromJson(Map<String, dynamic> json) => Review(
-        reviewer: json["reviewer"] == null
-            ? null
-            : Reviewer.fromJson(json["reviewer"]),
-        rating: json["rating"],
-        review: json["review"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "reviewer": reviewer?.toJson(),
-        "rating": rating,
-        "review": review,
-      };
-}
-
-class Reviewer {
+class Service {
   int? id;
-  String? firstName;
-  String? lastName;
-  String? service;
-  String? about;
-  String? avatar;
-  String? address;
+  String? title;
+  String? thumbnail;
+  String? price;
 
-  Reviewer({
+  Service({
     this.id,
-    this.firstName,
-    this.lastName,
-    this.service,
-    this.about,
-    this.avatar,
-    this.address,
+    this.title,
+    this.thumbnail,
+    this.price,
   });
 
-  factory Reviewer.fromRawJson(String str) =>
-      Reviewer.fromJson(json.decode(str));
+  factory Service.fromRawJson(String str) => Service.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Reviewer.fromJson(Map<String, dynamic> json) => Reviewer(
+  factory Service.fromJson(Map<String, dynamic> json) => Service(
         id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        service: json["service"],
-        about: json["about"],
-        avatar: json["avatar"],
-        address: json["address"],
+        title: json["title"],
+        thumbnail: json["thumbnail"],
+        price: json["price"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "service": service,
-        "about": about,
-        "avatar": avatar,
-        "address": address,
+        "title": title,
+        "thumbnail": thumbnail,
+        "price": price,
       };
 }
