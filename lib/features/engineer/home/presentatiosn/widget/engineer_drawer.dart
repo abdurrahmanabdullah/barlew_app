@@ -1,9 +1,12 @@
 import 'package:barlew_app/constant/text_font_style.dart';
+import 'package:barlew_app/features/customer/home/presentation/customer_home_service_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_logout/logout_botom_sheet.dart';
+import 'package:barlew_app/features/engineer/home/presentatiosn/engineer_home_screen.dart';
 import 'package:barlew_app/features/engineer/home/presentatiosn/widget/custom_row.dart';
 import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/all_routes.dart';
+import 'package:barlew_app/helpers/global_variable.dart';
 import 'package:barlew_app/helpers/navigation_service.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:barlew_app/networks/api_access.dart';
@@ -32,14 +35,14 @@ class _EngineerDrawerState extends State<EngineerDrawer> {
   }
 
   apiCall() async {
-    final profileData = await engineerProfileRXObj.engineerProfileRX();
+    await engineerProfileRXObj.engineerProfileRX();
 
     /// If the profile data is not null, update the profile provider
-    if (mounted && profileData != null) {
-      /// Use the ProfileProvider to set the profile data
-      Provider.of<ProfileProvider>(context, listen: false)
-          .setProfile(profileData);
-    }
+    // if (mounted && profileData != null) {
+    //   /// Use the ProfileProvider to set the profile data
+    //   Provider.of<ProfileProvider>(context, listen: false)
+    //       .setProfile(profileData);
+    // }
   }
 
   @override
@@ -60,71 +63,127 @@ class _EngineerDrawerState extends State<EngineerDrawer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(150.r),
-                        child: Consumer<ProfileProvider>(
-                          builder: (context, profileProvider, child) {
-                            final profile = profileProvider.profile?.data;
+                  // Row(
+                  //   children: [
+                  //     ClipRRect(
+                  //       borderRadius: BorderRadius.circular(150.r),
+                  //       child: Consumer<ProfileProvider>(
+                  //         builder: (context, profileProvider, child) {
+                  //           final profile = profileProvider.profile?.data;
 
-                            return ClipOval(
-                              child: profile?.avatar == null
-                                  ? Image.asset(
+                  //           return ClipOval(
+                  //             child: profile?.avatar == null
+                  //                 ? Image.asset(
+                  //                     Assets.images.profileAvatar.path,
+                  //                     width: 50.w,
+                  //                     height: 50.h,
+                  //                     fit: BoxFit.cover,
+                  //                   )
+                  //                 : CachedNetworkImage(
+                  //                     width: 50.w,
+                  //                     height: 50.h,
+                  //                     imageUrl: profile?.avatar ?? ' ',
+                  //                     fit: BoxFit.cover,
+                  //                     placeholder: (context, url) =>
+                  //                         Shimmer.fromColors(
+                  //                       baseColor: Colors.grey[300]!,
+                  //                       highlightColor: Colors.grey[100]!,
+                  //                       direction: ShimmerDirection.ltr,
+                  //                       child: Container(
+                  //                         width: 50.w,
+                  //                         height: 50.h,
+                  //                         color: Colors.white,
+                  //                       ),
+                  //                     ),
+                  //                     errorWidget: (context, url, error) =>
+                  //                         Icon(
+                  //                       Icons.person,
+                  //                       size: 50.sp,
+                  //                     ),
+                  //                     fadeInDuration:
+                  //                         const Duration(milliseconds: 500),
+                  //                   ),
+                  //           );
+                  //         },
+                  //       ),
+                  //     ),
+                  //     UIHelper.horizontalSpace(12.w),
+                  //     Consumer<ProfileProvider>(
+                  //       builder: (context, profileProvider, child) {
+                  //         final profile = profileProvider.profile?.data;
+                  //         return Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             Text(
+                  //               "${profile?.firstName ?? 'Unknown'} ${profile?.lastName ?? ''}"
+                  //                   .trim(),
+                  //               style: TextFontStyle.text18cFFFFFFw500
+                  //                   .copyWith(fontSize: 16.sp),
+                  //             ),
+                  //             Text(
+                  //               profile?.email ?? "example@gmail.com",
+                  //               style: TextFontStyle.text14cFFFFFF400
+                  //                   .copyWith(fontSize: 16.sp),
+                  //             ),
+                  //           ],
+                  //         );
+                  //       },
+                  //     ),
+                  //   ],
+                  // ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          /// Profile Image
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(150.r),
+                            child: GlobalProfile.avatar != null &&
+                                    GlobalProfile.avatar!.isNotEmpty
+                                ? CachedNetworkImage(
+                                    imageUrl: GlobalProfile.avatar!,
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(
                                       Assets.images.profileAvatar.path,
                                       width: 50.w,
                                       height: 50.h,
                                       fit: BoxFit.cover,
-                                    )
-                                  : CachedNetworkImage(
-                                      width: 50.w,
-                                      height: 50.h,
-                                      imageUrl: profile?.avatar ?? ' ',
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) =>
-                                          Shimmer.fromColors(
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!,
-                                        direction: ShimmerDirection.ltr,
-                                        child: Container(
-                                          width: 50.w,
-                                          height: 50.h,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(
-                                        Icons.person,
-                                        size: 50.sp,
-                                      ),
-                                      fadeInDuration:
-                                          const Duration(milliseconds: 500),
                                     ),
-                            );
-                          },
-                        ),
-                      ),
-                      UIHelper.horizontalSpace(12.w),
-                      Consumer<ProfileProvider>(
-                        builder: (context, profileProvider, child) {
-                          final profile = profileProvider.profile?.data;
-                          return Column(
+                                    width: 50.w,
+                                    height: 50.h,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    Assets.images.profileAvatar.path,
+                                    width: 50.w,
+                                    height: 50.h,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+
+                          UIHelper.horizontalSpace(12.w),
+
+                          /// User Name & Email
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${profile?.firstName ?? 'Unknown'} ${profile?.lastName ?? ''}"
-                                    .trim(),
+                                "${GlobalProfile.firstName ?? 'Loading...'} ${GlobalProfile.lastName ?? ''}",
                                 style: TextFontStyle.text18cFFFFFFw500
                                     .copyWith(fontSize: 16.sp),
                               ),
                               Text(
-                                profile?.email ?? "example@gmail.com",
+                                GlobalProfile.email ?? "No Email",
                                 style: TextFontStyle.text14cFFFFFF400
                                     .copyWith(fontSize: 16.sp),
                               ),
                             ],
-                          );
-                        },
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -155,6 +214,14 @@ class _EngineerDrawerState extends State<EngineerDrawer> {
                 title: "Income History",
                 onTap: () {
                   NavigationService.navigateTo(Routes.incomeHistoryScreen);
+                },
+              ),
+              UIHelper.verticalSpace(26.h),
+              CustomRow(
+                icon: Assets.icons.icon2,
+                title: "Work History",
+                onTap: () {
+                  NavigationService.navigateTo(Routes.workHistoryScreen);
                 },
               ),
               UIHelper.verticalSpace(30.h),

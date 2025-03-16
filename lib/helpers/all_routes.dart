@@ -5,12 +5,14 @@ import 'package:barlew_app/features/customer/auth/sign_up/presentation/register_
 import 'package:barlew_app/features/customer/auth/signup_verify/presentation/sign_up_verify_screen.dart';
 import 'package:barlew_app/features/customer/chat/presentation/call_screen.dart';
 import 'package:barlew_app/features/customer/chat/presentation/messenging_screen.dart';
+import 'package:barlew_app/features/customer/chat_message_screen/presentations/chat_message_screen.dart';
 import 'package:barlew_app/features/customer/customer_review/widget/report_bottom_sheet.dart';
 import 'package:barlew_app/features/customer/engineer_level/presentation/engineer_level_screen.dart';
 import 'package:barlew_app/features/customer/matched_engineer/presentation/matched_engineer_screen.dart';
 import 'package:barlew_app/features/customer/notification/presentations/notification_screen.dart';
 
 import 'package:barlew_app/features/customer/waiting_screen/presentation/waiting_screen.dart';
+
 import 'package:barlew_app/features/engineer/Income_history/presentations/Income_history_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_edit_profile/presentation/engineer_edit_profile_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/create_new_password/presentation/engineer_create_new_pass_screen.dart';
@@ -48,7 +50,7 @@ import '../features/customer_navigations_bar/presentations/navigations_bar_scree
 import '../features/customer/problmes/presentatiosn/problmes_screen.dart';
 import '../features/customer/questions_page/presentations/questions_page_screen.dart';
 
-import '../features/customer/task_history/presentations/task_history_screen.dart';
+import '../features/customer/work_history/presentations/work_history_screen.dart';
 
 final class Routes {
   static final Routes _routes = Routes._internal();
@@ -71,7 +73,7 @@ final class Routes {
   static const String notificationScreen = '/notificationScreen';
   static const String editProfileScreen = '/editProfileScreen';
   static const String personalInformationScreen = '/personalInformationScreen';
-  static const String taskHistoryScreen = '/taskHistoryScreen';
+  static const String workHistoryScreen = '/taskHistoryScreen';
   static const String historyDetailsScreen = '/historyDetailsScreen';
   static const String matchedEngineerScreen = '/matchedEngineerScreen';
   static const String chatScreen = '/ChatScreen';
@@ -111,6 +113,9 @@ final class Routes {
       '/engineerSignupVerifyScreen';
   static const String matchedResultScreen = '/matchedResultScreen';
   static const String reportBottomSheet = '/ReportBottomSheet';
+  static const String engineerWorkHistoryScreen = '/EngineerWorkHistoryScreen';
+
+  static const String chatMessageScreen = '/ChatMessageScreen';
 }
 
 final class RouteGenerator {
@@ -361,21 +366,27 @@ final class RouteGenerator {
                       snap: args["snap"],
                     ));
 
-      case Routes.taskHistoryScreen:
+      case Routes.workHistoryScreen:
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: const ScreenTitle(widget: TaskHistoryScreen()),
+                widget: const ScreenTitle(widget: WorkHistoryScreen()),
                 settings: settings)
             : CupertinoPageRoute(
-                builder: (context) => const TaskHistoryScreen());
+                builder: (context) => const WorkHistoryScreen());
 
       case Routes.historyDetailsScreen:
+        Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: const ScreenTitle(widget: HistoryDetailsScreen()),
+                widget: ScreenTitle(
+                    widget: HistoryDetailsScreen(
+                  id: args['id'],
+                )),
                 settings: settings)
             : CupertinoPageRoute(
-                builder: (context) => const HistoryDetailsScreen());
+                builder: (context) => HistoryDetailsScreen(
+                      id: args['id'],
+                    ));
 
       case Routes.matchedEngineerScreen:
         return Platform.isAndroid
@@ -397,6 +408,14 @@ final class RouteGenerator {
                 widget: const ScreenTitle(widget: ChatScreen()),
                 settings: settings)
             : CupertinoPageRoute(builder: (context) => const ChatScreen());
+
+      case Routes.chatMessageScreen:
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(
+                widget: const ScreenTitle(widget: ChatMessageScreen()),
+                settings: settings)
+            : CupertinoPageRoute(
+                builder: (context) => const ChatMessageScreen());
 
       case Routes.engineerSettingScreen:
         return Platform.isAndroid
@@ -507,6 +526,7 @@ final class RouteGenerator {
                 widget: const ScreenTitle(widget: OnboardScreen()),
                 settings: settings)
             : CupertinoPageRoute(builder: (context) => const OnboardScreen());
+
       default:
         return null;
     }

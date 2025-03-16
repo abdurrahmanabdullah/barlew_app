@@ -139,4 +139,11 @@ final class Endpoints {
   /// withdrawal request
   static String engineerMatchProfileEndpoint({required String requestId}) =>
       "/api/engineer-profile-with-services/$requestId";
+
+  static String customerWorkHistoryEndpoint({required String endPart}) =>
+      "/api/working-history$endPart";
+
+  //engineer  request accept
+  static String historyDetailsEndpoint({required int id}) =>
+      "/api/working-history/$id";
 }

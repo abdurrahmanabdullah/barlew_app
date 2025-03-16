@@ -78,55 +78,57 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
 
   Future<void> engineersignupMethod() async {
     try {
-      if (_formKey.currentState!.validate()) {
+      if (!_formKey.currentState!.validate()) {
+        return;
+      }
+
+      setState(() {
+        _isLoading = true;
+      });
+      final imagePickerProvider =
+          Provider.of<ImagePickerProvider>(context, listen: false);
+
+      // Check if portfolio images are selected
+      if (imagePickerProvider.pickedFiles2.isEmpty) {
+        ToastUtil.showShortToast("Please select a portfolio file.");
+        return;
+      }
+      // Only send skill IDs, not the entire object
+      List<int> skillIds =
+          selectedSkills.map((skill) => skill['id'] as int).toList();
+
+      // print("Sending skill IDs: $skillIds");
+
+      bool isSignedUp = await engineerSignUpRxObj.engineerSignUpRx(
+        firstName: signupScreenProvider.firstnameController.text,
+        lastName: signupScreenProvider.lastnameController.text,
+        email: signupScreenProvider.emailController.text,
+        role: "engineer",
+        address: signupScreenProvider.addressController.text,
+        password: signupScreenProvider.passwordController.text,
+        passwordConfirmation:
+            signupScreenProvider.confirmPasswordController.text,
+        service: signupScreenProvider.serviceController.text,
+        about: signupScreenProvider.aboutController.text,
+        skills: skillIds,
+
+        // level: engineerLevelController.text,
+        portfolio: imagePickerProvider.pickedFiles2,
+      );
+
+      if (isSignedUp) {
         setState(() {
-          _isLoading = true; // Show loading indicator
+          _isLoading = false;
         });
-        final imagePickerProvider =
-            Provider.of<ImagePickerProvider>(context, listen: false);
-
-        // Check if portfolio images are selected
-        if (imagePickerProvider.pickedFiles2.isEmpty) {
-          ToastUtil.showShortToast("Please select a portfolio file.");
-          return;
-        }
-        // Only send skill IDs, not the entire object
-        List<int> skillIds =
-            selectedSkills.map((skill) => skill['id'] as int).toList();
-
-        // print("Sending skill IDs: $skillIds");
-
-        bool isSignedUp = await engineerSignUpRxObj.engineerSignUpRx(
-          firstName: signupScreenProvider.firstnameController.text,
-          lastName: signupScreenProvider.lastnameController.text,
-          email: signupScreenProvider.emailController.text,
-          role: "engineer",
-          address: signupScreenProvider.addressController.text,
-          password: signupScreenProvider.passwordController.text,
-          passwordConfirmation:
-              signupScreenProvider.confirmPasswordController.text,
-          service: signupScreenProvider.serviceController.text,
-          about: signupScreenProvider.aboutController.text,
-          skills: skillIds,
-
-          // level: engineerLevelController.text,
-          portfolio: imagePickerProvider.pickedFiles2,
+        NavigationService.navigateToWithArgs(
+          Routes.engineerSignupVerifyScreen,
+          {"email": signupScreenProvider.emailController.text},
         );
-
-        if (isSignedUp) {
-          setState(() {
-            _isLoading = false;
-          });
-          NavigationService.navigateToWithArgs(
-            Routes.engineerSignupVerifyScreen,
-            {"email": signupScreenProvider.emailController.text},
-          );
-        } else {
-          setState(() {
-            _isLoading = false;
-          });
-          ToastUtil.showShortToast("Failed to sign up");
-        }
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        ToastUtil.showShortToast("Failed to sign up");
       }
     } catch (e) {
       setState(() {

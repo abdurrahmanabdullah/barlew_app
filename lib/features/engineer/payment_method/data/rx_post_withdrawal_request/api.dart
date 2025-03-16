@@ -30,7 +30,8 @@ final class EngineerWithDrawlRequestApi {
       // Check if the response is successful
       if (response.statusCode == 200) {
         final data = json.decode(json.encode(response.data));
-        ToastUtil.showShortToast("withdrawl request Successfully");
+        String message = data['message'] ?? "No message received";
+        ToastUtil.showShortToast(message);
         return data;
       } else {
         throw DataSource.DEFAULT.getFailure();

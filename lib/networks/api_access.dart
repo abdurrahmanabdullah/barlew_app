@@ -9,6 +9,8 @@ import 'package:barlew_app/features/customer/auth/signup_verify/data/rx_post-sig
 import 'package:barlew_app/features/customer/auth/signup_verify/model/sign_up_verify_model.dart';
 import 'package:barlew_app/features/customer/customer_review/data/rx_post_customer_review/rx.dart';
 import 'package:barlew_app/features/customer/customer_review/data/rx_post_engineer_report_issue/rx.dart';
+import 'package:barlew_app/features/customer/history_details/data/rx_get_work_history_details/rx.dart';
+import 'package:barlew_app/features/customer/history_details/model/history_details_response_model.dart';
 import 'package:barlew_app/features/customer/home/model/customer_home_model.dart';
 import 'package:barlew_app/features/customer/home/model/customer_home_profile_model.dart';
 import 'package:barlew_app/features/customer/home/data/rx_get_customer_home_profile/rx.dart';
@@ -20,11 +22,13 @@ import 'package:barlew_app/features/customer/matched_engineer/data/rx_post_paypa
 import 'package:barlew_app/features/customer/matched_engineer/model/match_engineer_profile_model.dart';
 
 import 'package:barlew_app/features/customer/matched_engineer/model/paypal_pay_response_model.dart';
-import 'package:barlew_app/features/customer/payment_method/model/bank_details_model.dart';
+
 import 'package:barlew_app/features/customer/payment_method/rx_engineer_get_bank_details/rx.dart';
 import 'package:barlew_app/features/customer/problmes/data/rx.dart';
-import 'package:barlew_app/features/engineer/Engineer_edit_profile/data/rx_post_Engineer_portfolio_image_delete_data/rx.dart';
-import 'package:barlew_app/features/engineer/Engineer_edit_profile/data/rx_post_profile_pic_update/rx.dart';
+import 'package:barlew_app/features/customer/work_history/data/rx_get_work_history/rx.dart';
+import 'package:barlew_app/features/customer/work_history/model/work_history_response_model.dart';
+import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_Engineer_portfolio_image_delete_data/rx.dart';
+import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_profile_pic_update/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_Engineer_edit_profile_data/rx.dart';
 
 import 'package:barlew_app/features/engineer/balance/data/rx_engineer_get_details_balance/rx.dart';
@@ -228,9 +232,9 @@ EngineerReportRX engineerReportRXobj =
 EngineerBankDetailsRX engineerBankDetailsRXobj =
     EngineerBankDetailsRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
 ////  get bank details
-EngineerGetBankDetailsRX engineerGetBankDetailsRXobj = EngineerGetBankDetailsRX(
-    empty: BankDetailsResponseModel(),
-    dataFetcher: BehaviorSubject<BankDetailsResponseModel>());
+// EngineerGetBankDetailsRX engineerGetBankDetailsRXobj = EngineerGetBankDetailsRX(
+//     empty: BankDetailsResponseModel(),
+//     dataFetcher: BehaviorSubject<BankDetailsResponseModel>());
 
 ///------- withdrawl request
 
@@ -245,3 +249,15 @@ PaypalPayRequestRX paypalPayRequestRXobj = PaypalPayRequestRX(
 MatchEngineerProfileRX matchEngineerProfileRXobj = MatchEngineerProfileRX(
     empty: MatchEngineerProfileModel(),
     dataFetcher: BehaviorSubject<MatchEngineerProfileModel>());
+
+//customer_work_history
+
+CustomerWorkHistoryRX customerWorkHistoryRXobj = CustomerWorkHistoryRX(
+    empty: WorkHistoryResponseModel(),
+    dataFetcher: BehaviorSubject<WorkHistoryResponseModel>());
+
+//_history details
+
+HistoryDetailsRX historyDetailsRXobj = HistoryDetailsRX(
+    empty: HistoryDetailsResponseModel(),
+    dataFetcher: BehaviorSubject<HistoryDetailsResponseModel>());

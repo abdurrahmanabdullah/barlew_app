@@ -6,6 +6,7 @@ import 'package:barlew_app/features/customer/personal_Information/model/customer
 import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/all_routes.dart';
+import 'package:barlew_app/helpers/global_variable.dart';
 import 'package:barlew_app/helpers/navigation_service.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:barlew_app/networks/api_access.dart';
@@ -303,9 +304,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
 }
 
 //// global variable
-class GlobalProfile {
-  static String? firstName;
-  static String? lastName;
-  static String? email;
-  static String? avatar;
-}
+// class GlobalProfile {
+//   static String? firstName;
+//   static String? lastName;
+//   static String? email;
+//   static String? avatar;
+// }

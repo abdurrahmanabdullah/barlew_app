@@ -8,6 +8,7 @@ import 'package:barlew_app/features/engineer/personal_information/model/engineer
 import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/di.dart';
+import 'package:barlew_app/helpers/global_variable.dart';
 import 'package:barlew_app/helpers/toast.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:barlew_app/networks/api_access.dart';
@@ -154,15 +155,18 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                 }
                 if (snapshot.hasData) {
                   String profileSnap = snapshot.data?.data?.avatar ?? "";
-
+                  GlobalProfile.firstName = snapshot.data?.data?.firstName;
+                  GlobalProfile.lastName = snapshot.data?.data?.lastName;
+                  GlobalProfile.email = snapshot.data?.data?.email;
+                  GlobalProfile.avatar = snapshot.data?.data?.avatar;
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20.0),
                     child: ClipOval(
                       // ignore: unnecessary_null_comparison
                       child: profileSnap != null
                           ? CachedNetworkImage(
-                              width: 60.w, // Reduced width
-                              // Reduced height
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              height: MediaQuery.of(context).size.width * 0.15,
                               imageUrl: profileSnap,
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Shimmer.fromColors(
@@ -473,18 +477,114 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                       },
                     ),
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       // Previous Page Button
+                  //       GestureDetector(
+                  //         onTap: () {
+                  //           previouspage();
+                  //         },
+                  //         child: const Row(
+                  //           children: [
+                  //             Icon(Icons.arrow_back_ios, size: 24),
+                  //             SizedBox(width: 4),
+                  //             Text(
+                  //               'Previous',
+                  //               style: TextStyle(
+                  //                 fontSize: 16,
+                  //                 fontWeight: FontWeight.w500,
+                  //                 color: Colors.blue,
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       const SizedBox(width: 16),
+
+                  //       // Page Numbers
+                  //       for (int i = 1; i <= lastPageNumber; i++)
+                  //         GestureDetector(
+                  //           onTap: () {
+                  //             setState(() {
+                  //               pageId = i;
+                  //             });
+                  //             tasklistapiCall();
+                  //           },
+                  //           child: Container(
+                  //             margin:
+                  //                 const EdgeInsets.symmetric(horizontal: 4.0),
+                  //             padding: const EdgeInsets.symmetric(
+                  //                 vertical: 4.0, horizontal: 8.0),
+                  //             decoration: BoxDecoration(
+                  //               color: pageId == i
+                  //                   ? Colors.blue
+                  //                   : Colors.transparent,
+                  //               borderRadius: BorderRadius.circular(8.0),
+                  //               border: Border.all(
+                  //                 color:
+                  //                     pageId == i ? Colors.blue : Colors.grey,
+                  //                 width: 1.5,
+                  //               ),
+                  //             ),
+                  //             child: Text(
+                  //               '$i',
+                  //               style: TextStyle(
+                  //                 fontSize: 16,
+                  //                 fontWeight: FontWeight.w500,
+                  //                 color:
+                  //                     pageId == i ? Colors.white : Colors.blue,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+
+                  //       const SizedBox(width: 16),
+
+                  //       // Next Page Button
+                  //       GestureDetector(
+                  //         onTap: () {
+                  //           nextpage();
+                  //         },
+                  //         child: const Row(
+                  //           children: [
+                  //             Text(
+                  //               'Next',
+                  //               style: TextStyle(
+                  //                 fontSize: 16,
+                  //                 fontWeight: FontWeight.w500,
+                  //                 color: Colors.blue,
+                  //               ),
+                  //             ),
+                  //             SizedBox(width: 4),
+                  //             Icon(Icons.arrow_forward_ios, size: 24),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        // Previous Page Button
                         GestureDetector(
                           onTap: () {
-                            previouspage();
+                            if (pageId > 1) {
+                              setState(() {
+                                pageId--;
+                              });
+                              tasklistapiCall();
+                            }
                           },
                           child: const Row(
                             children: [
-                              Icon(Icons.arrow_back, size: 24),
+                              Icon(Icons.arrow_back_ios, size: 24),
                               SizedBox(width: 4),
                               Text(
                                 'Previous',
@@ -498,28 +598,59 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                           ),
                         ),
                         const SizedBox(width: 16),
+//- Page Numbers
+                        _pageButton(1), // Always show first page
+                        if (pageId == 2) _pageButton(2),
+                        if (pageId > 2 && pageId < lastPageNumber)
+                          _pageButton(pageId), // Show current page dynamically
+                        if (pageId < lastPageNumber - 1 && lastPageNumber > 3)
+                          const Text('...',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.blue)),
+                        if (lastPageNumber > 1)
+                          _pageButton(lastPageNumber), // Always show last page
+
+                        const Text('...',
+                            style: TextStyle(fontSize: 16, color: Colors.blue)),
+                        _pageButton(lastPageNumber), // Always show last page
+
+                        const SizedBox(width: 16),
+
+                        // Next Page Button
                         GestureDetector(
                           onTap: () {
-                            nextpage();
+                            if (pageId < lastPageNumber) {
+                              setState(() {
+                                pageId++;
+                              });
+                              tasklistapiCall();
+                            }
                           },
-                          child: const Row(
+                          child: Row(
                             children: [
                               Text(
                                 'Next',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.blue,
+                                  color: pageId < lastPageNumber
+                                      ? Colors.blue
+                                      : Colors.grey,
                                 ),
                               ),
-                              SizedBox(width: 4),
-                              Icon(Icons.arrow_forward, size: 24),
+                              const SizedBox(width: 4),
+                              Icon(Icons.arrow_forward_ios,
+                                  size: 24,
+                                  color: pageId < lastPageNumber
+                                      ? Colors.blue
+                                      : Colors.grey),
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
+
                   UIHelper.verticalSpace(30.h),
                 ],
               );
@@ -529,6 +660,38 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
               );
             }
           },
+        ),
+      ),
+    );
+  }
+
+// Function to generate page button
+  Widget _pageButton(int i) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          pageId = i;
+        });
+        tasklistapiCall();
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4.0),
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+        decoration: BoxDecoration(
+          color: pageId == i ? Colors.blue : Colors.transparent,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(
+            color: pageId == i ? Colors.blue : Colors.grey,
+            width: 1.5,
+          ),
+        ),
+        child: Text(
+          '$i',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: pageId == i ? Colors.white : Colors.blue,
+          ),
         ),
       ),
     );

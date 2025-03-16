@@ -2,32 +2,35 @@
 
 // import 'dart:developer';
 
-// import 'package:barlew_app/features/customer/payment_method/model/bank_details_model.dart';
-// import 'package:barlew_app/features/customer/payment_method/rx_engineer_get_bank_details/api.dart';
-// import 'package:barlew_app/helpers/toast.dart';
-// import 'package:barlew_app/networks/rx_base.dart';
+// import 'package:barlew_app/features/customer/history_details/data/rx_get_work_history_details/api.dart';
+// import 'package:barlew_app/features/customer/history_details/model/history_details_response_model.dart';
+
 // import 'package:dio/dio.dart';
 // import 'package:rxdart/rxdart.dart';
+// import '../../../../../../helpers/toast.dart';
+// import '../../../../../../networks/rx_base.dart';
 
-// final class EngineerGetBankDetailsRX
-//     extends RxResponseInt<BankDetailsResponseModel> {
-//   final api = EngineerGetBankDetailsApi.instance;
+// final class HistoryDetailsRX
+//     extends RxResponseInt<HistoryDetailsResponseModel> {
+//   final api = HistoryDetailsApi.instance;
 
-//   EngineerGetBankDetailsRX({required super.empty, required super.dataFetcher});
+//   HistoryDetailsRX({required super.empty, required super.dataFetcher});
 
 //   ValueStream get customerProfileSteam => dataFetcher.stream;
 
-//   Future<BankDetailsResponseModel?> engineerGetBankDetailsRX() async {
+//   Future<HistoryDetailsResponseModel?> historyDetailsRX(
+//       {required int id}) async {
 //     try {
-//       final BankDetailsResponseModel data =
-//           await api.engineerGetBankDetailsApi();
+//       final HistoryDetailsResponseModel data = await api.historyDetailsApi(
+//         id: id,
+//       );
 //       handleSuccessWithReturn(data);
 //       return data;
 //     } catch (error) {
 //       // Handle the error locally and return a fallback response
 //       if (error is DioException) {
-//         ToastUtil.showShortToast(
-//             error.response!.data["message"] ?? "Unknown error");
+//         // ToastUtil.showShortToast(
+//         //     error.response!.data["message"] ?? "Unknown error");
 //       }
 //       log(error.toString());
 //     }

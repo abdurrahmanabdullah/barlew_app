@@ -105,7 +105,7 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
                 UIHelper.verticalSpace(15.h),
                 RatingBar.builder(
                   unratedColor: AppColors.c000000.withOpacity(0.1),
-                  initialRating: 3,
+                  initialRating: 0,
                   itemSize: 25.sp,
                   minRating: 0,
                   direction: Axis.horizontal,
@@ -158,12 +158,21 @@ class _CustomerReviewScreenState extends State<CustomerReviewScreen> {
                 CustomButton(
                   title: "Submit",
                   onTap: () async {
+                    if (_selectedRating < 1) {
+                      ToastUtil.showShortToast(
+                          "Please select minimum one rating.");
+                      return;
+                    }
+
                     bool isSuccess = await submitreview();
                     if (isSuccess) {
+                      // Show success message
+                      ToastUtil.showShortToast(
+                          "Review submitted successfully!");
                       NavigationService.navigateTo(Routes.navigationsBarScreen);
                     }
                   },
-                ),
+                )
               ],
             ),
           ),

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 class BankDetailsResponseModel {
-  String? data;
-  List<Message>? message;
+  List<Datum>? data;
+  String? message;
   int? status;
 
   BankDetailsResponseModel({
@@ -18,24 +18,23 @@ class BankDetailsResponseModel {
 
   factory BankDetailsResponseModel.fromJson(Map<String, dynamic> json) =>
       BankDetailsResponseModel(
-        data: json["data"],
-        message: json["message"] == null
+        data: json["data"] == null
             ? []
-            : List<Message>.from(
-                json["message"]!.map((x) => Message.fromJson(x))),
+            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        message: json["message"],
         status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
-        "data": data,
-        "message": message == null
+        "data": data == null
             ? []
-            : List<dynamic>.from(message!.map((x) => x.toJson())),
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "message": message,
         "status": status,
       };
 }
 
-class Message {
+class Datum {
   int? id;
   String? bankName;
   String? accountNumber;
@@ -44,7 +43,7 @@ class Message {
   String? swiftCode;
   String? ifscCode;
 
-  Message({
+  Datum({
     this.id,
     this.bankName,
     this.accountNumber,
@@ -54,11 +53,11 @@ class Message {
     this.ifscCode,
   });
 
-  factory Message.fromRawJson(String str) => Message.fromJson(json.decode(str));
+  factory Datum.fromRawJson(String str) => Datum.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Message.fromJson(Map<String, dynamic> json) => Message(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         bankName: json["bank_name"],
         accountNumber: json["account_number"],

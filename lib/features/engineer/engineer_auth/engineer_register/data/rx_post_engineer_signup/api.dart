@@ -42,10 +42,6 @@ final class EngineerSignUpApi {
         mapData["skills[$i]"] = skills[i];
       }
 
-      // Dynamically add selected skills to the request
-      // for (int i = 0; i < level.length; i++) {
-      //   mapData["level[$i]"] = level[i];
-      // }
       FormData data = FormData.fromMap(mapData);
 
       // Add photos to FormData if available
@@ -66,7 +62,7 @@ final class EngineerSignUpApi {
 
       if (response.statusCode == 201) {
         final data = json.decode(json.encode(response.data));
-        ToastUtil.showShortToast("Sign Up Successful");
+        ToastUtil.showShortToast("varify  Successful");
         return data;
       } else {
         throw DataSource.DEFAULT.getFailure();

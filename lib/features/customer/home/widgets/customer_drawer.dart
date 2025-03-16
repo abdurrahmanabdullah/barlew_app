@@ -5,6 +5,7 @@ import 'package:barlew_app/features/engineer/home/presentatiosn/widget/custom_ro
 import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/all_routes.dart';
+import 'package:barlew_app/helpers/global_variable.dart';
 import 'package:barlew_app/helpers/navigation_service.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -111,7 +112,7 @@ class _CustomerDrawerState extends State<CustomerDrawer> {
               icon: Assets.icons.icon2,
               title: "Task History",
               onTap: () {
-                NavigationService.navigateTo(Routes.taskHistoryScreen);
+                NavigationService.navigateTo(Routes.workHistoryScreen);
               },
             ),
 
