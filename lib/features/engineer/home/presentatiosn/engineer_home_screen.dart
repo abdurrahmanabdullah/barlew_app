@@ -179,9 +179,9 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                                   color: Colors.white,
                                 ),
                               ),
-                              errorWidget: (context, url, error) => Icon(
-                                Icons.person,
-                                size: 35.sp, // Match icon size
+                              errorWidget: (context, url, error) => Image.asset(
+                                Assets.images.profileAvatar.path,
+                                fit: BoxFit.cover,
                               ),
                             )
                           : Image.asset(
@@ -566,90 +566,93 @@ class _EngineerHomeScreenState extends State<EngineerHomeScreen> {
                   //     ],
                   //   ),
                   // ),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Previous Page Button
-                        GestureDetector(
-                          onTap: () {
-                            if (pageId > 1) {
-                              setState(() {
-                                pageId--;
-                              });
-                              tasklistapiCall();
-                            }
-                          },
-                          child: const Row(
-                            children: [
-                              Icon(Icons.arrow_back_ios, size: 24),
-                              SizedBox(width: 4),
-                              Text(
-                                'Previous',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.blue,
+                  if (tasksSnap.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Previous Page Button
+                          GestureDetector(
+                            onTap: () {
+                              if (pageId > 1) {
+                                setState(() {
+                                  pageId--;
+                                });
+                                tasklistapiCall();
+                              }
+                            },
+                            child: const Row(
+                              children: [
+                                Icon(Icons.arrow_back_ios, size: 24),
+                                SizedBox(width: 4),
+                                Text(
+                                  'Previous',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.blue,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 16),
+                          const SizedBox(width: 16),
 //- Page Numbers
-                        _pageButton(1), // Always show first page
-                        if (pageId == 2) _pageButton(2),
-                        if (pageId > 2 && pageId < lastPageNumber)
-                          _pageButton(pageId), // Show current page dynamically
-                        if (pageId < lastPageNumber - 1 && lastPageNumber > 3)
+                          _pageButton(1), // Always show first page
+                          if (pageId == 2) _pageButton(2),
+                          if (pageId > 2 && pageId < lastPageNumber)
+                            _pageButton(
+                                pageId), // Show current page dynamically
+                          if (pageId < lastPageNumber - 1 && lastPageNumber > 3)
+                            const Text('...',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.blue)),
+                          if (lastPageNumber > 1)
+                            _pageButton(
+                                lastPageNumber), // Always show last page
+
                           const Text('...',
                               style:
                                   TextStyle(fontSize: 16, color: Colors.blue)),
-                        if (lastPageNumber > 1)
                           _pageButton(lastPageNumber), // Always show last page
 
-                        const Text('...',
-                            style: TextStyle(fontSize: 16, color: Colors.blue)),
-                        _pageButton(lastPageNumber), // Always show last page
+                          const SizedBox(width: 16),
 
-                        const SizedBox(width: 16),
-
-                        // Next Page Button
-                        GestureDetector(
-                          onTap: () {
-                            if (pageId < lastPageNumber) {
-                              setState(() {
-                                pageId++;
-                              });
-                              tasklistapiCall();
-                            }
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                'Next',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: pageId < lastPageNumber
-                                      ? Colors.blue
-                                      : Colors.grey,
+                          // Next Page Button
+                          GestureDetector(
+                            onTap: () {
+                              if (pageId < lastPageNumber) {
+                                setState(() {
+                                  pageId++;
+                                });
+                                tasklistapiCall();
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Next',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: pageId < lastPageNumber
+                                        ? Colors.blue
+                                        : Colors.grey,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 4),
-                              Icon(Icons.arrow_forward_ios,
-                                  size: 24,
-                                  color: pageId < lastPageNumber
-                                      ? Colors.blue
-                                      : Colors.grey),
-                            ],
+                                const SizedBox(width: 4),
+                                Icon(Icons.arrow_forward_ios,
+                                    size: 24,
+                                    color: pageId < lastPageNumber
+                                        ? Colors.blue
+                                        : Colors.grey),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
 
                   UIHelper.verticalSpace(30.h),
                 ],

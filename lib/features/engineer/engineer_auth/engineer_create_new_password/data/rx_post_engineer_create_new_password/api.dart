@@ -4,13 +4,13 @@ import 'package:barlew_app/networks/endpoint.dart';
 import 'package:barlew_app/networks/exception_handler/data_source.dart';
 import 'package:dio/dio.dart';
 
-final class CustomerResetPassApi {
-  static final CustomerResetPassApi _singleton =
-      CustomerResetPassApi._internal();
-  CustomerResetPassApi._internal();
-  static CustomerResetPassApi get instance => _singleton;
+final class EngineerCreateNewPasswordApi {
+  static final EngineerCreateNewPasswordApi _singleton =
+      EngineerCreateNewPasswordApi._internal();
+  EngineerCreateNewPasswordApi._internal();
+  static EngineerCreateNewPasswordApi get instance => _singleton;
 
-  Future<Map> customerResetPassApi({
+  Future<Map> engineerCreateNewPasswordApi({
     required String token,
     required String email,
     required String password,

@@ -26,7 +26,7 @@ class EngineerSignUpOtpVerifyScreen extends StatefulWidget {
 class _EngineerSignUpOtpVerifyScreenState
     extends State<EngineerSignUpOtpVerifyScreen> {
   final otpController = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -40,120 +40,169 @@ class _EngineerSignUpOtpVerifyScreenState
 
   late int otpDigits;
   bool _isLoading = false;
-
-  ///------------------
   Future<void> submitForm() async {
-    if (otpController.text.length == 4) {
-      setState(() {
-        _isLoading = true;
-      });
-      final result = await postVerifyOTPRxObj.postVerifyOTPRx(
-        email: widget.email,
-        otp: int.parse(otpController.text),
-      );
-      print("API response: $result");
-      if (result) {
+    try {
+      if (_formKey.currentState!.validate()) {
         setState(() {
-          _isLoading = false;
+          _isLoading = true;
         });
-        ToastUtil.showShortToast("Verify success");
-        NavigationService.navigateToUntilReplacement(
-            Routes.engineerNavigationsBarScreen);
-      } else {
-        setState(() {
-          _isLoading = false;
-        });
-        ToastUtil.showShortToast("Verify failed");
+        await postVerifyOTPRxObj
+            .postVerifyOTPRx(
+          email: widget.email,
+          otp: int.parse(otpController.text),
+        )
+            .then(
+          (value) {
+            if (value) {
+              NavigationService.navigateToUntilReplacement(
+                  Routes.engineerNavigationsBarScreen);
+            } else {
+              ToastUtil.showShortToast("Invalid OTP");
+            }
+          },
+        );
       }
-    } else {
+    } catch (e) {
+      ToastUtil.showShortToast(e.toString());
+    } finally {
       setState(() {
         _isLoading = false;
       });
-      ToastUtil.showShortToast("Please fill up all otp");
     }
   }
+
+  ///------------------
+  // Future<void> submitForm() async {
+  //   try {
+  //     if (_formKey.currentState!.validate()) {
+  //       setState(() {
+  //         _isLoading = true;
+  //       });
+  //       final result = await postVerifyOTPRxObj.postVerifyOTPRx(
+  //         email: widget.email,
+  //         otp: int.parse(otpController.text),
+  //       );
+  //       print("API response: $result");
+  //       if (result) {
+  //         setState(() {
+  //           _isLoading = false;
+  //         });
+  //         ToastUtil.showShortToast("Verify success");
+  //         NavigationService.navigateToUntilReplacement(
+  //             Routes.engineerNavigationsBarScreen);
+  //       } else {
+  //         setState(() {
+  //           _isLoading = false;
+  //         });
+  //         ToastUtil.showShortToast("Verify failed");
+  //       }
+  //     } else {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //       ToastUtil.showShortToast("Please fill up all otp");
+  //     }
+  //   } catch (e) {
+  //     ToastUtil.showShortToast(e.toString());
+  //   } finally {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.cFFFFFF,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Stack(children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                UIHelper.verticalSpace(60.h),
-                GestureDetector(
-                  onTap: () {
-                    NavigationService.goBack;
-                  },
-                  child: Image.asset(
-                    Assets.icons.arraytow.path,
-                    height: 34.h,
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Stack(children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  UIHelper.verticalSpace(60.h),
+                  GestureDetector(
+                    onTap: () {
+                      NavigationService.goBack;
+                    },
+                    child: Image.asset(
+                      Assets.icons.arraytow.path,
+                      height: 34.h,
+                    ),
                   ),
-                ),
-                UIHelper.verticalSpace(22.h),
-                Center(
-                  child: Text('Verify Account',
-                      textAlign: TextAlign.center, // Text alignment
-                      style: TextFontStyle.text25allPrimaryColorTextw700),
-                ),
-                UIHelper.verticalSpace(33.h),
-                Center(
-                    child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                      text: 'Code has been send to ',
-                      style: TextFontStyle.text14c2D3444w400,
-                      children: [
-                        TextSpan(
-                            // text: "johndoe@gmail.com.\n",
-                            text: widget.email,
-                            style: TextFontStyle.text14c000000w500),
-                        TextSpan(
-                            text: "Enter the code to verify your account.",
-                            style: TextFontStyle.text14c2D3444w400)
-                      ]),
-                )),
-                UIHelper.verticalSpace(44.h),
-                Text(
-                  'Enter Codel',
-                  style: TextFontStyle.text14allPrimaryColorTexts,
-                ),
-                UIHelper.verticalSpace(8.h),
-                CustomTextFormFild(
-                  hintText: '4 Digit Code',
-                  textStyle: TextFontStyle.text15cABABABinter400,
-                  controller: otpController,
-                ),
-                UIHelper.verticalSpace(22.h),
-                UIHelper.verticalSpace(8.h),
-                UIHelper.verticalSpace(325.h),
-                CustomButton(
-                  padding: EdgeInsets.symmetric(vertical: 18.h),
-                  title: 'Verify Account',
-                  style: TextFontStyle.text15cFFFFFF500,
-                  color: AppColors.allPrimaryColor,
-                  radius: BorderRadius.circular(119.r),
-                  onTap: () {
-                    submitForm();
-                    // NavigationService.navigateTo(
-                    //     Routes.engineerNavigationsBarScreen);
-                  },
-                ),
-              ],
+                  UIHelper.verticalSpace(22.h),
+                  Center(
+                    child: Text('Verify Account',
+                        textAlign: TextAlign.center, // Text alignment
+                        style: TextFontStyle.text25allPrimaryColorTextw700),
+                  ),
+                  UIHelper.verticalSpace(33.h),
+                  Center(
+                      child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                        text: 'Code has been send to ',
+                        style: TextFontStyle.text14c2D3444w400,
+                        children: [
+                          TextSpan(
+                              // text: "johndoe@gmail.com.\n",
+                              text: widget.email,
+                              style: TextFontStyle.text14c000000w500),
+                          TextSpan(
+                              text: "Enter the code to verify your account.",
+                              style: TextFontStyle.text14c2D3444w400)
+                        ]),
+                  )),
+                  UIHelper.verticalSpace(44.h),
+                  Text(
+                    'Enter Codel',
+                    style: TextFontStyle.text14allPrimaryColorTexts,
+                  ),
+                  UIHelper.verticalSpace(8.h),
+                  CustomTextFormFild(
+                      hintText: '4 Digit Code',
+                      textStyle: TextFontStyle.text15cABABABinter400,
+                      controller: otpController,
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.length < 3) {
+                          return "Enter your 4 Digit Code";
+                        } else {
+                          return null;
+                        }
+                      }),
+                  UIHelper.verticalSpace(22.h),
+                  UIHelper.verticalSpace(8.h),
+                  UIHelper.verticalSpace(325.h),
+                  CustomButton(
+                    padding: EdgeInsets.symmetric(vertical: 18.h),
+                    title: 'Verify Account',
+                    style: TextFontStyle.text15cFFFFFF500,
+                    color: AppColors.allPrimaryColor,
+                    radius: BorderRadius.circular(119.r),
+                    onTap: () {
+                      submitForm();
+                      // NavigationService.navigateTo(
+                      //     Routes.engineerNavigationsBarScreen);
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          //<<----------- loading indicator ------------->>
-          if (_isLoading)
-            const SpinKitCircle(
-              color: Colors.black,
-              size: 50.0,
-            ),
-        ]),
+            //<<----------- loading indicator ------------->>
+            if (_isLoading)
+              const SpinKitCircle(
+                color: Colors.yellow,
+                size: 50.0,
+              ),
+          ]),
+        ),
       ),
     );
   }

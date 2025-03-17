@@ -302,11 +302,3 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     );
   }
 }
-
-//// global variable
-// class GlobalProfile {
-//   static String? firstName;
-//   static String? lastName;
-//   static String? email;
-//   static String? avatar;
-// }

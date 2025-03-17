@@ -157,9 +157,9 @@ class _EngineerEditProfileScreenState extends State<EngineerEditProfileScreen> {
 
         if (result) {
           await engineerProfileRXObj.engineerProfileRX();
-          ToastUtil.showShortToast("Profile pic  updated successfully.");
+          ToastUtil.showShortToast("Profile picture updated successfully.");
         } else {
-          ToastUtil.showShortToast("Failed to update profile.");
+          ToastUtil.showShortToast("Failed to update profile picture.");
         }
       }
     } catch (e) {

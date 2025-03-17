@@ -27,13 +27,15 @@ import 'package:barlew_app/features/customer/payment_method/rx_engineer_get_bank
 import 'package:barlew_app/features/customer/problmes/data/rx.dart';
 import 'package:barlew_app/features/customer/work_history/data/rx_get_work_history/rx.dart';
 import 'package:barlew_app/features/customer/work_history/model/work_history_response_model.dart';
+import 'package:barlew_app/features/engineer/engineer_auth/engineer_verify_email/data/rx_post_engineer_verify_otp/rx.dart';
+import 'package:barlew_app/features/engineer/engineer_auth/engineer_verify_email/model/engineer_otp_response_model.dart';
 import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_Engineer_portfolio_image_delete_data/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_profile_pic_update/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_edit_profile/data/rx_post_Engineer_edit_profile_data/rx.dart';
 
 import 'package:barlew_app/features/engineer/balance/data/rx_engineer_get_details_balance/rx.dart';
 import 'package:barlew_app/features/engineer/balance/model/engineer_balance_details_model.dart';
-import 'package:barlew_app/features/engineer/engineer_auth/create_new_password/data/rx_create_new_password/rx.dart';
+import 'package:barlew_app/features/engineer/engineer_auth/engineer_create_new_password/data/rx_post_engineer_create_new_password/rx.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_forget_password/data/rx_post_forget_password/rx.dart';
 
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_login/data/rx_login/rx.dart';
@@ -153,8 +155,8 @@ ForgetPasswordSendOTPRx forgetPasswordSendOTPRxObj =
     ForgetPasswordSendOTPRx(empty: {}, dataFetcher: BehaviorSubject<Map>());
 
 ///  engineer reset  password
-EngineerResetPassRX engineerResetPassRXobj =
-    EngineerResetPassRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
+EngineerCreateNewPasswordRX engineerCreateNewPasswordRXobj =
+    EngineerCreateNewPasswordRX(empty: {}, dataFetcher: BehaviorSubject<Map>());
 
 ///  engineer edit profile
 EngineerEditProfileRX engineerEditProfileRXobj =
@@ -261,3 +263,8 @@ CustomerWorkHistoryRX customerWorkHistoryRXobj = CustomerWorkHistoryRX(
 HistoryDetailsRX historyDetailsRXobj = HistoryDetailsRX(
     empty: HistoryDetailsResponseModel(),
     dataFetcher: BehaviorSubject<HistoryDetailsResponseModel>());
+
+EngineerForgetPasswordOtpRX engineerForgetPasswordOtpRXobj =
+    EngineerForgetPasswordOtpRX(
+        empty: EngineerOtpResponseModel(),
+        dataFetcher: BehaviorSubject<EngineerOtpResponseModel>());

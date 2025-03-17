@@ -15,7 +15,7 @@ import 'package:barlew_app/features/customer/waiting_screen/presentation/waiting
 
 import 'package:barlew_app/features/engineer/Income_history/presentations/Income_history_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_edit_profile/presentation/engineer_edit_profile_screen.dart';
-import 'package:barlew_app/features/engineer/engineer_auth/create_new_password/presentation/engineer_create_new_pass_screen.dart';
+import 'package:barlew_app/features/engineer/engineer_auth/engineer_create_new_password/presentation/engineer_create_new_pass_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_forget_password/presentations/engineer_forgot_password_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_login/presentation/engineer_login_screen.dart';
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_register/presentations/engineer_register_screen.dart';
@@ -491,12 +491,18 @@ final class RouteGenerator {
                 builder: (context) => const EngineerForgotPasswordScreen());
 
       case Routes.engineerVerifyEmailScreen:
+        Map args = settings.arguments as Map;
         return Platform.isAndroid
             ? _FadedTransitionRoute(
-                widget: const ScreenTitle(widget: EngineerVerifyEmailScreen()),
+                widget: ScreenTitle(
+                    widget: EngineerVerifyEmailScreen(
+                  email: args["email"],
+                )),
                 settings: settings)
             : CupertinoPageRoute(
-                builder: (context) => const EngineerVerifyEmailScreen());
+                builder: (context) => EngineerVerifyEmailScreen(
+                      email: args["email"],
+                    ));
 
       case Routes.engineerLevelScreen:
         Map data = settings.arguments as Map;

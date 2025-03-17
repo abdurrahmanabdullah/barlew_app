@@ -1,7 +1,7 @@
 import 'package:barlew_app/constant/text_font_style.dart';
-import 'package:barlew_app/features/customer/home/presentation/customer_home_service_screen.dart';
+
 import 'package:barlew_app/features/engineer/engineer_auth/engineer_logout/logout_botom_sheet.dart';
-import 'package:barlew_app/features/engineer/home/presentatiosn/engineer_home_screen.dart';
+
 import 'package:barlew_app/features/engineer/home/presentatiosn/widget/custom_row.dart';
 import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
@@ -10,13 +10,11 @@ import 'package:barlew_app/helpers/global_variable.dart';
 import 'package:barlew_app/helpers/navigation_service.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:barlew_app/networks/api_access.dart';
-import 'package:barlew_app/provider/profile_provider.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 ////-----------------
 class EngineerDrawer extends StatefulWidget {
@@ -36,13 +34,6 @@ class _EngineerDrawerState extends State<EngineerDrawer> {
 
   apiCall() async {
     await engineerProfileRXObj.engineerProfileRX();
-
-    /// If the profile data is not null, update the profile provider
-    // if (mounted && profileData != null) {
-    //   /// Use the ProfileProvider to set the profile data
-    //   Provider.of<ProfileProvider>(context, listen: false)
-    //       .setProfile(profileData);
-    // }
   }
 
   @override

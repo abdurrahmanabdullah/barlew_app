@@ -81,10 +81,12 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
       if (!_formKey.currentState!.validate()) {
         return;
       }
+      if (signupScreenProvider.passwordController.text !=
+          signupScreenProvider.confirmPasswordController.text) {
+        ToastUtil.showShortToast("Passwords do not match");
+        return;
+      }
 
-      setState(() {
-        _isLoading = true;
-      });
       final imagePickerProvider =
           Provider.of<ImagePickerProvider>(context, listen: false);
 
@@ -93,6 +95,9 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
         ToastUtil.showShortToast("Please select a portfolio file.");
         return;
       }
+      setState(() {
+        _isLoading = true;
+      });
       // Only send skill IDs, not the entire object
       List<int> skillIds =
           selectedSkills.map((skill) => skill['id'] as int).toList();
@@ -128,7 +133,7 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
         setState(() {
           _isLoading = false;
         });
-        ToastUtil.showShortToast("Failed to sign up");
+        ToastUtil.showShortToast("Failed to Create Account");
       }
     } catch (e) {
       setState(() {
@@ -157,7 +162,7 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                     UIHelper.verticalSpace(53.h),
                     ////<<<<<<<<<<<<<<<<  back icon start here >>>>>>>>>>>>>> ////////////////
 
-                    UIHelper.verticalSpace(20.h),
+                    // UIHelper.verticalSpace(20.h),
                     Row(
                       children: [
                         GestureDetector(
@@ -202,19 +207,31 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                         Expanded(
                           flex: 1,
                           child: CustomTextFormFild(
-                            hintText: 'John',
-                            textStyle: TextFontStyle.text15cABABABinter400,
-                            controller: provider.firstnameController,
-                          ),
+                              hintText: 'John',
+                              textStyle: TextFontStyle.text15cABABABinter400,
+                              controller: provider.firstnameController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "First Name is required";
+                                } else {
+                                  return null;
+                                }
+                              }),
                         ),
                         UIHelper.horizontalSpace(15.w),
                         Expanded(
                           flex: 1,
                           child: CustomTextFormFild(
-                            hintText: 'Doe',
-                            textStyle: TextFontStyle.text15cABABABinter400,
-                            controller: provider.lastnameController,
-                          ),
+                              hintText: 'Doe',
+                              textStyle: TextFontStyle.text15cABABABinter400,
+                              controller: provider.lastnameController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Last Name  is required";
+                                } else {
+                                  return null;
+                                }
+                              }),
                         ),
                       ],
                     ),
@@ -228,10 +245,21 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                     UIHelper.verticalSpace(18.h),
                     ///// this is emil fild ///////////////
                     CustomTextFormFild(
-                      hintText: 'Enter your email',
-                      textStyle: TextFontStyle.text15cABABABinter400,
-                      controller: provider.emailController,
-                    ),
+                        hintText: 'Enter your email',
+                        textStyle: TextFontStyle.text15cABABABinter400,
+                        controller: provider.emailController,
+                        validator: (value) {
+                          final bool emailValid = RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(value ?? "");
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your email";
+                          } else if (!emailValid) {
+                            return "Please enter a valid email";
+                          } else {
+                            return null;
+                          }
+                        }),
 
                     //// end here //////////
                     ///
@@ -244,10 +272,16 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                     ),
                     UIHelper.verticalSpace(18.h),
                     CustomTextFormFild(
-                      hintText: 'Enter your Address',
-                      textStyle: TextFontStyle.text15cABABABinter400,
-                      controller: provider.addressController,
-                    ),
+                        hintText: 'Enter your Address',
+                        textStyle: TextFontStyle.text15cABABABinter400,
+                        controller: provider.addressController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Address is required";
+                          } else {
+                            return null;
+                          }
+                        }),
 
                     UIHelper.verticalSpace(17.h),
 
@@ -258,25 +292,34 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                     ),
                     UIHelper.verticalSpace(11.h),
                     CustomTextFormFild(
-                      obscureText: provider.obscurePassword,
-                      suffixIcon: IconButton(
-                        highlightColor: Colors.transparent,
-                        icon: Image.asset(
-                          provider.obscurePassword
-                              ? Assets.icons.eyeOff.path
-                              : Assets.icons.eyeOpen.path,
-                          height: 25.h,
+                        obscureText: provider.obscurePassword,
+                        suffixIcon: IconButton(
+                          highlightColor: Colors.transparent,
+                          icon: Image.asset(
+                            provider.obscurePassword
+                                ? Assets.icons.eyeOff.path
+                                : Assets.icons.eyeOpen.path,
+                            height: 25.h,
+                          ),
+                          onPressed: () {
+                            provider
+                                .togglePasswordVisibility(); // Toggling visibility through provider
+                          },
                         ),
-                        onPressed: () {
-                          provider
-                              .togglePasswordVisibility(); // Toggling visibility through provider
-                        },
-                      ),
-                      hintText: 'Confirm your Password',
-                      textStyle: TextFontStyle.text15cABABABinter400,
-                      controller: provider
-                          .passwordController, // Using the provider's controller
-                    ),
+                        hintText: 'Enter your Password',
+                        textStyle: TextFontStyle.text15cABABABinter400,
+                        controller: provider.passwordController,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.length < 8) {
+                            return "Enter Minimum 8 Digit";
+                          } else {
+                            return null;
+                          }
+                        }
+                        // Using the provider's controller
+                        ),
 
                     UIHelper.verticalSpace(5.h),
                     Text(
@@ -294,25 +337,35 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                     ),
                     UIHelper.verticalSpace(11.h),
                     CustomTextFormFild(
-                      obscureText: provider.confirmObscurePassword,
-                      suffixIcon: IconButton(
-                        highlightColor: Colors.transparent,
-                        icon: Image.asset(
-                          provider.confirmObscurePassword
-                              ? Assets.icons.eyeOff.path
-                              : Assets.icons.eyeOpen.path,
-                          height: 25.h,
+                        obscureText: provider.confirmObscurePassword,
+                        suffixIcon: IconButton(
+                          highlightColor: Colors.transparent,
+                          icon: Image.asset(
+                            provider.confirmObscurePassword
+                                ? Assets.icons.eyeOff.path
+                                : Assets.icons.eyeOpen.path,
+                            height: 25.h,
+                          ),
+                          onPressed: () {
+                            provider
+                                .toggleConfirmPasswordVisibility(); // Toggling visibility through provider
+                          },
                         ),
-                        onPressed: () {
-                          provider
-                              .toggleConfirmPasswordVisibility(); // Toggling visibility through provider
-                        },
-                      ),
-                      hintText: 'Confirm your Password',
-                      textStyle: TextFontStyle.text15cABABABinter400,
-                      controller: provider
-                          .confirmPasswordController, // Using the provider's controller
-                    ),
+                        hintText: 'Confirm your Password',
+                        textStyle: TextFontStyle.text15cABABABinter400,
+                        controller: provider.confirmPasswordController,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.length < 8) {
+                            return "Enter Minimum 8 Digit";
+                          } else {
+                            return null;
+                          }
+                        }
+
+                        // Using the provider's controller
+                        ),
 
                     ///<<<<<<<<<<<<<  end here >>>>>>>>>>>>>>  /////////
 
@@ -324,10 +377,16 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                     ),
                     UIHelper.verticalSpace(11.h),
                     CustomTextFormFild(
-                      hintText: 'Enter Your provide service ',
-                      textStyle: TextFontStyle.text15cABABABinter400,
-                      controller: provider.serviceController,
-                    ),
+                        hintText: 'Enter Your provide service ',
+                        textStyle: TextFontStyle.text15cABABABinter400,
+                        controller: provider.serviceController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Service is required";
+                          } else {
+                            return null;
+                          }
+                        }),
 
                     /// this is a skills fild start here
                     UIHelper.verticalSpace(10.h),
@@ -344,57 +403,66 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                         ),
                         UIHelper.verticalSpace(11.h),
                         DropdownButtonFormField<String>(
-                          isExpanded: true,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          hint: Text(
-                            selectedSkills.isEmpty
-                                ? 'Select Skills'
-                                : selectedSkills
-                                    .map((skill) => skill['name'])
-                                    .join(', '),
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          items: skillOptions.keys.map((skill) {
-                            return DropdownMenuItem<String>(
-                              value: skill,
-                              enabled:
-                                  false, // Prevent default selection behavior
-                              child: StatefulBuilder(
-                                builder: (context, setStateDropdown) {
-                                  return Row(
-                                    children: [
-                                      Checkbox(
-                                        value: selectedSkills.any((s) =>
-                                            s['id'] == skillOptions[skill]),
-                                        onChanged: (isSelected) {
-                                          setState(() {
-                                            if (isSelected == true) {
-                                              selectedSkills.add({
-                                                "id": skillOptions[skill]!,
-                                                "name": skill
-                                              });
-                                            } else {
-                                              selectedSkills.removeWhere((s) =>
-                                                  s['id'] ==
-                                                  skillOptions[skill]);
-                                            }
-                                          });
-                                          setStateDropdown(() {});
-                                        },
-                                      ),
-                                      Text(skill),
-                                    ],
-                                  );
-                                },
+                            isExpanded: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                            );
-                          }).toList(),
-                          onChanged: (_) {}, // Not needed
-                        ),
+                            ),
+                            hint: Text(
+                              selectedSkills.isEmpty
+                                  ? 'Select Skills'
+                                  : selectedSkills
+                                      .map((skill) => skill['name'])
+                                      .join(', '),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            items: skillOptions.keys.map((skill) {
+                              return DropdownMenuItem<String>(
+                                value: skill,
+                                enabled:
+                                    false, // Prevent default selection behavior
+                                child: StatefulBuilder(
+                                  builder: (context, setStateDropdown) {
+                                    return Row(
+                                      children: [
+                                        Checkbox(
+                                          value: selectedSkills.any((s) =>
+                                              s['id'] == skillOptions[skill]),
+                                          onChanged: (isSelected) {
+                                            setState(() {
+                                              if (isSelected == true) {
+                                                selectedSkills.add({
+                                                  "id": skillOptions[skill]!,
+                                                  "name": skill
+                                                });
+                                              } else {
+                                                selectedSkills.removeWhere(
+                                                    (s) =>
+                                                        s['id'] ==
+                                                        skillOptions[skill]);
+                                              }
+                                            });
+                                            setStateDropdown(() {});
+                                          },
+                                        ),
+                                        Text(skill),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (_) {},
+                            validator: (value) {
+                              if (selectedSkills.isEmpty) {
+                                return "Please select at least one skill";
+                              } else {
+                                return null;
+                              }
+                            }
+                            // Not needed
+                            ),
                       ],
                     ),
 
@@ -410,33 +478,40 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
                     ),
                     UIHelper.verticalSpace(11.h),
                     TextFormField(
-                      maxLines: 5,
-                      maxLength: 60,
-                      controller: provider.aboutController,
-                      decoration: InputDecoration(
-                        hintText: 'About',
-                        hintStyle: TextFontStyle.text15cc45536Bw400,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                              color: AppColors.broderColor, width: 1.w),
+                        maxLines: 5,
+                        maxLength: 60,
+                        controller: provider.aboutController,
+                        decoration: InputDecoration(
+                          hintText: 'About',
+                          hintStyle: TextFontStyle.text15cc45536Bw400,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                                color: AppColors.broderColor, width: 1.w),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                                color: AppColors.broderColor, width: 1.w),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                                color: AppColors.broderColor, width: 1.w),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 1.w),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                              color: AppColors.broderColor, width: 1.w),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                              color: AppColors.broderColor, width: 1.w),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(color: Colors.red, width: 1.w),
-                        ),
-                      ),
-                    ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "About is required";
+                          } else {
+                            return null;
+                          }
+                        }),
 
                     //// <<<<<<<<<<<<<<< end here >>>>>>>>>>>>>>>>>>>> ////
                     Text(
@@ -600,7 +675,7 @@ class _EngineerRegisterScreenState extends State<EngineerRegisterScreen> {
               //<<----------- loading indicator ------------->>
               if (_isLoading)
                 const SpinKitCircle(
-                  color: Colors.black,
+                  color: Colors.yellow,
                   size: 50.0,
                 ),
             ])),

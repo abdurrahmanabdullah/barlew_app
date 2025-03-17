@@ -205,7 +205,7 @@ class _EngineerLevelScreenState extends State<EngineerLevelScreen> {
                   ),
                   const SizedBox(width: 8),
                   const Text(
-                    'Pick Any 3 Options',
+                    'Pick Any Options',
                     style: TextStyle(
                       color: Color(0xFF192A48),
                       fontSize: 12,

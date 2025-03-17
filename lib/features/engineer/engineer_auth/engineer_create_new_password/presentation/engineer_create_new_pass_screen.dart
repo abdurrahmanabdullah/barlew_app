@@ -27,8 +27,8 @@ class _EngineerCreateNewPassScreenState
     extends State<EngineerCreateNewPassScreen> {
   final conformPasswordController = TextEditingController();
   final passwordController = TextEditingController();
-  bool _obscurePassword = true; // For password visibility toggle
-  bool _obscurePasswordTow = true; // For confirm password visibility toggle
+  bool _obscurePassword = true;
+  bool _obscurePasswordTow = true;
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
@@ -39,33 +39,76 @@ class _EngineerCreateNewPassScreenState
     super.dispose();
   }
 
+  // Future<void> submitForm() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     try {
+  //       setState(() {
+  //         _isLoading = true;
+  //       });
+  //       final success =
+  //           await engineerCreateNewPasswordRXobj.engineerResetPassRX(
+  //               email: widget.email,
+  //               password: passwordController.text,
+  //               passwordConfirmation: conformPasswordController.text,
+  //               token: otpVerifyToken);
+  //       print("Reset Password Success: $success");
+  //       if (success) {
+  //         print("Navigating to Login Screen");
+  //         setState(() {
+  //           _isLoading = false;
+  //         });
+  //         ToastUtil.showShortToast("Success");
+  //         NavigationService.navigateToReplacement(Routes.engineerLoginScreen);
+  //       } else {
+  //         setState(() {
+  //           _isLoading = false;
+  //         });
+  //         ToastUtil.showShortToast("Reset password failed: Unknown error");
+  //       }
+  //     } catch (error) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //       ToastUtil.showShortToast("Reset password failed: ${error.toString()}");
+  //     }
+  //   } else {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //     ToastUtil.showShortToast("Invalid form data");
+  //   }
+  // }
+
   Future<void> submitForm() async {
     if (_formKey.currentState!.validate()) {
       try {
         setState(() {
           _isLoading = true;
         });
-        final success = await engineerResetPassRXobj.engineerResetPassRX(
-            email: widget.email,
-            password: passwordController.text,
-            passwordConfirmation: conformPasswordController.text,
-            token: otpVerifyToken);
+        final success =
+            await engineerCreateNewPasswordRXobj.engineerResetPassRX(
+                email: widget.email,
+                password: passwordController.text,
+                passwordConfirmation: conformPasswordController.text,
+                token: otpVerifyToken);
 
         if (success) {
-          setState(() {});
-          ToastUtil.showShortToast("Success");
+          setState(() {
+            _isLoading = false;
+          });
+          ToastUtil.showShortToast(" Create Password Successfull");
           NavigationService.navigateToReplacement(Routes.engineerLoginScreen);
         } else {
           setState(() {
             _isLoading = false;
           });
-          ToastUtil.showShortToast("Reset password failed: Unknown error");
+          ToastUtil.showShortToast("Create Password failed");
         }
       } catch (error) {
         setState(() {
           _isLoading = false;
         });
-        ToastUtil.showShortToast("Reset password failed: ${error.toString()}");
+        ToastUtil.showShortToast("Create password failed: ${error.toString()}");
       }
     } else {
       setState(() {
@@ -199,8 +242,6 @@ class _EngineerCreateNewPassScreenState
                     color: AppColors.allPrimaryColor,
                     radius: BorderRadius.circular(119.r),
                     onTap: () {
-                      // Navigate to customer home screen
-                      // NavigationService.navigateTo(Routes.engineerLoginScreen);
                       submitForm();
                     },
                   ),

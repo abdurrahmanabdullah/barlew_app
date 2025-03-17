@@ -50,7 +50,7 @@ class _EngineerForgotPasswordScreenState
               _isLoading = false;
             });
             NavigationService.navigateToWithArgs(
-                Routes.verifyEmailScreen, {'email': email});
+                Routes.engineerVerifyEmailScreen, {'email': email});
           } else {
             setState(() {
               _isLoading = true;

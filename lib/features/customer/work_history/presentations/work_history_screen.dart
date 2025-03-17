@@ -103,6 +103,14 @@ class _WorkHistoryScreenState extends State<WorkHistoryScreen> {
 
           if (snapshot.hasData) {
             final historySnap = snapshot.data!;
+            if (historySnap.data == null || historySnap.data!.isEmpty) {
+              return const Center(
+                child: Text(
+                  'No history available',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+              );
+            }
             return Column(
               children: [
                 Expanded(
@@ -200,82 +208,85 @@ class _WorkHistoryScreenState extends State<WorkHistoryScreen> {
                     },
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Previous Page Button
-                      GestureDetector(
-                        onTap: () {
-                          previouspage();
-                        },
-                        child: Row(
-                          children: [
-                            Icon(Icons.arrow_back_ios,
-                                size: 24,
-                                color: pageId > 1 ? Colors.blue : Colors.grey),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Previous',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: pageId > 1 ? Colors.blue : Colors.grey,
+                if (historySnap.data!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Previous Page Button
+                        GestureDetector(
+                          onTap: () {
+                            previouspage();
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.arrow_back_ios,
+                                  size: 24,
+                                  color:
+                                      pageId > 1 ? Colors.blue : Colors.grey),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Previous',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: pageId > 1 ? Colors.blue : Colors.grey,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 16),
+                        const SizedBox(width: 16),
 
-                      // Page Numbers Logic
-                      if (lastPageNumber > 1)
-                        _pageButton(1), // Always show first page
-                      if (pageId == 2) _pageButton(2),
-                      if (pageId > 2 && pageId < lastPageNumber)
-                        _pageButton(pageId), // Show current page dynamically
+                        // Page Numbers Logic
+                        if (lastPageNumber > 1)
+                          _pageButton(1), // Always show first page
+                        if (pageId == 2) _pageButton(2),
+                        if (pageId > 2 && pageId < lastPageNumber)
+                          _pageButton(pageId), // Show current page dynamically
 
-                      // Show ellipsis before last page if needed
-                      if (lastPageNumber > 3 && pageId < lastPageNumber - 1)
-                        const Text('...',
-                            style: TextStyle(fontSize: 16, color: Colors.blue)),
+                        // Show ellipsis before last page if needed
+                        if (lastPageNumber > 3 && pageId < lastPageNumber - 1)
+                          const Text('...',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.blue)),
 
-                      // Always show last page
-                      if (lastPageNumber > 1)
-                        _pageButton(lastPageNumber), // Always show last page
+                        // Always show last page
+                        if (lastPageNumber > 1)
+                          _pageButton(lastPageNumber), // Always show last page
 
-                      const SizedBox(width: 16),
+                        const SizedBox(width: 16),
 
-                      // Next Page Button
-                      GestureDetector(
-                        onTap: () {
-                          nextpage();
-                        },
-                        child: Row(
-                          children: [
-                            Text(
-                              'Next',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: pageId < lastPageNumber
-                                    ? Colors.blue
-                                    : Colors.grey,
+                        // Next Page Button
+                        GestureDetector(
+                          onTap: () {
+                            nextpage();
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                'Next',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: pageId < lastPageNumber
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 4),
-                            Icon(Icons.arrow_forward_ios,
-                                size: 24,
-                                color: pageId < lastPageNumber
-                                    ? Colors.blue
-                                    : Colors.grey),
-                          ],
+                              const SizedBox(width: 4),
+                              Icon(Icons.arrow_forward_ios,
+                                  size: 24,
+                                  color: pageId < lastPageNumber
+                                      ? Colors.blue
+                                      : Colors.grey),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
                 UIHelper.verticalSpace(30.h),
               ],
             );

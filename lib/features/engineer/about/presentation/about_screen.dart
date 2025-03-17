@@ -5,6 +5,7 @@ import 'package:barlew_app/gen/assets.gen.dart';
 import 'package:barlew_app/gen/colors.gen.dart';
 import 'package:barlew_app/helpers/ui_helpers.dart';
 import 'package:barlew_app/networks/api_access.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -57,11 +58,11 @@ class _AboutScreenState extends State<AboutScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Plumbing Services",
+                engineerprofileSnap.service ?? '',
                 style: TextFontStyle.text22c192A48w600roboto
                     .copyWith(fontSize: 18.sp),
               ),
-              UIHelper.verticalSpace(6.h),
+              UIHelper.verticalSpace(15.h),
               Text(
                 "${engineerprofileSnap.firstName ?? ''} ${engineerprofileSnap.lastName ?? ''}"
                     .trim(),
@@ -168,7 +169,7 @@ class _AboutScreenState extends State<AboutScreen> {
 
               UIHelper.verticalSpace(24.h),
               Text(
-                "${engineerprofileSnap.firstName ?? ''} ${engineerprofileSnap.lastName ?? ''}"
+                " About ${engineerprofileSnap.firstName ?? ''} ${engineerprofileSnap.lastName ?? ''}"
                     .trim(),
                 style: TextFontStyle.text145192A48w500roboto
                     .copyWith(fontSize: 18.sp),
@@ -202,11 +203,25 @@ class _AboutScreenState extends State<AboutScreen> {
                   itemBuilder: (_, index) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(8.r),
-                      child: Image.network(
-                        engineerprofileSnap.portfolios![index].image ??
-                            "https://via.placeholder.com/150",
-                        fit: BoxFit.cover,
-                      ),
+                      child: engineerprofileSnap.portfolios![index].image !=
+                                  null &&
+                              engineerprofileSnap
+                                  .portfolios![index].image!.isNotEmpty
+                          ? CachedNetworkImage(
+                              imageUrl:
+                                  engineerprofileSnap.portfolios![index].image!,
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => Image.asset(
+                                Assets.images.profileAvatar.path,
+                                fit: BoxFit.cover,
+                              ),
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              Assets.images.profileAvatar.path,
+                              fit: BoxFit.cover,
+                            ),
                     );
                   },
                 ),

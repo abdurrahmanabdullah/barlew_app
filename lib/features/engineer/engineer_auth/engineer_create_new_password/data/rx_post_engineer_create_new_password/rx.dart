@@ -5,10 +5,11 @@ import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
 import 'api.dart';
 
-final class EngineerResetPassRX extends RxResponseInt<Map> {
-  final api = CustomerResetPassApi.instance;
+final class EngineerCreateNewPasswordRX extends RxResponseInt<Map> {
+  final api = EngineerCreateNewPasswordApi.instance;
 
-  EngineerResetPassRX({required super.empty, required super.dataFetcher});
+  EngineerCreateNewPasswordRX(
+      {required super.empty, required super.dataFetcher});
 
   ValueStream get getFileData => dataFetcher.stream;
 
@@ -19,7 +20,7 @@ final class EngineerResetPassRX extends RxResponseInt<Map> {
     required String passwordConfirmation,
   }) async {
     try {
-      Map data = await api.customerResetPassApi(
+      Map data = await api.engineerCreateNewPasswordApi(
         token: token,
         email: email,
         password: password,
